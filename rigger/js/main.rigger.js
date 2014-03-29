@@ -112,6 +112,8 @@ rigger.newGame = function(player){
 	rigger.target = rigger.genBar();
 	// Create the new, empty bar
 	rigger.bar = new rigger.Bar();
+	rigger.bar.addLight(new rigger.Light(), 5);
+	rigger.bar.addLight(new rigger.Light(), 15);
 
 	// Remove the main menu
 	rigger.menu = 0;
