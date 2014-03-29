@@ -1,20 +1,22 @@
 // Contains the objects used in the game
 (function(){
 
-rigger.player = function(who){
+rigger.Player = function(who){
 	this.who = function(){return who;};
 
-	this.speed = 10; // Speed in px/s
+	this.speed = 100; // Speed in px/s
 
 	this.g = {
-		x : 0,
-		y : 0,
-		w : 0,
-		h : 0,
-		i : rigger.assets.sprites.player[who]
+		w : 50,
+		h : 50,
+		x : 5,
+		y : 0
+		//i : rigger.assets.sprites.player[who]
 	};
+	this.g.y = rigger.height - this.g.h;
 	this.draw = function(){
-
+		rigger.ctx.fillStyle = "blue";
+		rigger.ctx.fillRect(this.g.x, this.g.y, this.g.w, this.g.h);
 	};
 };
 

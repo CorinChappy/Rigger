@@ -74,6 +74,9 @@ var rigger = {
 		draw : function(){
 			rigger.ctx.clearRect(0,0, rigger.width, rigger.height);
 			rigger.d.room();
+			if(rigger.inGame){
+				rigger.player.draw();
+			}
 		}
 	},
 
@@ -125,6 +128,7 @@ rigger.init = function(){
 
 	// Do some setup stuff
 	rigger.assets.load();
+	rigger.newGame();
 	// Create gameloop etc.
 	gameloop(function(dt){
 		// Do shizz
