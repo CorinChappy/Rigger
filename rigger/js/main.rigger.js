@@ -134,13 +134,19 @@ rigger.init = function(){
 
 	// Do some setup stuff
 	rigger.assets.load();
-	rigger.newGame();
-	// Create gameloop etc.
-	gameloop(function(dt){
-		// Do shizz
-		rigger.e.update(dt);
-		rigger.e.draw();
-	});
+	var intt;
+	intt = setInterval(function(){
+		if(rigger.assets.isLoaded()){
+			clearTimeout(intt);
+			rigger.newGame();
+			// Create gameloop etc.
+			gameloop(function(dt){
+				// Do shizz
+				rigger.e.update(dt);
+				rigger.e.draw();
+			});
+		}
+	}, 500);
 };
 
 

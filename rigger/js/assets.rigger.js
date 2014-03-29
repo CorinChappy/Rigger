@@ -11,7 +11,7 @@
 
 		// Audio stored in an array, index: 0 = ogg; 1 = mp3
 		audio : {
-			//bgMusic : ["assets/audio/bg.ogg", "assets/audio/bg.mp3"]
+			//bgMusic : ["assets/audio/ss.mp3", "assets/audio/ss.mp3"]
 		},
 
 
