@@ -47,13 +47,13 @@ rigger.Bar = function(){ // Represents a bar in the annex
 
 	// Please use these methods for adding & removing lights!
 	this.addLight = function(light, pos){
-		if(!light || !pos || pos >= this.bar.length){return;}
+		if(!light || !pos || pos >= rigger.settings.barSize){return;}
 		if(this.bar[pos]){return;} // Already got a light there
 		this.bar[pos] = light;
 		updatables[pos] = true;
 	};
 	this.removeLight = function(pos){
-		if(!pos || pos >= this.bar.length){return;}
+		if(!pos || pos >= rigger.settings.barSize){return;}
 		if(!this.bar[pos]){return;} // No light there
 		var light = this.bar[pos];
 		this.bar[pos] = false;
@@ -80,15 +80,19 @@ rigger.Bar = function(){ // Represents a bar in the annex
 		});
 	};
 	this.update = function(dt){
-		for(var u in this.updatables){
+		for(var u in updatables){
 			// Update the lights on bar
 			/* Divide up the bar per (size:positions)
 			 * Position relative (position * ratio)
 			 * Move the light onto the bar
 			 */
-			//this.bar[u].x = gsd;
+			var ratio = rigger.width/rigger.settings.barSize; // Divide up the bar
+			var absPos = u * ratio; // Absolute position
 
-			delete this.updatables[u]; // Been updated bro
+			this.bar[u].g.x = absPos;
+			this.bar[u].g.y = this.g.y+1;
+
+			delete updatables[u]; // Been updated bro
 		}
 	};
 };

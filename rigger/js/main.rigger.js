@@ -68,6 +68,9 @@ var rigger = {
 					rigger.keyAction[i].call(rigger, dt);
 				}
 			}
+
+			// Update the bar
+			rigger.bar.update();
 		},
 
 		// THE drawing function
