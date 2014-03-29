@@ -1,5 +1,5 @@
 // Contains keybindings and functions for the game
-(function ()) {
+(function(){
 	
 	rigger.keysDown = {}; // Contins the currently pressed keys
 

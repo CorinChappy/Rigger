@@ -59,7 +59,7 @@ var rigger = {
 		update : function(dt){
 			// Call the even if a key is held down
 			for(var i in rigger.keysDown){
-				rigger.ketAction[i].call(rigger, dt);
+				rigger.keyAction[i].call(rigger, dt);
 			}
 		},
 
