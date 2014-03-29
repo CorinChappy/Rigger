@@ -34,7 +34,7 @@
 				toLoad++;
 				var i = new Audio();
 				i.addEventListener('loadeddata',function(){rigger.assets.audio[m] = i; loaded++;});
-				i.addEventListener('onerror',function(){throw new Error("Could not load something :(");});
+				i.addEventListener('error',function(){throw new Error("Could not load something :(");});
 				i.src = rigger.assets.audio[m];
 			}
 
