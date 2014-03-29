@@ -102,12 +102,13 @@ rigger.Light = function(type) {
 	this.g = {
 		x : 0,
 		y : 0,
-		w : 0,
-		h : 0,
+		w : 50,
+		h : 50,
 		i : rigger.assets.sprites.lights[type]
 	};
 	this.draw = function(){
-
+		rigger.ctx.fillStyle = "purple";
+		rigger.ctx.fillRect(this.g.x, this.g.y, this.g.w, this.g.h);
 	};
 };
 
