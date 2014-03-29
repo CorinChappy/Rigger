@@ -6,6 +6,13 @@ rigger.Player = function(who){
 
 	this.speed = 100; // Speed in px/s
 
+	this.light = null; // Holding a light?
+
+	this.hand = { // Position relative to the image of the players hand
+		x : 0,
+		y : 0
+	};
+
 	this.g = {
 		w : 50,
 		h : 50,
@@ -23,8 +30,8 @@ rigger.Player = function(who){
 			this.light.draw();
 		}
 	};
-	this.update = function(dt){
-		rigger.player.g.x += rigger.player.speed * dt;
+	this.update = function(dt, axis){
+		rigger.player.g[axis] += rigger.player.speed * dt;
 
 		if(this.light){
 			// Place the light in his hand

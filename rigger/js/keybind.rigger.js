@@ -24,14 +24,14 @@
 	rigger.keyAction = {
 		37 : function(dt, a){
 			// LEFT
-			rigger.player.g.x -= rigger.player.speed * dt;
+			rigger.player.update(-dt, "x"); // -dt as we are moving backwards! DUH
 		},
 		38 : function(dt, a){
 			// UP
 		},
 		39 : function(dt, a){
 			// RIGHT
-			rigger.player.g.x += rigger.player.speed * dt;
+			rigger.player.update(dt, "x");
 		},
 		40 : function(dt, a){
 			// DOWN
