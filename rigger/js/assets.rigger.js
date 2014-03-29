@@ -14,11 +14,14 @@
 		load : function(){
 			// Create new Image objects for each asset and wait till the have all loaded
 			var toLoad = 0; var loaded = 0; var prep = false;
-			for(var sprites in rigger.assets.sprites){
-				for(var sprite in sprites){
+			for(var a in rigger.assets.sprites){
+				for(var b in rigger.assets.sprites[a]){
+					var sprite = rigger.assets.sprites[a][b];
 					toLoad++;
-					var i = new Image(sprite);
-					i.onLoad = function(){loaded++;}
+					var i = new Image();
+					i.onload = function(){rigger.assets.sprites[a][b] = i; loaded++;};
+					i.onerror = function(){throw new Error("Could not load something :(");};
+					i.src = sprite;
 				}
 			}
 			prep = true;
