@@ -9,8 +9,9 @@
 			}
 		},
 
+		// Audio stored in an array, index: 0 = ogg; 1 = mp3
 		audio : {
-			//bgMusic : "assets/audio/bg"
+			//bgMusic : ["assets/audio/bg.ogg", "assets/audio/bg.mp3"]
 		},
 
 
@@ -30,12 +31,24 @@
 			}
 
 			// Load audio in a sim. way
+			var ty = (function(){ // Use the right codec
+				var a = new Audio();
+				if(a.canPlayType("audio/ogg; codecs=vorbis") != ""){
+					return 0;
+				}else{
+					if(a.canPlayType("audio/mpeg") != ""){
+						return 1;
+					}
+				}
+				return 0;
+			})();
 			for(var m in rigger.assets.audio){
 				toLoad++;
+				var au = rigger.assets.audio[m][ty];
 				var i = new Audio();
 				i.addEventListener('loadeddata',function(){rigger.assets.audio[m] = i; loaded++;});
 				i.addEventListener('error',function(){throw new Error("Could not load something :(");});
-				i.src = rigger.assets.audio[m];
+				i.src = au;
 			}
 
 
