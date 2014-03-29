@@ -57,7 +57,10 @@ var rigger = {
 	e : {
 		// Update the bits with respect to time
 		update : function(dt){
-
+			// Call the even if a key is held down
+			for(var i in rigger.keysDown){
+				rigger.ketAction[i].call(rigger, dt);
+			}
 		},
 
 		// THE drawing function
