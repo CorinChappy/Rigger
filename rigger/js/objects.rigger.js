@@ -19,7 +19,7 @@ rigger.player = function(who){
 };
 
 rigger.Bar = function(){ // Represents a bar in the annex
-	this.bar = (function(b){var a = []; while(a.length < b){a.push(false)} return a;})(20); // Create an array of 20 false values (false means empty)
+	this.bar = (function(b){var a = []; while(a.length < b){a.push(false)} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
 
 
 	this.g = {
