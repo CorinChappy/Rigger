@@ -40,7 +40,7 @@ var rigger = {
 	/* Global settings for the game */
 	settings : {
 		barSize : 20, // Size of the bars
-		volume : 100 // Volume for sound effects
+		volume : 1 // Volume for sound effects (0-1)
 
 	},
 	// Generate a random bar

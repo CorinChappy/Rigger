@@ -49,6 +49,7 @@
 				i.addEventListener('loadeddata',function(){rigger.assets.audio[m] = i; loaded++;});
 				i.addEventListener('error',function(){throw new Error("Could not load something :(");});
 				i.src = au;
+				i.volume = rigger.settings.volume;
 			}
 
 
