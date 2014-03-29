@@ -76,6 +76,7 @@ var rigger = {
 			rigger.d.room();
 			if(rigger.inGame){
 				rigger.player.draw();
+				rigger.bar.draw();
 			}
 		}
 	},
