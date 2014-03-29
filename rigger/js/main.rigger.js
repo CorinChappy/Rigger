@@ -37,7 +37,12 @@ var rigger = {
 
 	target : null, // The target bar
 
+	/* Global settings for the game */
+	settings : {
+		barSize : 20, // Size of the bars
+		volume : 100 // Volume for sound effects
 
+	},
 	// Generate a random bar
 	genBar : function(){
 
