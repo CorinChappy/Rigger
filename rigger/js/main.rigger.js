@@ -2,13 +2,7 @@
 
 var deps;
 
-/* Mapping from the integer representations to the string representations (name)
- * Running rigger.objs.lights[num] will return the name of the light that num represents
-*/
-var objs = {
-	rooms : ["annex", "light store", "gel draw"],
-	lights : ["fresnel", "pc", "parcan", "flood", "source 4"]
-};
+
 
 var rigger = {
 
@@ -17,25 +11,37 @@ var rigger = {
 	canvas : null, // The canvas object
 	ctx : null, // The canvas context
 
-	inGame : false,
-
-	objs : objs,
-
-	player : null, // The current character
-
-	/* Current room
-	 * 0 = Annex; 1 = Light Store; 2 = Gel Draw
+	/* State of the game
+	 * 0 = loading; 1 = main menu; 2 = in game
 	*/
-	room : 0,
+	state : 0,
 
-	/* Currently displayed menu overlay
-	 * 0 = none;
+
+	/* Mapping from the integer representations to the string representations (name)
+	 * Running rigger.objs.lights[num] will return the name of the light that num represents
 	*/
-	menu : 0,
+	objs : {
+		rooms : ["annex", "light store", "gel draw"],
+		lights : ["fresnel", "pc", "parcan", "flood", "source 4"]
+	},
 
-	bar : null, // The bar's current state
+	game : { // Game state references
+		player : null, // The current character
 
-	target : null, // The target bar
+		/* Current room
+		 * 0 = Annex; 1 = Light Store; 2 = Gel Draw
+		*/
+		room : 0,
+
+		/* Currently displayed menu overlay
+		 * 0 = none; 1 = design; 2 = in game menu
+		*/
+		menu : 0,
+
+		bar : null, // The bar's current state
+
+		target : null // The target bar
+	},
 
 	/* Global settings for the game */
 	settings : {
@@ -43,10 +49,8 @@ var rigger = {
 		volume : 1 // Volume for sound effects (0-1)
 
 	},
-	// Generate a random bar
-	genBar : function(){
+	
 
-	},
 	// Helper functions
 	h : {
 		// String of the obj to it's int value
@@ -56,6 +60,11 @@ var rigger = {
 			}
 			var index = rigger.objs[s].indexOf(t);
 			return (index < 0)?0:index;
+		},
+
+		// Generate a random bar
+		genBar : function(){
+
 		}
 	},
 
@@ -69,17 +78,23 @@ var rigger = {
 				}
 			}
 
-			// Update the bar
-			rigger.bar.update();
+
+			/* IN GAME */
+			if(rigger.state === 2){
+				// Update the bar
+				rigger.game.bar.update();
+			}
 		},
 
 		// THE drawing function
 		draw : function(){
 			rigger.ctx.clearRect(0,0, rigger.width, rigger.height);
 			rigger.d.room();
-			if(rigger.inGame){
-				rigger.player.draw();
-				rigger.bar.draw();
+
+
+			if(rigger.state === 2){ // IN GAME
+				rigger.game.player.draw();
+				rigger.game.bar.draw();
 			}
 		}
 	},
@@ -97,6 +112,9 @@ var rigger = {
 		},
 		menu : function(){
 
+		},
+		loading : function(){
+
 		}
 	}
 };
@@ -106,19 +124,18 @@ var rigger = {
 
 rigger.newGame = function(player){
 	var p = player || "danbarr"; // danbarr is the default player
-	rigger.player = new rigger.Player(p);
+	rigger.game.player = new rigger.Player(p);
 
 	// Generate a random target bar
-	rigger.target = rigger.genBar();
+	rigger.game.target = rigger.h.genBar();
 	// Create the new, empty bar
-	rigger.bar = new rigger.Bar();
-	rigger.bar.addLight(new rigger.Light(), 5);
-	rigger.bar.addLight(new rigger.Light(), 15);
+	rigger.game.bar = new rigger.Bar();
+	rigger.game.bar.addLight(new rigger.Light(), 5);
+	rigger.game.bar.addLight(new rigger.Light(), 15);
 
-	// Remove the main menu
-	rigger.menu = 0;
+
 	// Set inGame
-	rigger.inGame = true;
+	rigger.state = 2;
 };
 
 
@@ -138,15 +155,18 @@ rigger.init = function(){
 	intt = setInterval(function(){
 		if(rigger.assets.isLoaded()){
 			clearTimeout(intt);
-			rigger.newGame();
-			// Create gameloop etc.
-			gameloop(function(dt){
-				// Do shizz
-				rigger.e.update(dt);
-				rigger.e.draw();
-			});
+			// Show the main menu
+			rigger.state = 1;
+			rigger.newGame(); //TEMP start a new game
 		}
 	}, 500);
+
+	// Create gameloop etc.
+	gameloop(function(dt){
+		// Do shizz
+		rigger.e.update(dt);
+		rigger.e.draw();
+	});
 };
 
 

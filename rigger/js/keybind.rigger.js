@@ -24,14 +24,18 @@
 	rigger.keyAction = {
 		37 : function(dt, a){
 			// LEFT
-			rigger.player.update(-dt, "x"); // -dt as we are moving backwards! DUH
+			if(rigger.state === 2){ // IN GAME
+				rigger.player.update(-dt, "x"); // -dt as we are moving backwards! DUH
+			}
 		},
 		38 : function(dt, a){
 			// UP
 		},
 		39 : function(dt, a){
 			// RIGHT
-			rigger.player.update(dt, "x");
+			if(rigger.state === 2){ // IN GAME
+				rigger.player.update(dt, "x");
+			}
 		},
 		40 : function(dt, a){
 			// DOWN
