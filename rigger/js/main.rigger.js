@@ -115,7 +115,7 @@ var rigger = {
 			rigger.ctx.fillStyle = "black";
 			rigger.ctx.font = "24px Helvetica";
 			rigger.ctx.textBaseline = "top";
-			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
+			rigger.ctx.fillText("Welcome to Rigger2!", 20, 10);
 		},
 		menu : function(){
 
