@@ -25,7 +25,7 @@
 		37 : function(dt, a){
 			// LEFT
 			if(rigger.state === 2){ // IN GAME
-				rigger.player.update(-dt, "x"); // -dt as we are moving backwards! DUH
+				rigger.game.player.update(-dt, "x"); // -dt as we are moving backwards! DUH
 			}
 		},
 		38 : function(dt, a){
@@ -34,7 +34,7 @@
 		39 : function(dt, a){
 			// RIGHT
 			if(rigger.state === 2){ // IN GAME
-				rigger.player.update(dt, "x");
+				rigger.game.player.update(dt, "x");
 			}
 		},
 		40 : function(dt, a){

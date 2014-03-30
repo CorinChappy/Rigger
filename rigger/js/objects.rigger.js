@@ -4,7 +4,7 @@
 rigger.Player = function(who){
 	this.who = function(){return who;};
 
-	this.speed = 100; // Speed in px/s
+	this.speed = 300; // Speed in px/s
 
 	this.light = null; // Holding a light?
 
