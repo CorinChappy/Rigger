@@ -91,6 +91,13 @@ var rigger = {
 			rigger.ctx.clearRect(0,0, rigger.width, rigger.height);
 			rigger.d.room();
 
+			if(rigger.state === 0){ // LOADING
+				rigger.ctx.fillStyle = "black";
+				rigger.ctx.font = "24px Helvetica";
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText("LOADING...", 20, 200);
+			}
+
 
 			if(rigger.state === 2){ // IN GAME
 				rigger.game.player.draw();
@@ -149,23 +156,30 @@ rigger.init = function(){
 	rigger.canvas = canvas;
 	rigger.ctx = ctx;
 
-	// Do some setup stuff
-	rigger.assets.load();
-	var intt;
-	intt = setInterval(function(){
-		if(rigger.assets.isLoaded()){
-			clearTimeout(intt);
-			// Show the main menu
-			rigger.state = 1;
-			rigger.newGame(); //TEMP start a new game
-		}
-	}, 500);
+
 
 	// Create gameloop etc.
 	gameloop(function(dt){
 		// Do shizz
 		rigger.e.update(dt);
 		rigger.e.draw();
+	});
+
+
+	// Load the assets
+	rigger.assets.load(function(load){
+		if(load === false){ // Check for failure
+			throw new Error("Something couldn't load :(");
+			return;
+		}
+		if(load === true){ // Check for success
+			rigger.state = 1; // Show the main menu
+			rigger.newGame(); //TEMP start a new game
+			return;
+		}
+
+		// Update the screen's percentage value somehow
+
 	});
 };
 
