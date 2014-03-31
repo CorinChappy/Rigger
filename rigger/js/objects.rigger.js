@@ -40,18 +40,19 @@ rigger.Player = function(who){
 			case 37 :
 			case 39 : {
 			var min = 0; var max = rigger.width - this.g.w;
-			if(this.g.y < rigger.height - this.g.h){ // No moving away from the ladder if in the air
-				min = rigger.game.ladder.g.x; max = rigger.game.ladder.g.x + rigger.game.ladder.g.w;
+			if(this.g.y >= rigger.height - this.g.h){ // No moving away from the ladder if in the air
+				this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
+				this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
 			}
-			this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
-			this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
 			break; }
 
 			// Up or Down
 			case 38 :
 			case 40 : {
-				if(rigger.game.player.g.x > rigger.game.ladder.g.x && rigger.game.player.g.x < rigger.game.ladder.g.x + rigger.game.ladder.g.w){ // Over the ladder
-					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), rigger.game.ladder.g.y, rigger.height - this.g.h);
+				var l = rigger.game.ladder.g;
+				var rW = l.w/5
+				if(rigger.game.player.g.x > l.x - (rW*2) && rigger.game.player.g.x < l.x + l.w - (rW*2)){ // Over the ladder
+					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
 					this.g.i = this.imgs.climb;
 				}
 			break; }
@@ -167,9 +168,9 @@ rigger.Ladder = function(){
 	this.position = 0;
 
 	this.g = {
-		w : 100,
+		w : 75,
 		h : 400,
-		x : 0
+		x : 50
 	};
 	this.g.y = rigger.height - this.g.h;
 
@@ -180,8 +181,8 @@ rigger.Ladder = function(){
 
 		// Left
 		rigger.ctx.beginPath();
-		rigger.ctx.moveTo(this.g.x, this.g.y);
-		rigger.ctx.lineTo(this.g.x, rigger.height);
+		rigger.ctx.moveTo(this.g.x + rW/2, this.g.y);
+		rigger.ctx.lineTo(this.g.x + rW/2, rigger.height);
 		rigger.ctx.stroke();
 
 		// Right
@@ -194,8 +195,8 @@ rigger.Ladder = function(){
 		var num = this.g.h/7; // 20 rungs
 		for(var i = 0; i < 7; i++){
 			rigger.ctx.beginPath();
-			rigger.ctx.moveTo(this.g.x, this.g.y + (num * i));
-			rigger.ctx.lineTo(this.g.x + this.g.w, this.g.y + (num * i));
+			rigger.ctx.moveTo(this.g.x - rW/2, this.g.y + (num * i) + 20);
+			rigger.ctx.lineTo(this.g.x + this.g.w, this.g.y + (num * i) + 20);
 			rigger.ctx.stroke();
 		}
 	};
