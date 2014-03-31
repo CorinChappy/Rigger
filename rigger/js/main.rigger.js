@@ -8,7 +8,7 @@ Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
 
 var rigger = {
 
-	width : 512, height : 480,
+	width : 1000, height : 500,
 
 	canvas : null, // The canvas object
 	ctx : null, // The canvas context
