@@ -30,8 +30,20 @@ rigger.Player = function(who){
 			this.light.draw();
 		}
 	};
-	this.update = function(dt, axis){
-		this.g[axis] = Math.clamp(this.g[axis] + (this.speed * dt), 0, ((axis === "y")?rigger.height:rigger.width) - this.g.w);
+	this.update = function(dt, key){
+		if(key === 37 || key === 39){ // Left or right
+			var min = 0; var max = rigger.width - this.g.w;
+			if(this.g.y < rigger.height - this.g.h){ // No moving away from the ladder if in the air
+				min = rigger.game.ladder.g.x; max = rigger.game.ladder.g.x + rigger.game.ladder.g.w;
+			}
+			this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
+		}else{
+			if(key === 38 || key === 40){ // Up or Down
+				if(rigger.game.player.g.x > rigger.game.ladder.g.x && rigger.game.player.g.x < rigger.game.ladder.g.x + rigger.game.ladder.g.w){ // Over the ladder
+					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), rigger.game.ladder.g.y, rigger.height - this.g.h);
+				}
+			}
+		}
 
 		if(this.light){
 			// Place the light in his hand

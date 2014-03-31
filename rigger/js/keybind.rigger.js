@@ -25,25 +25,25 @@
 		37 : function(dt, a){
 			// LEFT
 			if(rigger.state === 2){ // IN GAME
-				rigger.game.player.update(-dt, "x"); // -dt as we are moving backwards! DUH
+				rigger.game.player.update(dt, 37); // -dt as we are moving backwards! DUH
 			}
 		},
 		38 : function(dt, a){
 			// UP
-			if(rigger.game.player.g.x > rigger.game.ladder.g.x && rigger.game.player.g.x < rigger.game.ladder.g.x + rigger.game.ladder.g.w){
-				rigger.game.player.update(-dt, "y");
+			if(rigger.state === 2){
+				rigger.game.player.update(dt, 38);
 			}
 		},
 		39 : function(dt, a){
 			// RIGHT
 			if(rigger.state === 2){ // IN GAME
-				rigger.game.player.update(dt, "x");
+				rigger.game.player.update(dt, 39);
 			}
 		},
 		40 : function(dt, a){
 			// DOWN
-			if(rigger.game.player.g.x > rigger.game.ladder.g.x && rigger.game.player.g.x < rigger.game.ladder.g.x + rigger.game.ladder.g.w){
-				rigger.game.player.update(dt, "y");
+			if(rigger.state === 2){
+				rigger.game.player.update(dt, 40);
 			}
 		},
 
