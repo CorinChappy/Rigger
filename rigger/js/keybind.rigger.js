@@ -59,7 +59,8 @@
 	};
 
 
-	/* The actions taken when each key is PRESSED
+	/* 
+	 * The actions taken when each key is PRESSED
 	 */
 	rigger.keyPressAction = {
 		37 : function(){
@@ -72,7 +73,7 @@
 			}
 		},
 		39 : function(){
-
+			// RIGHT
 		},
 		40 : function(){
 			// DOWN

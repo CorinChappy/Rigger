@@ -134,10 +134,6 @@ var rigger = {
 			// Draw the room green for now
 			rigger.ctx.fillStyle = "green";
 			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
-			rigger.ctx.fillStyle = "black";
-			rigger.ctx.font = "24px Helvetica";
-			rigger.ctx.textBaseline = "top";
-			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 		},
 		error : function(){
 			rigger.ctx.fillStyle = "black";
@@ -157,6 +153,13 @@ var rigger = {
 			rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
 		},
 		menu : function(){
+			// Welcome message
+			rigger.ctx.fillStyle = "black";
+			rigger.ctx.font = "24px Helvetica";
+			rigger.ctx.textBaseline = "top";
+			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
+
+
 			var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
 			for(var i = 0; i < ops.length; i++){
 				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
