@@ -52,6 +52,7 @@ rigger.Player = function(who){
 			case 40 : {
 				if(rigger.game.player.g.x > rigger.game.ladder.g.x && rigger.game.player.g.x < rigger.game.ladder.g.x + rigger.game.ladder.g.w){ // Over the ladder
 					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), rigger.game.ladder.g.y, rigger.height - this.g.h);
+					this.g.i = this.imgs.climb;
 				}
 			break; }
 		}

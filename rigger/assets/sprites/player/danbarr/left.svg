@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="danbarr-side.svg">
+   sodipodi:docname="danbarr-side2.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.53767585"
+     inkscape:zoom="1.1320597"
      inkscape:cx="277.6315"
-     inkscape:cy="273.6711"
+     inkscape:cy="379.67258"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -807,6 +807,12 @@
          d="m 384.87356,371.716 0,-19.66127 -21.01727,0 -21.01722,0 0,-36.61066 0,-36.61064 21.01722,0 21.01727,0 0,-55.59397 0,-55.59395 60.33975,0 60.33979,0 0,55.59395 0,55.59397 62.37374,0 62.37363,0 0,36.61064 0,36.61066 -20.33924,0 -20.33919,0 0,19.66127 0,19.66129 -102.37429,0 -102.37419,0 0,-19.66129 z m 84.06889,-131.52715 0,-38.64458 -22.37318,0 -22.37318,0 0,38.64458 0,38.64458 22.37318,0 22.37318,0 0,-38.64458 z"
          style="fill:#ffccaa;fill-opacity:1;fill-rule:nonzero;stroke:#ffccaa;stroke-width:0.70373821;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
     </g>
+    <path
+       style="fill:#4400aa;fill-opacity:1;fill-rule:nonzero;stroke:#4400aa;stroke-width:3.177;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       d="m 283.10824,391.20656 0,-11.92516 -13.69185,0 -13.69186,0 0,-35.23932 c 0,-31.31877 0.15545,-35.29897 1.39726,-35.7755 0.7685,-0.2949 18.65625,-0.53618 39.75056,-0.53618 l 38.35329,0 0,11.92517 0,11.92516 13.25018,0 13.25018,0 0,35.7755 0,35.7755 -39.30888,0 -39.30888,0 0,-11.92517 z"
+       id="path10231"
+       inkscape:connector-curvature="0"
+       transform="translate(11.454369,2.6803192)" />
   </g>
   <g
      inkscape:groupmode="layer"
