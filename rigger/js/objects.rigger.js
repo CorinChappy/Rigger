@@ -169,7 +169,7 @@ rigger.Ladder = function(){
 
 	this.g = {
 		w : 75,
-		h : 400,
+		h : 475,
 		x : 50
 	};
 	this.g.y = rigger.height - this.g.h;
@@ -192,8 +192,9 @@ rigger.Ladder = function(){
 		rigger.ctx.stroke();
 
 		// Rungs
-		var num = this.g.h/7; // 20 rungs
-		for(var i = 0; i < 7; i++){
+		var rungNum = 9; // 9 rungs
+		var num = this.g.h/rungNum; 
+		for(var i = 0; i < rungNum; i++){
 			rigger.ctx.beginPath();
 			rigger.ctx.moveTo(this.g.x - rW/2, this.g.y + (num * i) + 20);
 			rigger.ctx.lineTo(this.g.x + this.g.w, this.g.y + (num * i) + 20);
