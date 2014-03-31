@@ -68,6 +68,7 @@ rigger.Bar = function(){ // Represents a bar in the annex
 		w : 5 // Thickness of the bar
 	};
 	this.draw = function(){
+		rigger.ctx.strokeStyle = "black";
 		rigger.ctx.lineWidth = this.g.w;
 
 		rigger.ctx.beginPath();
@@ -132,7 +133,50 @@ rigger.Gel = function(num, type){
 
 	var col = rigger.gelRef[num]; // Gets the HEX colour code for the Gel number
 	this.colour = function(){return col;};
-}
+};
+
+
+rigger.Ladder = function(){
+
+	this.position = 0;
+
+	this.g = {
+		w : 100,
+		h : 400,
+		x : 0
+	};
+	this.g.y = rigger.height - this.g.h;
+
+	this.draw = function(){
+		var rW = this.g.w/5
+		rigger.ctx.lineWidth = rW;
+		rigger.ctx.strokeStyle = "gray";
+
+		// Left
+		rigger.ctx.beginPath();
+		rigger.ctx.moveTo(this.g.x, this.g.y);
+		rigger.ctx.lineTo(this.g.x, rigger.height);
+		rigger.ctx.stroke();
+
+		// Right
+		rigger.ctx.beginPath();
+		rigger.ctx.moveTo(this.g.x + this.g.w - rW, this.g.y);
+		rigger.ctx.lineTo(this.g.x + this.g.w - rW, rigger.height);
+		rigger.ctx.stroke();
+
+		// Rungs
+		var num = this.g.h/7; // 20 rungs
+		for(var i = 0; i < 7; i++){
+			rigger.ctx.beginPath();
+			rigger.ctx.moveTo(this.g.x, this.g.y + (num * i));
+			rigger.ctx.lineTo(this.g.x + this.g.w, this.g.y + (num * i));
+			rigger.ctx.stroke();
+		}
+	};
+	this.update = function(){
+
+	};
+};
 
 
 })();

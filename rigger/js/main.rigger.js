@@ -40,6 +40,8 @@ var rigger = {
 		*/
 		menu : 0,
 
+		ladder : null,
+
 		bar : null, // The bar's current state
 
 		target : null // The target bar
@@ -104,6 +106,7 @@ var rigger = {
 				rigger.ctx.fillText("Oh PANTS.", 10, 200);
 				rigger.ctx.textBaseline = "top";
 				rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
+				return;
 			}
 
 			if(rigger.state === 0){ // LOADING
@@ -114,12 +117,22 @@ var rigger = {
 
 				rigger.ctx.clearRect(20, 205, 200, 20);
 				rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
+				return;
 			}
 
+			if(rigger.state === 1){ // MAIN MENU
+
+				return;
+			}
 
 			if(rigger.state === 2){ // IN GAME
+				if(rigger.game.room === 0){ // We are in the ANNEX
+					rigger.game.ladder.draw();
+					rigger.game.bar.draw();
+				}
+
+
 				rigger.game.player.draw();
-				rigger.game.bar.draw();
 			}
 		}
 	},
@@ -157,6 +170,9 @@ rigger.newGame = function(player){
 	rigger.game.bar = new rigger.Bar();
 	rigger.game.bar.addLight(new rigger.Light(), 5);
 	rigger.game.bar.addLight(new rigger.Light(), 15);
+
+	// Create a new ladder
+	rigger.game.ladder = new rigger.Ladder();
 
 
 	// Set inGame
