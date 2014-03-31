@@ -157,7 +157,7 @@ var rigger = {
 			rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
 		},
 		menu : function(){
-			var ops = ["New Game", "Nothing"]; // Game options
+			var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
 			for(var i = 0; i < ops.length; i++){
 				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
 				rigger.ctx.font = "24px Helvetica";
