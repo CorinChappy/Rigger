@@ -44,6 +44,7 @@ rigger.Player = function(who){
 				min = rigger.game.ladder.g.x; max = rigger.game.ladder.g.x + rigger.game.ladder.g.w;
 			}
 			this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
+			this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
 			break; }
 
 			// Up or Down
