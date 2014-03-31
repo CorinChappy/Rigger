@@ -13,12 +13,14 @@ rigger.Player = function(who){
 		y : 0
 	};
 
+	this.imgs = who.imgs;
+
 	this.g = {
-		w : 50,
-		h : 50,
+		w : who.w,
+		h : who.h,
 		x : 5,
 		y : 0,
-		i : rigger.assets.sprites.player[who]
+		i : this.imgs.right
 	};
 	this.g.y = rigger.height - this.g.h;
 	this.draw = function(){
