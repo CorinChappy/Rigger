@@ -5,7 +5,7 @@
 			lights : [],
 			rooms : [],
 			player : {
-				//"danbarr" : "assets/sprites/danbarr"
+				"danbarr" : "assets/sprites/player/danbarr/danbarr.png"
 			}
 		},
 

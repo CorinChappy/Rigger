@@ -5,7 +5,7 @@
 
 	/* Event listeners for the keypresses */
 	window.addEventListener("keydown", function (e) {
-		e.preventDefault();
+		//e.preventDefault();
 		rigger.keysDown[e.keyCode] = true;
 
 		if(rigger.keyPressAction[e.keyCode]){
@@ -13,7 +13,7 @@
 		}
 	});
 	window.addEventListener("keyup", function (e) {
-		e.preventDefault();
+		//e.preventDefault();
 		delete rigger.keysDown[e.keyCode];
 	});
 

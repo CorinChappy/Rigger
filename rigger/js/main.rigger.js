@@ -70,7 +70,7 @@ var rigger = {
 
 		// Generate a random bar
 		genBar : function(){
-
+			return new rigger.Bar();
 		}
 	},
 

@@ -17,13 +17,15 @@ rigger.Player = function(who){
 		w : 50,
 		h : 50,
 		x : 5,
-		y : 0
-		//i : rigger.assets.sprites.player[who]
+		y : 0,
+		i : rigger.assets.sprites.player[who]
 	};
 	this.g.y = rigger.height - this.g.h;
 	this.draw = function(){
-		rigger.ctx.fillStyle = "blue";
-		rigger.ctx.fillRect(this.g.x, this.g.y, this.g.w, this.g.h);
+		//rigger.ctx.fillStyle = "blue";
+		//rigger.ctx.fillRect(this.g.x, this.g.y, this.g.w, this.g.h);
+		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
+
 
 		// Draw light if needed
 		if(this.light){
