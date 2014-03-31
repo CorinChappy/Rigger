@@ -18,6 +18,8 @@ var rigger = {
 	*/
 	state : 0,
 
+	menuOption : 0, // Currently selected menu option (top to bottom)
+
 
 	/* Mapping from the integer representations to the string representations (name)
 	 * Running rigger.objs.lights[num] will return the name of the light that num represents
@@ -100,28 +102,17 @@ var rigger = {
 			rigger.d.room();
 
 			if(rigger.state === -1){ // ERROR
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.font = "20px Helvetica";
-				rigger.ctx.textBaseline = "bottom";
-				rigger.ctx.fillText("Oh PANTS.", 10, 200);
-				rigger.ctx.textBaseline = "top";
-				rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
+				rigger.d.error();
 				return;
 			}
 
 			if(rigger.state === 0){ // LOADING
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.font = "24px Helvetica";
-				rigger.ctx.textBaseline = "bottom";
-				rigger.ctx.fillText("LOADING...", 20, 200);
-
-				rigger.ctx.clearRect(20, 205, 200, 20);
-				rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
+				rigger.d.loading();
 				return;
 			}
 
 			if(rigger.state === 1){ // MAIN MENU
-
+				rigger.d.menu();
 				return;
 			}
 
@@ -148,35 +139,54 @@ var rigger = {
 			rigger.ctx.textBaseline = "top";
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 		},
-		menu : function(){
-
+		error : function(){
+			rigger.ctx.fillStyle = "black";
+			rigger.ctx.font = "20px Helvetica";
+			rigger.ctx.textBaseline = "bottom";
+			rigger.ctx.fillText("Oh PANTS.", 10, 200);
+			rigger.ctx.textBaseline = "top";
+			rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
 		},
 		loading : function(){
+			rigger.ctx.fillStyle = "black";
+			rigger.ctx.font = "24px Helvetica";
+			rigger.ctx.textBaseline = "bottom";
+			rigger.ctx.fillText("LOADING...", 20, 200);
+
+			rigger.ctx.clearRect(20, 205, 200, 20);
+			rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
+		},
+		menu : function(){
 
 		}
+
+	},
+
+
+
+	newGame : function(player){
+		var p = player || "danbarr"; // danbarr is the default player
+		rigger.game.player = new rigger.Player(p);
+
+		// Generate a random target bar
+		rigger.game.target = rigger.h.genBar();
+		// Create the new, empty bar
+		rigger.game.bar = new rigger.Bar();
+		rigger.game.bar.addLight(new rigger.Light(), 5);
+		rigger.game.bar.addLight(new rigger.Light(), 15);
+
+		// Create a new ladder
+		rigger.game.ladder = new rigger.Ladder();
+
+
+		// Set inGame
+		rigger.state = 2;
+	},
+
+	pause : function(){
+		
 	}
-};
 
-
-
-
-rigger.newGame = function(player){
-	var p = player || "danbarr"; // danbarr is the default player
-	rigger.game.player = new rigger.Player(p);
-
-	// Generate a random target bar
-	rigger.game.target = rigger.h.genBar();
-	// Create the new, empty bar
-	rigger.game.bar = new rigger.Bar();
-	rigger.game.bar.addLight(new rigger.Light(), 5);
-	rigger.game.bar.addLight(new rigger.Light(), 15);
-
-	// Create a new ladder
-	rigger.game.ladder = new rigger.Ladder();
-
-
-	// Set inGame
-	rigger.state = 2;
 };
 
 
