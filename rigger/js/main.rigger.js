@@ -174,7 +174,7 @@ var rigger = {
 
 
 	newGame : function(player){
-		var p = player || "danbarr"; // danbarr is the default player
+		var p = player || rigger.def.players.danbarr; // danbarr is the default player
 		rigger.game.player = new rigger.Player(p);
 
 		// Generate a random target bar

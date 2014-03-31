@@ -14,19 +14,14 @@ rigger.def = {
 
 	players : {
 		danbarr : {
+
 			name : "danbarr",
 
-			imgs : { // Image assets for different positions
-				right : rigger.assets.sprites.player[who],
-				left : rigger.assets.sprites.player[who],
-				back : rigger.assets.sprites.player[who]
-			},
+			imgs : rigger.assets.sprites.player.danbarr, // Image assets for different positions
 
-			h : 50,
-			w : keepProportions(this.right.height, this.right.width, this.h)
+			h : 100,
+			w : 62
 		}
 	}
-
-
 };
 })();
