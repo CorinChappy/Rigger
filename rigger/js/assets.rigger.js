@@ -5,7 +5,10 @@
 			lights : [],
 			rooms : [],
 			player : {
-				"danbarr" : "assets/sprites/player/danbarr/danbarr.png"
+				danbarr : {
+					left : "assets/sprites/player/danbarr/left.png",
+					right : "assets/sprites/player/danbarr/right.png"
+				}
 			}
 		},
 
@@ -33,16 +36,20 @@
 			};
 
 			// Create new Image objects for each asset and wait till the have all loaded
-			for(var a in rigger.assets.sprites){
-				for(var b in rigger.assets.sprites[a]){
-					var sprite = rigger.assets.sprites[a][b];
+			(function ims(l, p){
+				if(typeof l[p] === 'string'){ // String means load
 					toLoad++;
 					var i = new Image();
-					i.addEventListener("load", function(){rigger.assets.sprites[a][b] = i; loaded++; f();});
+					i.addEventListener("load", function(){l[p] = i; loaded++; f();});
 					i.addEventListener("error", function(){f(true);});
-					i.src = sprite;
+					i.src = l[p];
+				}else{ // Assume string OR object/array
+					for(var a in l[p]){
+						ims(l[p], a); // Recurse
+					}
 				}
-			}
+			})(rigger.assets, "sprites");
+
 
 			// Load audio in a sim. way
 			var ty = (function(){ // Use the right codec
