@@ -157,7 +157,13 @@ var rigger = {
 			rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
 		},
 		menu : function(){
-
+			var ops = ["New Game", "Nothing"]; // Game options
+			for(var i = 0; i < ops.length; i++){
+				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
+				rigger.ctx.font = "24px Helvetica";
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText(ops[i], 10, 150 + (50*i));
+			}
 		}
 
 	},
@@ -184,7 +190,7 @@ var rigger = {
 	},
 
 	pause : function(){
-		
+
 	}
 
 };
@@ -219,7 +225,7 @@ rigger.init = function(div){
 		}
 		if(load === true){ // Check for success
 			rigger.state = 1; // Show the main menu
-			rigger.newGame(); //TEMP start a new game
+			//rigger.newGame(); //TEMP start a new game
 			return;
 		}
 	});

@@ -30,6 +30,10 @@
 		},
 		38 : function(dt, a){
 			// UP
+			if(rigger.state === 1){ // MAIN MENU
+				rigger.menuOption = Math.max(0, rigger.menuOption-1);
+			}
+
 			if(rigger.state === 2){
 				rigger.game.player.update(dt, 38);
 			}
@@ -42,6 +46,10 @@
 		},
 		40 : function(dt, a){
 			// DOWN
+			if(rigger.state === 1){ // MAIN MENU
+				rigger.menuOption = Math.min(rigger.menuOption+1, 1);
+			}
+
 			if(rigger.state === 2){
 				rigger.game.player.update(dt, 40);
 			}
@@ -49,7 +57,12 @@
 
 		32 : function(dt, a){
 			// SPACE
+			if(rigger.state === 1){ // MAIN MENU
+				if(rigger.menuOption === 0){
+					rigger.newGame();
+				}
+			}
 		}
 	};
 
-})()
+})();
