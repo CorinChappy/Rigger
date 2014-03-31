@@ -30,6 +30,9 @@
 		},
 		38 : function(dt, a){
 			// UP
+			if(rigger.game.player.g.x > rigger.game.ladder.g.x && rigger.game.player.g.x < rigger.game.ladder.g.x + rigger.game.ladder.g.w){
+				rigger.game.player.update(-dt, "y");
+			}
 		},
 		39 : function(dt, a){
 			// RIGHT
@@ -39,6 +42,9 @@
 		},
 		40 : function(dt, a){
 			// DOWN
+			if(rigger.game.player.g.x > rigger.game.ladder.g.x && rigger.game.player.g.x < rigger.game.ladder.g.x + rigger.game.ladder.g.w){
+				rigger.game.player.update(dt, "y");
+			}
 		},
 
 		32 : function(dt, a){

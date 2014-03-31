@@ -31,7 +31,7 @@ rigger.Player = function(who){
 		}
 	};
 	this.update = function(dt, axis){
-		this.g[axis] = Math.clamp(this.g[axis] + (this.speed * dt), 0, rigger.width - this.g.w);
+		this.g[axis] = Math.clamp(this.g[axis] + (this.speed * dt), 0, ((axis === "y")?rigger.height:rigger.width) - this.g.w);
 
 		if(this.light){
 			// Place the light in his hand
