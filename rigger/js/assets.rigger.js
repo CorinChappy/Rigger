@@ -25,12 +25,11 @@
 					return;
 				}
 
+				rigger.assets.loaded = (loaded/toLoad)*100; // Set the loaded var
 				if(rigger.assets.isLoaded()){
 					callback.call(rigger, true); // Fully Loaded
 					return;
-				};
-
-				callback.call(rigger, Math.floor((loaded/toLoad)*100)); // Return the percentage
+				}
 			};
 
 			// Create new Image objects for each asset and wait till the have all loaded
@@ -76,6 +75,8 @@
 			f();
 		},
 
-		isLoaded : function(){return false;}
+		isLoaded : function(){return false;},
+
+		loaded : 0 // percentage loaded
 	};
 })();

@@ -1,7 +1,7 @@
 (function(){
 
-var deps;
-
+/* Some util functions */
+Math.clamp = function(num, min, max){};
 
 
 var rigger = {
@@ -12,7 +12,7 @@ var rigger = {
 	ctx : null, // The canvas context
 
 	/* State of the game
-	 * 0 = loading; 1 = main menu; 2 = in game
+	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game
 	*/
 	state : 0,
 
@@ -78,6 +78,10 @@ var rigger = {
 				}
 			}
 
+			if(rigger.state === 1){ // Main menu
+
+			}
+
 
 			/* IN GAME */
 			if(rigger.state === 2){
@@ -88,14 +92,26 @@ var rigger = {
 
 		// THE drawing function
 		draw : function(){
-			rigger.ctx.clearRect(0,0, rigger.width, rigger.height);
+			rigger.ctx.clearRect(0,0, rigger.width, rigger.height); // Clear the screen (blank canvas)
 			rigger.d.room();
+
+			if(rigger.state === -1){ // ERROR
+				rigger.ctx.fillStyle = "black";
+				rigger.ctx.font = "20px Helvetica";
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Oh PANTS.", 10, 200);
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
+			}
 
 			if(rigger.state === 0){ // LOADING
 				rigger.ctx.fillStyle = "black";
 				rigger.ctx.font = "24px Helvetica";
-				rigger.ctx.textBaseline = "top";
+				rigger.ctx.textBaseline = "bottom";
 				rigger.ctx.fillText("LOADING...", 20, 200);
+
+				rigger.ctx.clearRect(20, 205, 200, 20);
+				rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
 			}
 
 
@@ -169,6 +185,7 @@ rigger.init = function(){
 	// Load the assets
 	rigger.assets.load(function(load){
 		if(load === false){ // Check for failure
+			rigger.state = -1;
 			throw new Error("Something couldn't load :(");
 			return;
 		}
@@ -177,9 +194,6 @@ rigger.init = function(){
 			rigger.newGame(); //TEMP start a new game
 			return;
 		}
-
-		// Update the screen's percentage value somehow
-
 	});
 };
 
