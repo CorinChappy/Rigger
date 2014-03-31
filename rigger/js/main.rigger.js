@@ -1,7 +1,9 @@
 (function(){
 
 /* Some util functions */
-Math.clamp = function(num, min, max){};
+Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
+	return Math.max(min, Math.min(num, max));
+};
 
 
 var rigger = {
