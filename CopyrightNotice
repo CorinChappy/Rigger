@@ -1,5 +1,8 @@
-<!--
-    StageSoc Games (Including Rigger)
+    Series of Stage Technician themed games, designed for use on the
+    University of Southampton Stage Technicians' Society's website (stagesoc.org.uk).
+        Individual games include:
+            => Rigger
+    
     Copyright (C) 2014  Corin Chaplin
 
     This program is free software; you can redistribute it and/or modify
@@ -15,28 +18,3 @@
     You should have received a copy of the GNU General Public License along
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
--->
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<title>StageSoc Games: Rigger</title>
-
-</head>
-<body>
-<h1>Rigger</h1>
-<div id="game"></div>
-
-<!-- Load JS here for the common good -->
-<script src="../lib/gameloop/gameloop.js"></script>
-<script src="js/main.rigger.js"></script>
-<script src="js/gels.rigger.js"></script>
-<script src="js/assets.rigger.js"></script>
-<script src="js/objects.rigger.js"></script>
-<script src="js/keybind.rigger.js"></script>
-<script src="js/audio.rigger.js"></script>
-
-</body>
-</html>
