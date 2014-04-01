@@ -221,17 +221,14 @@ rigger.init = function(div){
 
 
 	// Load the assets
-	rigger.assets.load(function(load){
-		if(load === false){ // Check for failure
+	rigger.assets.load(function(load, t){
+		if(load === true){ // Check for success (strictly)
+			rigger.state = 1; // Show the main menu, let's play!
+		}else{
 			rigger.state = -1;
-			throw new Error("Something couldn't load :(");
-			return;
+			throw new Error("Asset \""+t+"\" couldn't load :(");
 		}
-		if(load === true){ // Check for success
-			rigger.state = 1; // Show the main menu
-			//rigger.newGame(); //TEMP start a new game
-			return;
-		}
+
 	});
 };
 

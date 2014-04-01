@@ -27,7 +27,7 @@
 			var f = function(a){ // Function called when an asset is loaded
 				if(er){return;} // Error has already happened, no point here
 				if(a){
-					callback.call(rigger, false); // Failure
+					callback.call(rigger, false, a); // Failure
 					er = true;
 					return;
 				}
@@ -41,15 +41,16 @@
 
 			// Create new Image objects for each asset and wait till the have all loaded
 			(function ims(l, p){
-				if(typeof l[p] === 'string'){ // String means load
+				var s = l[p];
+				if(typeof s === 'string'){ // String means load
 					toLoad++;
 					var i = new Image();
-					i.addEventListener("load", function(){l[p] = i; loaded++; f();});
-					i.addEventListener("error", function(){f(true);});
-					i.src = l[p];
+					i.addEventListener("load", function(){s = i; loaded++; f();});
+					i.addEventListener("error", function(){f(s);});
+					i.src = s;
 				}else{ // Assume string OR object/array
-					for(var a in l[p]){
-						ims(l[p], a); // Recurse
+					for(var a in s){
+						ims(s, a); // Recurse
 					}
 				}
 			})(rigger.assets, "sprites");
@@ -72,7 +73,7 @@
 				var au = rigger.assets.audio[m][ty];
 				var i = new Audio();
 				i.addEventListener("canplaythrough",function(){rigger.assets.audio[m] = i; loaded++; f();});
-				i.addEventListener("error",function(){f(true);});
+				i.addEventListener("error",function(){f(au);});
 				i.src = au;
 				i.volume = rigger.settings.volume;
 			}
