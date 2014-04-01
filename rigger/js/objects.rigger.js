@@ -20,7 +20,9 @@ rigger.Player = function(who){
 		h : who.h,
 		x : 5,
 		y : 0,
-		i : this.imgs.right
+		i : this.imgs.right,
+		cI : true, // Image flipper
+		cD : 1
 	};
 	this.g.y = rigger.height - this.g.h;
 	this.draw = function(){
@@ -53,7 +55,12 @@ rigger.Player = function(who){
 				var rW = l.w/5
 				if(rigger.game.player.g.x > l.x - (rW*2) && rigger.game.player.g.x < l.x + l.w - (rW*2)){ // Over the ladder
 					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
-					this.g.i = this.imgs.climb;
+					this.g.cD = this.g.cD - dt * 4;
+					if(this.g.cD <= 0){
+						this.g.cI = !this.g.cI;
+						this.g.cD = 1;
+					}
+					this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
 				}
 			break; }
 		}

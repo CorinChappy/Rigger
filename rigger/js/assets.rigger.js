@@ -8,7 +8,8 @@
 				danbarr : {
 					left : "assets/sprites/player/danbarr/left.png",
 					right : "assets/sprites/player/danbarr/right.png",
-					climb : "assets/sprites/player/danbarr/climb.png"
+					climb : "assets/sprites/player/danbarr/climb.png",
+					climb2 : "assets/sprites/player/danbarr/climb2.png"
 				}
 			}
 		},
