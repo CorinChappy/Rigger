@@ -1,5 +1,7 @@
 // Contains the assest locations (images, JSON, etc) + a load function
 (function(){
+"use strict";
+
 	rigger.assets = {
 		sprites : {
 			lights : [],
@@ -69,7 +71,7 @@
 				toLoad++;
 				var au = rigger.assets.audio[m][ty];
 				var i = new Audio();
-				i.addEventListener("loadeddata",function(){rigger.assets.audio[m] = i; loaded++; f();});
+				i.addEventListener("canplaythrough",function(){rigger.assets.audio[m] = i; loaded++; f();});
 				i.addEventListener("error",function(){f(true);});
 				i.src = au;
 				i.volume = rigger.settings.volume;

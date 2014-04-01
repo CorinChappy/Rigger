@@ -1,5 +1,6 @@
 // Contains the objects used in the game
 (function(){
+"use strict";
 
 rigger.Player = function(who){
 	this.who = function(){return who;};

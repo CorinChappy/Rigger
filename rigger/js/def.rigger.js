@@ -1,5 +1,7 @@
 /* File containing the definitions for each thing in the game */
 (function(){
+"use strict";
+
 /* Functions to get a width from a height or visa versa 
  * Gets the ratio of a and b and applies it to c
  * IE: The original proportions are a & b, c is the width, the height will be returned

@@ -1,5 +1,6 @@
 // Audio control for music and sound effects in the game
 (function(){
+"use strict";
 	
 	rigger.audio = {
 		
@@ -13,6 +14,11 @@
 		playLoop : function(track){
 			rigger.assets.audio[track].loop = true;
 			rigger.audio.play(track);
+		},
+
+		stop : function(track){
+			rigger.assets.audio[track].loop = false;
+			rigger.assets.audio[track]
 		},
 
 		setVol : function(vol){

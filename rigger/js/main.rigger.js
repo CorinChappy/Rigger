@@ -1,4 +1,5 @@
 (function(){
+"use strict";
 
 /* Some util functions */
 Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
