@@ -182,8 +182,8 @@ var rigger = {
 		rigger.game.target = rigger.h.genBar();
 		// Create the new, empty bar
 		rigger.game.bar = new rigger.Bar();
-		rigger.game.bar.addLight(new rigger.Light(0), 5);
-		rigger.game.bar.addLight(new rigger.Light(1), 15);
+		rigger.game.bar.addLight(new rigger.Light(rigger.def.lights[3]), 5);
+		rigger.game.bar.addLight(new rigger.Light(rigger.def.lights[2]), 15);
 
 		// Create a new ladder
 		rigger.game.ladder = new rigger.Ladder();

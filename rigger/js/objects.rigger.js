@@ -135,11 +135,6 @@ rigger.Bar = function(){ // Represents a bar in the annex
 };
 
 rigger.Light = function(type) {
-	 /* The type of light
-	  * 0 = Fresnel; 1 = PC; 2 = Parcan; 3 = Source 4; 4 = flood
-	  * argument type can also be a string, but it is converted and stored as an integer
-	 */
-	var type = rigger.h.strToName("lights", type);
 	this.type = function(){return type;};
 
 	this.gel = null; // The Gel
@@ -150,9 +145,9 @@ rigger.Light = function(type) {
 	this.g = {
 		x : 0,
 		y : 0,
-		w : 50,
-		h : 50,
-		i : rigger.assets.sprites.lights[type]
+		w : type.w,
+		h : type.h,
+		i : type.img()
 	};
 	this.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);

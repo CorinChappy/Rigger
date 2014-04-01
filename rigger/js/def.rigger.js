@@ -14,7 +14,30 @@ function keepProportions(a, b, c){
 
 rigger.def = {
 	lights : [
-		
+		{
+			name : "fresnell",
+			img : function(){return rigger.assets.sprites.lights[0]},
+			h : 90,
+			w : 50
+		},
+		{
+			name : "pc",
+			img : function(){return rigger.assets.sprites.lights[1]},
+			h : 90,
+			w : 50
+		},
+		{
+			name : "parcan",
+			img : function(){return rigger.assets.sprites.lights[2]},
+			h : 64,
+			w : 50
+		},
+		{
+			name : "source 4",
+			img : function(){return rigger.assets.sprites.lights[3]},
+			h : 76,
+			w : 50
+		}
 
 	],
 
