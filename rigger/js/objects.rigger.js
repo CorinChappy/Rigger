@@ -209,6 +209,15 @@ rigger.Ladder = function(){
 		}
 	};
 	this.update = function(){
+		/* Check colision with player */
+		var p = rigger.game.player;
+		var rW = this.g.w/5
+		if(p.g.y === rigger.height - p.g.h // Player on ground
+		&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
+		&& !p.light){ // Player has not got a light
+			// Move ladder with player
+			this.g.x = p.g.x;
+		}
 
 	};
 };

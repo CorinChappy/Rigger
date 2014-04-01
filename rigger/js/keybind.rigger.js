@@ -55,6 +55,11 @@
 
 		32 : function(dt, a){
 			// SPACE
+			if(rigger.state === 2){
+				if(rigger.game.room ===0){ // In the ANNEX
+					this.game.ladder.update();
+				}
+			}
 		}
 	};
 
