@@ -21,6 +21,11 @@ rigger.def = {
 
 			imgs : rigger.assets.sprites.player.danbarr, // Image assets for different positions
 
+			/* Speed of player in different situations (in px/s)
+			 * 0 = normal; 1 = up ladder; 2 = carry ladder; 3 = carry light
+			*/
+			speeds : [300, 200, 150, 250],
+
 			h : 100,
 			w : 62
 		}
