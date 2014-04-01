@@ -4,7 +4,13 @@
 
 	rigger.assets = {
 		sprites : {
-			lights : [],
+			lights : [
+				"assets/sprites/lights/fresnell.png",
+				"assets/sprites/lights/pc.png",
+				"assets/sprites/lights/par.png",
+				"assets/sprites/lights/source4.png"
+			],
+
 			rooms : [],
 			player : {
 				danbarr : {

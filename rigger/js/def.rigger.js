@@ -13,6 +13,10 @@ function keepProportions(a, b, c){
 
 
 rigger.def = {
+	lights : [
+		
+
+	],
 
 	players : {
 		danbarr : {

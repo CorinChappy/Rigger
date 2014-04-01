@@ -27,7 +27,7 @@ var rigger = {
 	*/
 	objs : {
 		rooms : ["annex", "light store", "gel draw"],
-		lights : ["fresnel", "pc", "parcan", "flood", "source 4"]
+		lights : ["fresnell", "pc", "parcan", "source 4", "flood"]
 	},
 
 	game : { // Game state references
@@ -182,8 +182,8 @@ var rigger = {
 		rigger.game.target = rigger.h.genBar();
 		// Create the new, empty bar
 		rigger.game.bar = new rigger.Bar();
-		rigger.game.bar.addLight(new rigger.Light(), 5);
-		rigger.game.bar.addLight(new rigger.Light(), 15);
+		rigger.game.bar.addLight(new rigger.Light(0), 5);
+		rigger.game.bar.addLight(new rigger.Light(1), 15);
 
 		// Create a new ladder
 		rigger.game.ladder = new rigger.Ladder();
