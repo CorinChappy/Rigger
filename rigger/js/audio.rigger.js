@@ -18,13 +18,22 @@
 
 		stop : function(track){
 			rigger.assets.audio[track].loop = false;
-			rigger.assets.audio[track]
+			rigger.assets.audio[track].pause();
+			rigger.assets.audio[track].currentTime = 0; // Back to the start
 		},
 
 		setVol : function(vol){
 			for(var a in rigger.assets.audio){
 				rigger.assets.audio[a].volume = vol;
 			}
+		},
+
+		volUp : function(){
+			setVol(0.1);
+		},
+
+		volDown : function(){
+			setVol(-0.1);
 		}
 		
 		
