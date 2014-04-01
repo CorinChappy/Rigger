@@ -45,7 +45,7 @@
 				if(typeof s === 'string'){ // String means load
 					toLoad++;
 					var i = new Image();
-					i.addEventListener("load", function(){s = i; loaded++; f();});
+					i.addEventListener("load", function(){l[p] = i; loaded++; f();});
 					i.addEventListener("error", function(){f(s);});
 					i.src = s;
 				}else{ // Assume string OR object/array
