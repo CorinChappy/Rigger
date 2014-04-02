@@ -32,7 +32,12 @@
 		37 : function(dt, a){
 			// LEFT
 			if(rigger.state === 2){ // IN GAME
-				rigger.game.player.update(dt, 37); // -dt as we are moving backwards! DUH
+				var p = rigger.game.player;
+				if(rigger.game.room === 1 && p.g.x <= 0 - p.g.w/2){
+					p.g.x = rigger.width - p.g.w; // Move to annex
+					rigger.game.room = 0;
+				}
+				p.update(dt, 37);
 			}
 		},
 		38 : function(dt, a){
@@ -44,6 +49,12 @@
 		39 : function(dt, a){
 			// RIGHT
 			if(rigger.state === 2){ // IN GAME
+				var p = rigger.game.player;
+				// Check screen edge
+				if(rigger.game.room === 0 && p.g.x >= rigger.width - p.g.w/2){
+					p.g.x = 0; // Move to light store
+					rigger.game.room = 1;
+				}
 				rigger.game.player.update(dt, 39);
 			}
 		},
@@ -57,7 +68,7 @@
 		32 : function(dt, a){
 			// SPACE
 			if(rigger.state === 2){
-				if(rigger.game.room ===0){ // In the ANNEX
+				if(rigger.game.room === 0){ // In the ANNEX
 					this.game.ladder.update();
 				}
 			}

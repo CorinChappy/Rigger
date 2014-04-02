@@ -43,7 +43,7 @@ rigger.Player = function(who){
 			// Left or right
 			case 37 :
 			case 39 : {
-			var min = 0; var max = rigger.width - this.g.w;
+			var min = 0 - this.g.w*2/3; var max = (rigger.game.room === 0)?rigger.width - this.g.w/3:rigger.width*7/10 - this.g.w;
 			if(this.g.y >= rigger.height - this.g.h){ // No moving away from the ladder if in the air
 				this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
 				this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
@@ -52,7 +52,7 @@ rigger.Player = function(who){
 
 			// Up or Down
 			case 38 :
-			case 40 : {
+			case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
 				var l = rigger.game.ladder.g;
 				var rW = l.w/5
 				if(rigger.game.player.g.x > l.x - (rW*2) && rigger.game.player.g.x < l.x + l.w - (rW*2)){ // Over the ladder
