@@ -132,9 +132,23 @@ var rigger = {
 	// Misc drawing functions
 	d : {
 		room : function(){
-			// Draw the room green for now
-			rigger.ctx.fillStyle = "green";
-			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+			switch(rigger.game.room){
+			case 0 : { // ANNEX
+				// Draw the room green for now
+				rigger.ctx.fillStyle = "green";
+				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+			break; }
+			case 1 : { // LIGHT STORE
+				rigger.ctx.fillStyle = "#4775FF";
+				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
+				rigger.ctx.fillStyle = "black";
+				rigger.ctx.font = "20px Helvetica";
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText("Light Store", 20, 10);
+			break; }
+
+
+			}
 		},
 		error : function(){
 			rigger.ctx.fillStyle = "black";
