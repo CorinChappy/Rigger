@@ -83,7 +83,7 @@ rigger.Bar = function(){ // Represents a bar in the annex
 
 	// Please use these methods for adding & removing lights!
 	this.addLight = function(light, pos){
-		if(!light || !pos || pos >= rigger.settings.barSize){return;}
+		if(!light || pos < 0 || pos >= rigger.settings.barSize){return;}
 		if(this.bar[pos]){return;} // Already got a light there
 		this.bar[pos] = light;
 		updatables[pos] = true;
