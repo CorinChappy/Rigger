@@ -176,15 +176,36 @@ var rigger = {
 			rigger.ctx.fillStyle = "black";
 			rigger.ctx.font = "24px Helvetica";
 			rigger.ctx.textBaseline = "top";
+			rigger.ctx.textAlign = "start";
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 
 
-			var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
+			/*var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
 			for(var i = 0; i < ops.length; i++){
 				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
 				rigger.ctx.font = "24px Helvetica";
 				rigger.ctx.textBaseline = "top";
 				rigger.ctx.fillText(ops[i], 10, 150 + (50*i));
+			}*/
+
+			rigger.ctx.textAlign = "center";
+			rigger.ctx.fillText("Pick a character", rigger.width/2, 100);
+
+			// Loop around all the players
+			var count = 0;
+			for(var n in rigger.def.players){
+				var p = rigger.def.players[n], size = [p.w*3, p.h*3],
+				pos = [250 + (size[0]*9/5)*count, 150];
+
+				if(count === rigger.menuOption){
+					rigger.ctx.globalAlpha = 0.5;
+					rigger.ctx.fillStyle = "yellow";
+					rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1])
+					rigger.ctx.globalAlpha = 1;
+				}
+				rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
+
+				count++;
 			}
 		}
 

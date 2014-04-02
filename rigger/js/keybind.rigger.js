@@ -82,29 +82,27 @@
 	rigger.keyPressAction = {
 		37 : function(){
 			// LEFT
-		},
-		38 : function(){
-			// UP
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.max(0, rigger.menuOption-1);
 			}
 		},
+		38 : function(){
+			// UP
+		},
 		39 : function(){
 			// RIGHT
-		},
-		40 : function(){
-			// DOWN
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.min(rigger.menuOption+1, 2);
 			}
+		},
+		40 : function(){
+			// DOWN
 		},
 
 		32 : function(){
 			// SPACE
 			if(rigger.state === 1){ // MAIN MENU
-				if(rigger.menuOption === 0){
-					rigger.newGame(rigger.def.players.trojak);
-				}
+				rigger.newGame(rigger.def.players[Object.keys(rigger.def.players)[rigger.menuOption]]);
 			}
 		}
 	};
