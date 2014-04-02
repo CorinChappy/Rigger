@@ -21,6 +21,8 @@ var rigger = {
 
 	menuOption : 0, // Currently selected menu option (top to bottom)
 
+	locked : false, // If locked interaction is disabled
+
 
 	/* Mapping from the integer representations to the string representations (name)
 	 * Running rigger.objs.lights[num] will return the name of the light that num represents
@@ -78,10 +80,12 @@ var rigger = {
 	e : {
 		// Update the bits with respect to time
 		update : function(dt){
-			// Call the even if a key is held down
-			for(var i in rigger.keysDown){
-				if(rigger.keyAction[i]){
-					rigger.keyAction[i].call(rigger, dt);
+			if(!this.locked){
+				// Call the event if a key is held down
+				for(var i in rigger.keysDown){
+					if(rigger.keyAction[i]){
+						rigger.keyAction[i].call(rigger, dt);
+					}
 				}
 			}
 
