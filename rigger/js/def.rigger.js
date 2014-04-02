@@ -17,14 +17,14 @@ rigger.def = {
 		{
 			name : "fresnell",
 			img : function(){return rigger.assets.sprites.lights[0]},
-			h : 90,
-			w : 50
+			h : 68,
+			w : 38
 		},
 		{
 			name : "pc",
 			img : function(){return rigger.assets.sprites.lights[1]},
-			h : 90,
-			w : 50
+			h : 68,
+			w : 38
 		},
 		{
 			name : "parcan",
