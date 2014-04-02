@@ -92,7 +92,7 @@
 			// SPACE
 			if(rigger.state === 1){ // MAIN MENU
 				if(rigger.menuOption === 0){
-					rigger.newGame();
+					rigger.newGame(rigger.def.players.trojak);
 				}
 			}
 		}

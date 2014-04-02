@@ -55,6 +55,16 @@ rigger.def = {
 
 			h : 100,
 			w : 62
+		},
+		trojak : {
+			name : "Trojak",
+
+			imgs : rigger.assets.sprites.player.trojak,
+
+			speeds : [300, 200, 150, 250],
+
+			h : 100,
+			w : 62
 		}
 	}
 };

@@ -18,6 +18,12 @@
 					right : "assets/sprites/player/danbarr/right.png",
 					climb : "assets/sprites/player/danbarr/climb.png",
 					climb2 : "assets/sprites/player/danbarr/climb2.png"
+				},
+				trojak : {
+					left : "assets/sprites/player/trojak/left.png",
+					right : "assets/sprites/player/trojak/right.png",
+					climb : "assets/sprites/player/trojak/climb.png",
+					climb2 : "assets/sprites/player/trojak/climb2.png"
 				}
 			}
 		},
