@@ -92,7 +92,7 @@
 		39 : function(){
 			// RIGHT
 			if(rigger.state === 1){ // MAIN MENU
-				rigger.menuOption = Math.min(rigger.menuOption+1, 1);
+				rigger.menuOption = Math.min(rigger.menuOption+1, 2);
 			}
 		},
 		40 : function(){

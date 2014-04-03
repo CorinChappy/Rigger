@@ -65,6 +65,16 @@ rigger.def = {
 
 			h : 100,
 			w : 62
+		},
+		corin : {
+			name : "Corin",
+
+			imgs : rigger.assets.sprites.player.corin,
+
+			speeds : [300, 200, 150, 200],
+
+			h : 100,
+			w : 62
 		}
 	},
 	hidden : {
