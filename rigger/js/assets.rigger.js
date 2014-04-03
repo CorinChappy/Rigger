@@ -10,8 +10,6 @@
 				"assets/sprites/lights/par.png",
 				"assets/sprites/lights/source4.png"
 			],
-
-			rooms : [],
 			player : {
 				danbarr : {
 					left : "assets/sprites/player/danbarr/left.png",
@@ -25,7 +23,14 @@
 					right : "assets/sprites/player/trojak/right.png",
 					climb : "assets/sprites/player/trojak/climb.png",
 					climb2 : "assets/sprites/player/trojak/climb2.png",
-					front : "assets/sprites/player/trojak/front.png",
+					front : "assets/sprites/player/trojak/front.png"
+				},
+				rory : {
+					left : "assets/sprites/player/rory/rory.png",
+					right : "assets/sprites/player/rory/rory.png",
+					climb : "assets/sprites/player/rory/rory.png",
+					climb2 : "assets/sprites/player/rory/rory.png",
+					front : "assets/sprites/player/rory/rory.png"
 				}
 			}
 		},
@@ -33,6 +38,7 @@
 		// Audio stored in an array, index: 0 = ogg; 1 = mp3
 		audio : {
 			//bgMusic : ["assets/audio/ss.mp3", "assets/audio/ss.mp3"]
+			rory : ["assets/audio/rory.ogg","assets/audio/rory.ogg"]
 		},
 
 

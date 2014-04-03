@@ -65,6 +65,16 @@ rigger.def = {
 
 			h : 100,
 			w : 62
+		},
+		rory : {
+			name : "Rory",
+			hidden : true,
+			imgs : rigger.assets.sprites.player.rory,
+
+			speeds : [300, 200, 150, 250],
+
+			h : 150,
+			w : 100
 		}
 	}
 };

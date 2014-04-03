@@ -92,7 +92,7 @@
 		39 : function(){
 			// RIGHT
 			if(rigger.state === 1){ // MAIN MENU
-				rigger.menuOption = Math.min(rigger.menuOption+1, 2);
+				rigger.menuOption = Math.min(rigger.menuOption+1, 1);
 			}
 		},
 		40 : function(){
@@ -103,6 +103,14 @@
 			// SPACE
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.newGame(rigger.def.players[Object.keys(rigger.def.players)[rigger.menuOption]]);
+			}
+		},
+		82 : function(){
+			if(rigger.state === 2){ // IN GAME
+				var x = rigger.game.player.g.x;
+				rigger.game.player = new rigger.Player(rigger.def.players.rory);
+				rigger.game.player.g.x = x;
+				rigger.audio.play("rory");
 			}
 		}
 	};

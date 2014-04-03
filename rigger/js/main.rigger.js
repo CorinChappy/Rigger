@@ -196,6 +196,7 @@ var rigger = {
 			for(var n in rigger.def.players){
 				var p = rigger.def.players[n], size = [p.w*3, p.h*3],
 				pos = [250 + (size[0]*9/5)*count, 150];
+				if(p.hidden){continue;}
 
 				if(count === rigger.menuOption){
 					rigger.ctx.globalAlpha = 0.5;
