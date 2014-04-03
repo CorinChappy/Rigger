@@ -74,13 +74,23 @@ var rigger = {
 		// Generate a random bar
 		genBar : function(){
 			return new rigger.Bar();
+		},
+
+		defaultCan : function(a){
+			var a = a || 12;
+			rigger.ctx.globalAlpha = 1;
+			rigger.ctx.strokeStyle = "black";
+			rigger.ctx.fillStyle = "black";
+			rigger.ctx.font = a+"px Helvetica";
+			rigger.ctx.textAlign = "start";
+			rigger.ctx.textBaseline = "top";
 		}
 	},
 
 	e : {
 		// Update the bits with respect to time
 		update : function(dt){
-			if(!this.locked){
+			if(!rigger.locked){
 				// Call the event if a key is held down
 				for(var i in rigger.keysDown){
 					if(rigger.keyAction[i]){
@@ -104,6 +114,7 @@ var rigger = {
 		// THE drawing function
 		draw : function(){
 			rigger.ctx.clearRect(0,0, rigger.width, rigger.height); // Clear the screen (blank canvas)
+			rigger.h.defaultCan();
 			rigger.d.room();
 
 			if(rigger.state === -1){ // ERROR
@@ -145,9 +156,7 @@ var rigger = {
 			case 1 : { // LIGHT STORE
 				rigger.ctx.fillStyle = "#4775FF";
 				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.font = "20px Helvetica";
-				rigger.ctx.textBaseline = "top";
+				rigger.h.defaultCan(20);
 				rigger.ctx.fillText("Light Store", 20, 10);
 			break; }
 
@@ -155,17 +164,14 @@ var rigger = {
 			}
 		},
 		error : function(){
-			rigger.ctx.fillStyle = "black";
-			rigger.ctx.font = "20px Helvetica";
+			rigger.h.defaultCan(20);
 			rigger.ctx.textBaseline = "bottom";
 			rigger.ctx.fillText("Oh PANTS.", 10, 200);
 			rigger.ctx.textBaseline = "top";
 			rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
 		},
 		loading : function(){
-			rigger.ctx.fillStyle = "black";
-			rigger.ctx.font = "24px Helvetica";
-			rigger.ctx.textBaseline = "bottom";
+			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("LOADING...", 20, 200);
 
 			rigger.ctx.clearRect(20, 205, 200, 20);
@@ -173,18 +179,14 @@ var rigger = {
 		},
 		menu : function(){
 			// Welcome message
-			rigger.ctx.fillStyle = "black";
-			rigger.ctx.font = "24px Helvetica";
-			rigger.ctx.textBaseline = "top";
-			rigger.ctx.textAlign = "start";
+			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 
 
 			/*var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
 			for(var i = 0; i < ops.length; i++){
 				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
-				rigger.ctx.font = "24px Helvetica";
-				rigger.ctx.textBaseline = "top";
+				rigger.h.defaultCan(24);
 				rigger.ctx.fillText(ops[i], 10, 150 + (50*i));
 			}*/
 
@@ -197,7 +199,7 @@ var rigger = {
 				var p = rigger.def.players[n], size = [p.w*3, p.h*3],
 				pos = [50 + (size[0]*9/5)*count, 150];
 
-				rigger.ctx.fillStyle = "black";
+				rigger.h.defaultCan(18);
 
 				if(count === rigger.menuOption){
 					rigger.ctx.globalAlpha = 0.5;
@@ -208,9 +210,6 @@ var rigger = {
 				rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
 
 
-				rigger.ctx.textAlign = "start";
-				rigger.ctx.font = "18px Helvetica";
-				rigger.ctx.textBaseline = "top";
 				rigger.ctx.fillText(p.name, pos[0] + size[0]/3, pos[1] + size[1] + 10);
 
 				count++;

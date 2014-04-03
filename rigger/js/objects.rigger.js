@@ -28,8 +28,6 @@ rigger.Player = function(who){
 	};
 	this.g.y = rigger.height - this.g.h;
 	this.draw = function(){
-		//rigger.ctx.fillStyle = "blue";
-		//rigger.ctx.fillRect(this.g.x, this.g.y, this.g.w, this.g.h);
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 
 
@@ -201,6 +199,7 @@ rigger.Ladder = function(){
 	this.g.y = rigger.height - this.g.h;
 
 	this.draw = function(){
+		rigger.h.defaultCan();
 		var rW = this.g.w/5
 		rigger.ctx.lineWidth = rW;
 		rigger.ctx.strokeStyle = "gray";
