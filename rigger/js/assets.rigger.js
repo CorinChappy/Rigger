@@ -25,6 +25,13 @@
 					climb2 : "assets/sprites/player/trojak/climb2.png",
 					front : "assets/sprites/player/trojak/front.png"
 				},
+				corin : {
+					left : "assets/sprites/player/corin/left.png",
+					right : "assets/sprites/player/corin/right.png",
+					//climb : "assets/sprites/player/corin/climb.png",
+					//climb2 : "assets/sprites/player/corin/climb2.png",
+					front : "assets/sprites/player/corin/front.png"
+				}
 			},
 			hidden : {
 				rory : {
