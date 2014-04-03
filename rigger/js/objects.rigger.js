@@ -71,7 +71,7 @@ rigger.Player = function(who){
 				if(this.g.y === rigger.game.ladder.g.y){
 					// Check colision with bar position
 					var ratio = rigger.width/rigger.settings.barSize;
-					var u = Math.floor(this.g.x/ratio);
+					var u = Math.floor((this.g.x + (ratio/2))/ratio);
 					if(this.light){
 						// Try to add to the bar
 						if(b.addLight(this.light, u)){
