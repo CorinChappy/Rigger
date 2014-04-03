@@ -40,7 +40,7 @@
 		// Audio stored in an array, index: 0 = ogg; 1 = mp3
 		audio : {
 			//bgMusic : ["assets/audio/ss.mp3", "assets/audio/ss.mp3"]
-			rory : ["assets/audio/rory.ogg","assets/audio/rory.ogg"]
+			rory : ["assets/audio/rory.ogg","assets/audio/rory.mp3"]
 		},
 
 
