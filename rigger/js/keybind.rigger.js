@@ -103,12 +103,16 @@
 			// SPACE
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.newGame(rigger.def.players[Object.keys(rigger.def.players)[rigger.menuOption]]);
+				return;
+			}
+			if(rigger.state === 2){ // IN game
+				rigger.game.player.update(0, 32);
 			}
 		},
 		82 : function(){
 			if(rigger.state === 2){ // IN GAME
 				var x = rigger.game.player.g.x;
-				rigger.game.player = new rigger.Player(rigger.def.players.rory);
+				rigger.game.player = new rigger.Player(rigger.def.hidden.rory);
 				rigger.game.player.g.x = x;
 				rigger.audio.play("rory");
 			}
