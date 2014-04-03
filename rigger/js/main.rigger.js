@@ -197,6 +197,8 @@ var rigger = {
 				var p = rigger.def.players[n], size = [p.w*3, p.h*3],
 				pos = [50 + (size[0]*9/5)*count, 150];
 
+				rigger.ctx.fillStyle = "black";
+
 				if(count === rigger.menuOption){
 					rigger.ctx.globalAlpha = 0.5;
 					rigger.ctx.fillStyle = "yellow";
@@ -204,6 +206,12 @@ var rigger = {
 					rigger.ctx.globalAlpha = 1;
 				}
 				rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
+
+
+				rigger.ctx.textAlign = "start";
+				rigger.ctx.font = "18px Helvetica";
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText(p.name, pos[0] + size[0]/3, pos[1] + size[1] + 10);
 
 				count++;
 			}
