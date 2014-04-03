@@ -39,7 +39,6 @@ rigger.Player = function(who){
 		}
 	};
 	this.update = function(dt, key){
-		this.speed = (this.light)?this.speeds[3]:this.speeds[0];
 		switch(key){
 			// Left or right
 			case 37 :
@@ -79,6 +78,7 @@ rigger.Player = function(who){
 						// Try to add to the bar
 						if(b.addLight(this.light, u)){
 							this.light = null;
+							this.speed = this.speeds[0];
 						}
 					}else{
 						this.light = b.removeLight(u); // Get a light if you are not holding one
@@ -90,6 +90,7 @@ rigger.Player = function(who){
 		
 
 		if(this.light){
+			this.speed = this.speeds[3];
 			// Place the light in his hand
 			this.light.g.x = this.g.x + this.hand.x;
 			this.light.g.y = this.g.y + this.hand.y;
