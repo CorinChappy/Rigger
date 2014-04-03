@@ -222,7 +222,9 @@ var rigger = {
 		// Create the new, empty bar
 		rigger.game.bar = new rigger.Bar();
 		for(var i = 0; i <= rigger.settings.barSize; i++){
-			rigger.game.bar.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*4)]), i);
+			if(Math.random() < 0.5){
+				rigger.game.bar.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*4)]), i);
+			}
 		}
 
 		// Create a new ladder

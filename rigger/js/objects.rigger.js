@@ -11,8 +11,8 @@ rigger.Player = function(who){
 	this.light = null; // Holding a light?
 
 	this.hand = { // Position relative to the image of the players hand
-		x : 0,
-		y : 0
+		x : 30,
+		y : 50
 	};
 
 	this.imgs = who.imgs;
@@ -39,6 +39,7 @@ rigger.Player = function(who){
 		}
 	};
 	this.update = function(dt, key){
+		this.speed = (this.light)?this.speeds[3]:this.speeds[0];
 		switch(key){
 			// Left or right
 			case 37 :
@@ -65,13 +66,33 @@ rigger.Player = function(who){
 					this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
 				}
 			break; }
+
+			// Spacebar
+			case 32 : {
+				var b = rigger.game.bar;
+				// Check you are close enough to the bar (top of the ladder)
+				if(this.g.y === rigger.game.ladder.g.y){
+					// Check colision with bar position
+					var ratio = rigger.width/rigger.settings.barSize;
+					var u = Math.floor(this.g.x/ratio);
+					if(this.light){
+						// Try to add to the bar
+						if(b.addLight(this.light, u)){
+							this.light = null;
+						}
+					}else{
+						this.light = b.removeLight(u); // Get a light if you are not holding one
+					}
+				}
+			break; }
 		}
 
 		
 
 		if(this.light){
 			// Place the light in his hand
-			//this.light.g.x = fg;
+			this.light.g.x = this.g.x + this.hand.x;
+			this.light.g.y = this.g.y + this.hand.y;
 		}
 	};
 };
@@ -83,17 +104,18 @@ rigger.Bar = function(){ // Represents a bar in the annex
 
 	// Please use these methods for adding & removing lights!
 	this.addLight = function(light, pos){
-		if(!light || pos < 0 || pos >= rigger.settings.barSize){return;}
-		if(this.bar[pos]){return;} // Already got a light there
+		if(!light || pos < 0 || pos >= rigger.settings.barSize){return false;}
+		if(this.bar[pos]){return false;} // Already got a light there
 		this.bar[pos] = light;
 		updatables[pos] = true;
+
+		return true;
 	};
 	this.removeLight = function(pos){
 		if(!pos || pos >= rigger.settings.barSize){return;}
-		if(!this.bar[pos]){return;} // No light there
+		if(!this.bar[pos]){return null;} // No light there
 		var light = this.bar[pos];
 		this.bar[pos] = false;
-		updatables[pos] = true;
 
 		return light;
 	};
