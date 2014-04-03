@@ -172,6 +172,7 @@ var rigger = {
 		},
 		loading : function(){
 			rigger.h.defaultCan(24);
+			rigger.ctx.textBaseline = "bottom";
 			rigger.ctx.fillText("LOADING...", 20, 200);
 
 			rigger.ctx.clearRect(20, 205, 200, 20);
