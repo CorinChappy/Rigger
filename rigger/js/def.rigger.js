@@ -71,7 +71,7 @@ rigger.def = {
 		rory : {
 			name : "Rory",
 
-			imgs : rigger.assets.sprites.player.rory,
+			imgs : rigger.assets.sprites.hidden.rory,
 
 			speeds : [300, 200, 150, 250],
 
