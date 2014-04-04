@@ -9,7 +9,7 @@
 		//e.preventDefault();
 		rigger.keysDown[e.keyCode] = true;
 
-		if(rigger.keyPressAction[e.keyCode]){
+		if(rigger.keyPressAction[e.keyCode] && !rigger.locked){
 			rigger.keyPressAction[e.keyCode].call(rigger);
 		}
 	});
@@ -107,6 +107,13 @@
 			}
 			if(rigger.state === 2){ // IN game
 				rigger.game.player.update(0, 32);
+				// Test for winning conditions
+				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){
+					rigger.locked = true;
+					var d = document.createElement("h2");
+					d.innerHTML = "You win. Time = "+rigger.game.time/1000+" seconds";
+					document.body.appendChild(d);
+				}
 			}
 		},
 		68 : function(){ // D
