@@ -109,6 +109,11 @@
 				rigger.game.player.update(0, 32);
 			}
 		},
+		68 : function(){ // D
+			if(rigger.state === 2){ // IN GAME
+				rigger.game.menu = (rigger.game.menu === 0)?1:0;
+			}
+		},
 		82 : function(){
 			if(rigger.state === 2){ // IN GAME
 				var x = rigger.game.player.g.x;

@@ -142,6 +142,10 @@ var rigger = {
 				rigger.ctx.textAlign = "right";
 				rigger.ctx.fillText("Time: "+(rigger.game.time/1000).toFixed(3), rigger.width - 10, 10);
 
+				if(rigger.game.menu === 1){
+					rigger.d.design();
+					return;
+				}
 
 				if(rigger.game.room === 0){ // We are in the ANNEX
 					rigger.game.ladder.draw();
@@ -198,6 +202,16 @@ var rigger = {
 
 
 			}
+		},
+		design : function(){
+			rigger.h.defaultCan(24);
+			rigger.ctx.fillStyle = "brown";
+			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+
+			rigger.game.target.draw();
+
+			rigger.ctx.fillStyle = "black";
+			rigger.ctx.fillText("Design", 250, 400);
 		},
 		error : function(){
 			rigger.h.defaultCan(20);
