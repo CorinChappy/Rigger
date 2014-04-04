@@ -108,7 +108,7 @@ rigger.Player = function(who){
 	};
 };
 
-rigger.Bar = function(){ // Represents a bar in the annex
+rigger.Bar = function(design){ // Represents a bar in the annex (design is a boolean, whether or not it's a physical bar, or one drawn on paper)
 	this.bar = (function(b){var a = []; while(a.length < b){a.push(false)} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
 
 	var updatables = {}; // What needs updating on the bar (what's new cockadoo?)
@@ -134,15 +134,16 @@ rigger.Bar = function(){ // Represents a bar in the annex
 	this.g = {
 		x : 0,
 		y : 50,
-		w : 5 // Thickness of the bar
+		t : 5, // Thickness of the bar
+		l : rigger.width // Length of the bar
 	};
 	this.draw = function(){
 		rigger.ctx.strokeStyle = "black";
-		rigger.ctx.lineWidth = this.g.w;
+		rigger.ctx.lineWidth = this.g.t;
 
 		rigger.ctx.beginPath();
 		rigger.ctx.moveTo(this.g.x, this.g.y);
-		rigger.ctx.lineTo(rigger.width, this.g.y);
+		rigger.ctx.lineTo(this.g.x + this.g.l, this.g.y);
 		rigger.ctx.stroke();
 
 		this.bar.forEach(function(a){
