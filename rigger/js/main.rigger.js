@@ -155,6 +155,9 @@ var rigger = {
 				}
 
 				if(rigger.game.room === 0){ // We are in the ANNEX
+					rigger.h.defaultCan(20);
+					rigger.ctx.textAlign = "right";
+					rigger.ctx.fillText("Light Store \u21D2", rigger.width - 10, 400);
 					rigger.game.ladder.draw();
 					rigger.game.bar.draw();
 				}
@@ -173,6 +176,7 @@ var rigger = {
 				// Draw the room green for now
 				rigger.ctx.fillStyle = "green";
 				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+
 			break; }
 			case 1 : { // LIGHT STORE
 				rigger.h.defaultCan(20);
