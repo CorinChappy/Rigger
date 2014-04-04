@@ -184,31 +184,31 @@ var rigger = {
 				rigger.ctx.fillStyle = "#4775FF";
 				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
 
-				rigger.ctx.textAlign = "center;"
+				rigger.ctx.textAlign = "center";
 				// Draw some boxes
 				rigger.ctx.fillStyle = "gray";
 				rigger.ctx.fillRect(15, rigger.height - 150, 150, 150);
 				rigger.ctx.strokeRect(15, rigger.height - 150, 150, 150);
 				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("fresnel", 75, rigger.height - 125);
+				rigger.ctx.fillText("Fresnel", 90, rigger.height - 125);
 
 				rigger.ctx.fillStyle = "gray";
 				rigger.ctx.fillRect(15 + 175, rigger.height - 150, 150, 150);
 				rigger.ctx.strokeRect(15 + 175, rigger.height - 150, 150, 150);
 				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("PC", 75 + 175, rigger.height - 125);
+				rigger.ctx.fillText("PC", 90 + 175, rigger.height - 125);
 
 				rigger.ctx.fillStyle = "gray";
 				rigger.ctx.fillRect(15 + 175*2, rigger.height - 150, 150, 150);
 				rigger.ctx.strokeRect(15 + 175*2, rigger.height - 150, 150, 150);
 				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Parcan", 75 + 175*2, rigger.height - 125);
+				rigger.ctx.fillText("Parcan", 90 + 175*2, rigger.height - 125);
 
 				rigger.ctx.fillStyle = "gray";
 				rigger.ctx.fillRect(15 + 175*3, rigger.height - 150, 150, 150);
 				rigger.ctx.strokeRect(15 + 175*3, rigger.height - 150, 150, 150);
 				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Source 4", 75 + 175*3, rigger.height - 125);
+				rigger.ctx.fillText("Source 4", 90 + 175*3, rigger.height - 125);
 			break; }
 
 
