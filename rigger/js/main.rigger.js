@@ -75,7 +75,13 @@ var rigger = {
 
 		// Generate a random bar
 		genBar : function(){
-			return new rigger.Bar();
+			var b = new rigger.Bar();
+			for(var i = 0; i <= rigger.settings.barSize; i++){
+				if(Math.random() < 0.5){
+					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*4)]), i);
+				}
+			}
+			return b;
 		},
 
 		defaultCan : function(a){
@@ -112,6 +118,7 @@ var rigger = {
 				rigger.game.time += dt*1000;
 				// Update the bar
 				rigger.game.bar.update();
+				rigger.game.target.update();
 			}
 		},
 
@@ -279,11 +286,6 @@ var rigger = {
 		rigger.game.target = rigger.h.genBar();
 		// Create the new, empty bar
 		rigger.game.bar = new rigger.Bar();
-		for(var i = 0; i <= rigger.settings.barSize; i++){
-			if(Math.random() < 0.5){
-				rigger.game.bar.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*4)]), i);
-			}
-		}
 
 		// Create a new ladder
 		rigger.game.ladder = new rigger.Ladder();
