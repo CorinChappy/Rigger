@@ -166,6 +166,13 @@ rigger.Bar = function(){ // Represents a bar in the annex
 		}
 	};
 };
+rigger.Bar.equals = function(a, b){ // Check for equality of two bars
+	if(!a || !b){return false;}
+	for(var i = 0; i < rigger.settings.barSize; i++){
+		if(!rigger.Light.equals(a.bar[i], b.bar[i])){return false;}
+	}
+	return true;
+};
 
 rigger.Light = function(type) {
 	this.type = function(){return type;};
@@ -186,6 +193,12 @@ rigger.Light = function(type) {
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 	};
 };
+rigger.Light.equals = function(a, b){
+	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
+	if(a.type() !== b.type()){return false;}
+	if(!rigger.Gel.equals(a.gel, b.gel)){return false;}
+	return true;
+};
 
 
 
@@ -196,6 +209,12 @@ rigger.Gel = function(num, type){
 
 	var col = rigger.gelRef[num]; // Gets the HEX colour code for the Gel number
 	this.colour = function(){return col;};
+};
+rigger.Gel.equals = function(a, b){
+	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
+	if(a.type() !== b.type()){return false;}
+	if(a.colour() !== b.colour()){return false;}
+	return true;
 };
 
 
