@@ -154,10 +154,17 @@ var rigger = {
 				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 			break; }
 			case 1 : { // LIGHT STORE
-				rigger.ctx.fillStyle = "#4775FF";
-				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
 				rigger.h.defaultCan(20);
 				rigger.ctx.fillText("Light Store", 20, 10);
+				rigger.ctx.fillStyle = "#4775FF";
+				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
+
+				// Draw some boxes
+				rigger.ctx.fillStyle = "gray";
+				rigger.ctx.fillRect(50, rigger.height - 150, 150, 150);
+				rigger.ctx.strokeRect(50, rigger.height - 150, 150, 150);
+				rigger.h.defaultCan(20);
+				rigger.ctx.fillText("Fresnell", 75, rigger.height - 125);
 			break; }
 
 

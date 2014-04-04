@@ -66,20 +66,32 @@ rigger.Player = function(who){
 
 			// Spacebar
 			case 32 : {
-				var b = rigger.game.bar;
-				// Check you are close enough to the bar (top of the ladder)
-				if(this.g.y === rigger.game.ladder.g.y){
-					// Check colision with bar position
-					var ratio = rigger.width/rigger.settings.barSize;
-					var u = Math.floor((this.g.x + (ratio/2))/ratio);
-					if(this.light){
-						// Try to add to the bar
-						if(b.addLight(this.light, u)){
+				if(rigger.game.room === 0){ // ANNEX
+					var b = rigger.game.bar;
+					// Check you are close enough to the bar (top of the ladder)
+					if(this.g.y === rigger.game.ladder.g.y){
+						// Check colision with bar position
+						var ratio = rigger.width/rigger.settings.barSize;
+						var u = Math.floor((this.g.x + (ratio/2))/ratio);
+						if(this.light){
+							// Try to add to the bar
+							if(b.addLight(this.light, u)){
+								this.light = null;
+								this.speed = this.speeds[0];
+							}
+						}else{
+							this.light = b.removeLight(u); // Get a light if you are not holding one
+						}
+					}
+				}
+				if(rigger.game.room === 1){ // LIGHT STORE
+					if(this.g.x > 50 && this.g.x < 200){ // Over the box
+						if(this.light){
 							this.light = null;
 							this.speed = this.speeds[0];
+						}else{
+							this.light = new rigger.Light(rigger.def.lights[0]);
 						}
-					}else{
-						this.light = b.removeLight(u); // Get a light if you are not holding one
 					}
 				}
 			break; }
