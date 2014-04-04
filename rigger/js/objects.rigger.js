@@ -85,12 +85,18 @@ rigger.Player = function(who){
 					}
 				}
 				if(rigger.game.room === 1){ // LIGHT STORE
-					if(this.g.x > 50 && this.g.x < 200){ // Over the box
+					if((this.g.x > 15 && this.g.x < 165)
+					|| (this.g.x > 15 + 175*1 && this.g.x < 165 + 175*1)
+					|| (this.g.x > 15 + 175*2 && this.g.x < 165 + 175*2)
+					|| (this.g.x > 15 + 175*3 && this.g.x < 165 + 175*3)){ // Over the box
+						var t = Math.floor((this.g.x + 15)/175);
 						if(this.light){
-							this.light = null;
-							this.speed = this.speeds[0];
+							if(t === this.light.type().t){
+								this.light = null;
+								this.speed = this.speeds[0];
+							}
 						}else{
-							this.light = new rigger.Light(rigger.def.lights[0]);
+							this.light = new rigger.Light(rigger.def.lights[t]);
 						}
 					}
 				}
