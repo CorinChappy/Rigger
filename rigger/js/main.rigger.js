@@ -35,6 +35,8 @@ var rigger = {
 	game : { // Game state references
 		player : null, // The current character
 
+		time : null, // Time since game started
+
 		/* Current room
 		 * 0 = Annex; 1 = Light Store; 2 = Gel Draw
 		*/
@@ -106,6 +108,8 @@ var rigger = {
 
 			/* IN GAME */
 			if(rigger.state === 2){
+				// Update the timer
+				rigger.game.time += dt*1000;
 				// Update the bar
 				rigger.game.bar.update();
 			}
@@ -133,6 +137,12 @@ var rigger = {
 			}
 
 			if(rigger.state === 2){ // IN GAME
+				// Display the time
+				rigger.h.defaultCan(20);
+				rigger.ctx.textAlign = "right";
+				rigger.ctx.fillText("Time: "+(rigger.game.time/1000).toFixed(3), rigger.width - 10, 10);
+
+
 				if(rigger.game.room === 0){ // We are in the ANNEX
 					rigger.game.ladder.draw();
 					rigger.game.bar.draw();
@@ -265,6 +275,7 @@ var rigger = {
 		rigger.game.ladder = new rigger.Ladder();
 
 
+		rigger.game.timer = 0; // Rest timer
 		// Set inGame
 		rigger.state = 2;
 	},
