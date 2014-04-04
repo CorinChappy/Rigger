@@ -17,9 +17,12 @@
 		},
 
 		stop : function(track){
-			rigger.assets.audio[track].loop = false;
-			rigger.assets.audio[track].pause();
-			rigger.assets.audio[track].currentTime = 0; // Back to the start
+			var p =  rigger.assets.audio[track];
+			if(p && p.play){
+				p.loop = false;
+				p.pause();
+				p.currentTime = 0; // Back to the start
+			}
 		},
 
 		setVol : function(vol){

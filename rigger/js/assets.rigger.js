@@ -95,16 +95,24 @@
 						return 1;
 					}
 				}
-				return 0;
+				return -1;
 			})();
-			for(var m in rigger.assets.audio){
-				toLoad++;
-				var au = rigger.assets.audio[m][ty];
-				var i = new Audio();
-				i.addEventListener("canplaythrough",function(){rigger.assets.audio[m] = i; loaded++; f();});
-				i.addEventListener("error",function(){f(au);});
-				i.src = au;
-				i.volume = rigger.settings.volume;
+			if(ty >= 0){
+				for(var m in rigger.assets.audio){
+					toLoad++;
+					var au = rigger.assets.audio[m][ty];
+					var i = new Audio();
+					i.addEventListener("canplaythrough",function(){rigger.assets.audio[m] = i; loaded++; f();});
+					i.addEventListener("error",function(){f(au);});
+					i.src = au;
+					i.volume = rigger.settings.volume;
+				}
+			}else{ // No codec supported
+				for(var m in rigger.assets.audio){
+					rigger.assets.audio[m] = {
+						pause : function(){}, play : function(){} // Stub methods for audio.js to call
+					};
+				}
 			}
 
 
