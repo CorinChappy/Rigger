@@ -15,7 +15,7 @@ function keepProportions(a, b, c){
 rigger.def = {
 	lights : [
 		{
-			name : "fresnell",
+			name : "fresnel",
 			t : 0,
 			img : function(){return rigger.assets.sprites.lights[0]},
 			h : 68,

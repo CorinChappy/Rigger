@@ -29,7 +29,7 @@ var rigger = {
 	*/
 	objs : {
 		rooms : ["annex", "light store", "gel draw"],
-		lights : ["fresnell", "pc", "parcan", "source 4", "flood"]
+		lights : ["fresnel", "pc", "parcan", "source 4", "flood"]
 	},
 
 	game : { // Game state references
@@ -77,7 +77,7 @@ var rigger = {
 		genBar : function(){
 			var b = new rigger.Bar();
 			for(var i = 0; i <= rigger.settings.barSize; i++){
-				if(Math.random() < 0.5){
+				if(Math.random() < 0.3){
 					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*4)]), i);
 				}
 			}
@@ -186,7 +186,7 @@ var rigger = {
 				rigger.ctx.fillRect(15, rigger.height - 150, 150, 150);
 				rigger.ctx.strokeRect(15, rigger.height - 150, 150, 150);
 				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Fresnell", 75, rigger.height - 125);
+				rigger.ctx.fillText("fresnel", 75, rigger.height - 125);
 
 				rigger.ctx.fillStyle = "gray";
 				rigger.ctx.fillRect(15 + 175, rigger.height - 150, 150, 150);
