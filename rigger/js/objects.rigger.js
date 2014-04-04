@@ -123,7 +123,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 		return true;
 	};
 	this.removeLight = function(pos){
-		if(!pos || pos >= rigger.settings.barSize){return;}
+		if(pos < 0 || pos >= rigger.settings.barSize){return;}
 		if(!this.bar[pos]){return null;} // No light there
 		var light = this.bar[pos];
 		this.bar[pos] = false;
