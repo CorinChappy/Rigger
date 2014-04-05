@@ -308,6 +308,7 @@ var rigger = {
 
 
 rigger.init = function(div){
+	if(!div){throw new Error("Where do I put my canvas?!");}
 	// Create the canvas object
 	var canvas = document.createElement("canvas");
 	var ctx = canvas.getContext("2d");
@@ -343,9 +344,3 @@ rigger.init = function(div){
 // Export rigger object for the rest of the JS
 window.rigger = rigger;
 })();
-
-
-// INIT on load, rigger gets replaced to become an obj after it is called
-window.addEventListener("load",function(){
-	rigger.init(document.getElementById("game"));
-});

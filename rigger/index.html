@@ -39,5 +39,11 @@
 <script src="js/audio.rigger.js"></script>
 <script src="js/def.rigger.js"></script>
 
+<script>
+// INIT on load, rigger.init takes the element that the canvas gets put into
+window.addEventListener("load",function(){
+    rigger.init(document.getElementById("game"));
+});
+</script>
 </body>
 </html>
