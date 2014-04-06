@@ -87,7 +87,7 @@ rigger.def = {
 
 			imgs : rigger.assets.sprites.hidden.rory,
 
-			speeds : [300, 200, 150, 250],
+			speeds : [200, 200, 150, 200],
 
 			h : 150,
 			w : 100
