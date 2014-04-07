@@ -77,6 +77,13 @@ window.addEventListener("load",function(){
     document.getElementById("left").addEventListener("touchend", function(){
         rigger.keyFunc.keyup({keyCode : 37});
     });
+
+    document.getElementById("space").addEventListener("touchstart", function(){
+        rigger.keyFunc.keydown({keyCode : 32});
+    }, false);
+    document.getElementById("space").addEventListener("touchend", function(){
+        rigger.keyFunc.keyup({keyCode : 32});
+    }, false);
 });
 </script>
 </body>
