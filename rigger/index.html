@@ -40,6 +40,7 @@
         width: 1000px; height: 500px;
     }
     .b{
+        display: none;
         position: absolute;
         background-color: red;
         font-size: 20px;
@@ -69,9 +70,6 @@
     #design{
         left: 20px; top: 350px;
         font-size: 80px;
-    }
-    @media screen and (min-width: 1200px){
-        .b{display: none;}
     }
     </style>
 </head>
@@ -103,57 +101,67 @@
 window.addEventListener("load",function(){
     rigger.init(document.getElementById("game"));
 
-    document.getElementById("right").addEventListener("touchstart", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keydown({keyCode : 39});
-    });
-    document.getElementById("right").addEventListener("touchend", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keyup({keyCode : 39});
-    });
+    var hasTouch = 'ontouchstart' in window;
 
-    document.getElementById("left").addEventListener("touchstart", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keydown({keyCode : 37});
-    });
-    document.getElementById("left").addEventListener("touchend", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keyup({keyCode : 37});
-    });
+    if(hasTouch){
+        document.getElementById("right").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 39});
+        });
+        document.getElementById("right").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 39});
+        });
+        document.getElementById("right").style.display = "block";
 
-    document.getElementById("up").addEventListener("touchstart", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keydown({keyCode : 38});
-    });
-    document.getElementById("up").addEventListener("touchend", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keyup({keyCode : 38});
-    });
+        document.getElementById("left").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 37});
+        });
+        document.getElementById("left").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 37});
+        });
+        document.getElementById("left").style.display = "block";
 
-    document.getElementById("down").addEventListener("touchstart", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keydown({keyCode : 40});
-    });
-    document.getElementById("down").addEventListener("touchend", function(e){
-        e.stopPropagation();
-        rigger.keyFunc.keyup({keyCode : 40});
-    });
+        document.getElementById("up").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 38});
+        });
+        document.getElementById("up").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 38});
+        });
+        document.getElementById("up").style.display = "block";
+
+        document.getElementById("down").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 40});
+        });
+        document.getElementById("down").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 40});
+        });
+        document.getElementById("down").style.display = "block";
 
 
 
-    document.getElementById("space").addEventListener("touchstart", function(e){
-        rigger.keyFunc.keydown({keyCode : 32});
-    });
-    document.getElementById("space").addEventListener("touchend", function(e){
-        rigger.keyFunc.keyup({keyCode : 32});
-    });
+        document.getElementById("space").addEventListener("touchstart", function(e){
+            rigger.keyFunc.keydown({keyCode : 32});
+        });
+        document.getElementById("space").addEventListener("touchend", function(e){
+            rigger.keyFunc.keyup({keyCode : 32});
+        });
+        document.getElementById("space").style.display = "block";
 
-    document.getElementById("design").addEventListener("touchstart", function(e){
-        rigger.keyFunc.keydown({keyCode : 68});
-    });
-    document.getElementById("design").addEventListener("touchend", function(e){
-        rigger.keyFunc.keyup({keyCode : 68});
-    });
+        document.getElementById("design").addEventListener("touchstart", function(e){
+            rigger.keyFunc.keydown({keyCode : 68});
+        });
+        document.getElementById("design").addEventListener("touchend", function(e){
+            rigger.keyFunc.keyup({keyCode : 68});
+        });
+        document.getElementById("design").style.display = "block";
+    }
 });
 </script>
 </body>
