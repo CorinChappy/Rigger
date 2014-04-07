@@ -64,28 +64,28 @@
 window.addEventListener("load",function(){
     rigger.init(document.getElementById("game"));
 
-    document.getElementById("right").addEventListener("touchstart", function(){
+    document.getElementById("right").addEventListener("touchstart", function(e){
         e.stopPropagation();
         rigger.keyFunc.keydown({keyCode : 39});
     });
-    document.getElementById("right").addEventListener("touchend", function(){
+    document.getElementById("right").addEventListener("touchend", function(e){
         e.stopPropagation();
         rigger.keyFunc.keyup({keyCode : 39});
     });
 
-    document.getElementById("left").addEventListener("touchstart", function(){
+    document.getElementById("left").addEventListener("touchstart", function(e){
         e.stopPropagation();
         rigger.keyFunc.keydown({keyCode : 37});
     });
-    document.getElementById("left").addEventListener("touchend", function(){
+    document.getElementById("left").addEventListener("touchend", function(e){
         e.stopPropagation();
         rigger.keyFunc.keyup({keyCode : 37});
     });
 
-    document.getElementById("mobile").addEventListener("touchstart", function(){
+    document.getElementById("mobile").addEventListener("touchstart", function(e){
         rigger.keyFunc.keydown({keyCode : 32});
     });
-    document.getElementById("mobile").addEventListener("touchend", function(){
+    document.getElementById("mobile").addEventListener("touchend", function(e){
         rigger.keyFunc.keyup({keyCode : 32});
     });
 });
