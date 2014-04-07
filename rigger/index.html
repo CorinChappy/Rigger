@@ -63,8 +63,15 @@
         top: 50px; left: 0px;
     }
     #space{
-        left: 20px; top: 300px;
+        left: 20px; top: 200px;
         font-size: 80px;
+    }
+    #design{
+        left: 20px; top: 350px;
+        font-size: 80px;
+    }
+    @media screen and (max-width: 700px){
+        .b{display: none;}
     }
     </style>
 </head>
@@ -73,6 +80,7 @@
 <div id="game"></div>
 
 <div class="b" id="space">A</div>
+<div class="b" id="design">D</div>
 <div id="c">
     <div class="b" id="up">UP</div>
     <div class="b" id="right">RIGHT</div>
@@ -138,6 +146,13 @@ window.addEventListener("load",function(){
     });
     document.getElementById("space").addEventListener("touchend", function(e){
         rigger.keyFunc.keyup({keyCode : 32});
+    });
+
+    document.getElementById("design").addEventListener("touchstart", function(e){
+        rigger.keyFunc.keydown({keyCode : 68});
+    });
+    document.getElementById("design").addEventListener("touchend", function(e){
+        rigger.keyFunc.keyup({keyCode : 68});
     });
 });
 </script>
