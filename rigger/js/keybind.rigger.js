@@ -4,19 +4,24 @@
 	
 	rigger.keysDown = {}; // Contins the currently pressed keys
 
-	/* Event listeners for the keypresses */
-	window.addEventListener("keydown", function (e) {
-		//e.preventDefault();
-		rigger.keysDown[e.keyCode] = true;
+	rigger.keyFunc = {
+		keydown : function(e){
+			//e.preventDefault();
+			rigger.keysDown[e.keyCode] = true;
 
-		if(rigger.keyPressAction[e.keyCode] && !rigger.locked){
-			rigger.keyPressAction[e.keyCode].call(rigger);
+			if(rigger.keyPressAction[e.keyCode] && !rigger.locked){
+				rigger.keyPressAction[e.keyCode].call(rigger);
+			}
+		},
+		keyup : function(e){
+			//e.preventDefault();
+			delete rigger.keysDown[e.keyCode];
 		}
-	});
-	window.addEventListener("keyup", function (e) {
-		//e.preventDefault();
-		delete rigger.keysDown[e.keyCode];
-	});
+	}
+
+	/* Event listeners for the keypresses */
+	window.addEventListener("keydown", rigger.keyFunc.keydown);
+	window.addEventListener("keyup", rigger.keyFunc.keyup);
 
 	/* Mapping from char to keycode for each key */
 	window.what = {

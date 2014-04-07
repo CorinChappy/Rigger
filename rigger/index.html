@@ -24,10 +24,30 @@
 
 	<title>StageSoc Games: Rigger</title>
 
+    <style type="text/css">
+    #game{position: relative;}
+    #mobile{
+        position: absolute; top: 0px; left: 0px;
+        width: 1000px; height: 500px;
+    }
+    #right{
+        position: absolute; top: 240px; right: 0px;
+        background-color: white; font-size: 50px;
+    }
+    #left{
+        position: absolute; top: 240px; left: 0px;
+        background-color: white; font-size: 50px;
+    }
+    </style>
 </head>
 <body>
 <h1>Rigger</h1>
-<div id="game"></div>
+<div id="game">
+    <div id="mobile">
+        <div id="right">&gt;</div>
+        <div id="left">&lt;</div>
+    </div>
+</div>
 
 <!-- Load JS here for the common good -->
 <script src="../lib/gameloop/gameloop.js"></script>
@@ -43,6 +63,20 @@
 // INIT on load, rigger.init takes the element that the canvas gets put into
 window.addEventListener("load",function(){
     rigger.init(document.getElementById("game"));
+
+    document.getElementById("right").addEventListener("touchstart", function(){
+        rigger.keyFunc.keydown({keyCode : 39});
+    });
+    document.getElementById("right").addEventListener("touchend", function(){
+        rigger.keyFunc.keyup({keyCode : 39});
+    });
+
+    document.getElementById("left").addEventListener("touchstart", function(){
+        rigger.keyFunc.keydown({keyCode : 37});
+    });
+    document.getElementById("left").addEventListener("touchend", function(){
+        rigger.keyFunc.keyup({keyCode : 37});
+    });
 });
 </script>
 </body>

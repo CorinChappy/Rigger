@@ -307,8 +307,11 @@ var rigger = {
 };
 
 
-rigger.init = function(div){
+rigger.init = function(div, w, h){
 	if(!div){throw new Error("Where do I put my canvas?!");}
+	if(w && h){
+		rigger.width = w; rigger.height = h;
+	}
 	// Create the canvas object
 	var canvas = document.createElement("canvas");
 	var ctx = canvas.getContext("2d");
