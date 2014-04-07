@@ -65,25 +65,29 @@ window.addEventListener("load",function(){
     rigger.init(document.getElementById("game"));
 
     document.getElementById("right").addEventListener("touchstart", function(){
+        e.stopPropagation();
         rigger.keyFunc.keydown({keyCode : 39});
     });
     document.getElementById("right").addEventListener("touchend", function(){
+        e.stopPropagation();
         rigger.keyFunc.keyup({keyCode : 39});
     });
 
     document.getElementById("left").addEventListener("touchstart", function(){
+        e.stopPropagation();
         rigger.keyFunc.keydown({keyCode : 37});
     });
     document.getElementById("left").addEventListener("touchend", function(){
+        e.stopPropagation();
         rigger.keyFunc.keyup({keyCode : 37});
     });
 
     document.getElementById("mobile").addEventListener("touchstart", function(){
         rigger.keyFunc.keydown({keyCode : 32});
-    }, false);
+    });
     document.getElementById("mobile").addEventListener("touchend", function(){
         rigger.keyFunc.keyup({keyCode : 32});
-    }, false);
+    });
 });
 </script>
 </body>
