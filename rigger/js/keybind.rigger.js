@@ -128,9 +128,12 @@
 		},
 		82 : function(){
 			if(rigger.state === 2){ // IN GAME
-				var x = rigger.game.player.g.x;
-				rigger.game.player = new rigger.Player(rigger.def.hidden.rory);
-				rigger.game.player.g.x = x;
+				var x = rigger.game.player.g.x,
+				l = rigger.game.player.light, p = new rigger.Player(rigger.def.hidden.rory);
+				p.g.x = x;
+				p.light = l;
+				rigger.game.player = p;
+				p.update(0);
 				rigger.audio.play("rory");
 			}
 		}
