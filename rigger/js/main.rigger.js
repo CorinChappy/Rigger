@@ -185,7 +185,7 @@ var rigger = {
 				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.lampy, 0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
 
-				rigger.ctx.textAlign = "center";
+				/*rigger.ctx.textAlign = "center";
 				// Draw some boxes
 				rigger.ctx.fillStyle = "gray";
 				rigger.ctx.fillRect(15, rigger.height - 150, 150, 150);
@@ -209,7 +209,7 @@ var rigger = {
 				rigger.ctx.fillRect(15 + 175*3, rigger.height - 150, 150, 150);
 				rigger.ctx.strokeRect(15 + 175*3, rigger.height - 150, 150, 150);
 				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Source 4", 90 + 175*3, rigger.height - 125);
+				rigger.ctx.fillText("Source 4", 90 + 175*3, rigger.height - 125);*/
 			break; }
 
 
