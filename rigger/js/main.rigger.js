@@ -183,6 +183,7 @@ var rigger = {
 				rigger.ctx.fillText("Light Store", 20, 10);
 				rigger.ctx.fillStyle = "#4775FF";
 				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.lampy, 0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
 
 				rigger.ctx.textAlign = "center";
 				// Draw some boxes
