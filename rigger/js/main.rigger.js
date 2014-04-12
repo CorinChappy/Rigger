@@ -11,6 +11,8 @@ var rigger = {
 
 	width : 1000, height : 500,
 
+	LS : {width : 716, height : 409},
+
 	canvas : null, // The canvas object
 	ctx : null, // The canvas context
 
@@ -182,8 +184,8 @@ var rigger = {
 				rigger.h.defaultCan(20);
 				rigger.ctx.fillText("Light Store", 20, 10);
 				rigger.ctx.fillStyle = "#4775FF";
-				rigger.ctx.fillRect(0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
-				rigger.ctx.drawImage(rigger.assets.sprites.bg.lampy, 0, rigger.height*2/10, rigger.width*7/10, rigger.height*8/10);
+				rigger.ctx.fillRect(0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.lampy, 0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
 
 				/*rigger.ctx.textAlign = "center";
 				// Draw some boxes
@@ -210,6 +212,20 @@ var rigger = {
 				rigger.ctx.strokeRect(15 + 175*3, rigger.height - 150, 150, 150);
 				rigger.ctx.fillStyle = "black";
 				rigger.ctx.fillText("Source 4", 90 + 175*3, rigger.height - 125);*/
+
+				// Put in some lights
+				var l = rigger.def.lights,
+				ln = rigger.LS.width/2, // Length of the lighting bars
+				wI = rigger.LS.width/36, // Padding from the side
+				wG = ln/l.length, // Space for each light type
+				hI = rigger.LS.height/13.6, // Top padding
+				hG = rigger.LS.height/4.5; // Distance between each bar
+				for(var i = 0; i < l.length; i++){
+					for(var j = 4 /* Number of bars */; j > 0; j--){
+						rigger.ctx.drawImage(l[i].img(), wI + (wG*i), hI + (hG*j), l[i].w, l[i].h);
+					}
+				}
+
 			break; }
 
 

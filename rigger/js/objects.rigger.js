@@ -85,11 +85,12 @@ rigger.Player = function(who){
 					}
 				}
 				if(rigger.game.room === 1){ // LIGHT STORE
-					if((this.g.x > 15 && this.g.x < 165)
-					|| (this.g.x > 15 + 175*1 && this.g.x < 165 + 175*1)
-					|| (this.g.x > 15 + 175*2 && this.g.x < 165 + 175*2)
-					|| (this.g.x > 15 + 175*3 && this.g.x < 165 + 175*3)){ // Over the box
-						var t = Math.floor((this.g.x + 15)/175);
+					var ll = rigger.def.lights.length, // Number of light types
+					ln = rigger.LS.width/2, // Length of the lighting bars
+					wI = rigger.LS.width/36, // Padding from the side
+					wG = ln/ll; // Space for each light type
+					if(this.g.x > wI || this.g.x < ln){ // Over the lighting part
+						var t = Math.floor((this.g.x + wI)/wG);
 						if(this.light){
 							if(t === this.light.type().t){
 								this.light = null;
