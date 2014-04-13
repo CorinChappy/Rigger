@@ -187,41 +187,15 @@ var rigger = {
 				rigger.ctx.fillRect(0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.lampy, 0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
 
-				/*rigger.ctx.textAlign = "center";
-				// Draw some boxes
-				rigger.ctx.fillStyle = "gray";
-				rigger.ctx.fillRect(15, rigger.height - 150, 150, 150);
-				rigger.ctx.strokeRect(15, rigger.height - 150, 150, 150);
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Fresnel", 90, rigger.height - 125);
-
-				rigger.ctx.fillStyle = "gray";
-				rigger.ctx.fillRect(15 + 175, rigger.height - 150, 150, 150);
-				rigger.ctx.strokeRect(15 + 175, rigger.height - 150, 150, 150);
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("PC", 90 + 175, rigger.height - 125);
-
-				rigger.ctx.fillStyle = "gray";
-				rigger.ctx.fillRect(15 + 175*2, rigger.height - 150, 150, 150);
-				rigger.ctx.strokeRect(15 + 175*2, rigger.height - 150, 150, 150);
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Parcan", 90 + 175*2, rigger.height - 125);
-
-				rigger.ctx.fillStyle = "gray";
-				rigger.ctx.fillRect(15 + 175*3, rigger.height - 150, 150, 150);
-				rigger.ctx.strokeRect(15 + 175*3, rigger.height - 150, 150, 150);
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Source 4", 90 + 175*3, rigger.height - 125);*/
-
 				// Put in some lights
 				var l = rigger.def.lights,
 				ln = rigger.LS.width/2, // Length of the lighting bars
 				wI = rigger.LS.width/36, // Padding from the side
 				wG = ln/l.length, // Space for each light type
-				hI = rigger.LS.height/13.6, // Top padding
+				hI = (rigger.height - rigger.LS.height) + rigger.LS.height/13.6, // Top padding
 				hG = rigger.LS.height/4.5; // Distance between each bar
 				for(var i = 0; i < l.length; i++){
-					for(var j = 4 /* Number of bars */; j > 0; j--){
+					for(var j = 0; j < 4 /* Number of bars */; j++){
 						rigger.ctx.drawImage(l[i].img(), wI + (wG*i), hI + (hG*j), l[i].w, l[i].h);
 					}
 				}
