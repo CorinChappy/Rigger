@@ -24,10 +24,67 @@
 
 	<title>StageSoc Games: Rigger</title>
 
+    <style type="text/css">
+    *{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    #game{
+        margin: auto; width: 1000px;
+    }
+    #mobile{
+        position: absolute; top: 0px; left: 0px;
+        width: 1000px; height: 500px;
+    }
+    .b{
+        display: none;
+        position: absolute;
+        background-color: red;
+        font-size: 20px;
+        padding: 10px;
+    }
+    #c{
+        position: absolute;
+        top: 250px; right: 0px;
+        width: 150px; height: 145px;
+    }
+    #down{
+        left: 30px; bottom: 0px;
+    }
+    #up{
+        left: 50px;
+    }
+    #right{
+        top: 50px; right: 0px;
+    }
+    #left{
+        top: 50px; left: 0px;
+    }
+    #space{
+        left: 20px; top: 200px;
+        font-size: 80px;
+    }
+    #design{
+        left: 20px; top: 350px;
+        font-size: 80px;
+    }
+    </style>
 </head>
 <body>
 <h1>Rigger</h1>
 <div id="game"></div>
+
+<div class="b" id="space">A</div>
+<div class="b" id="design">D</div>
+<div id="c">
+    <div class="b" id="up">UP</div>
+    <div class="b" id="right">RIGHT</div>
+    <div class="b" id="down">DOWN</div>
+    <div class="b" id="left">LEFT</div>
+</div>
 
 <!-- Load JS here for the common good -->
 <script src="../lib/gameloop/gameloop.js"></script>
@@ -43,6 +100,68 @@
 // INIT on load, rigger.init takes the element that the canvas gets put into
 window.addEventListener("load",function(){
     rigger.init(document.getElementById("game"));
+
+    var hasTouch = 'ontouchstart' in window;
+
+    if(hasTouch){
+        document.getElementById("right").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 39});
+        });
+        document.getElementById("right").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 39});
+        });
+        document.getElementById("right").style.display = "block";
+
+        document.getElementById("left").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 37});
+        });
+        document.getElementById("left").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 37});
+        });
+        document.getElementById("left").style.display = "block";
+
+        document.getElementById("up").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 38});
+        });
+        document.getElementById("up").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 38});
+        });
+        document.getElementById("up").style.display = "block";
+
+        document.getElementById("down").addEventListener("touchstart", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keydown({keyCode : 40});
+        });
+        document.getElementById("down").addEventListener("touchend", function(e){
+            e.stopPropagation();
+            rigger.keyFunc.keyup({keyCode : 40});
+        });
+        document.getElementById("down").style.display = "block";
+
+
+
+        document.getElementById("space").addEventListener("touchstart", function(e){
+            rigger.keyFunc.keydown({keyCode : 32});
+        });
+        document.getElementById("space").addEventListener("touchend", function(e){
+            rigger.keyFunc.keyup({keyCode : 32});
+        });
+        document.getElementById("space").style.display = "block";
+
+        document.getElementById("design").addEventListener("touchstart", function(e){
+            rigger.keyFunc.keydown({keyCode : 68});
+        });
+        document.getElementById("design").addEventListener("touchend", function(e){
+            rigger.keyFunc.keyup({keyCode : 68});
+        });
+        document.getElementById("design").style.display = "block";
+    }
 });
 </script>
 </body>
