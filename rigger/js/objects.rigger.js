@@ -41,7 +41,7 @@ rigger.Player = function(who){
 			// Left or right
 			case 37 :
 			case 39 : {
-			var min = 0 - this.g.w*2/3; var max = (rigger.game.room === 0)?rigger.width - this.g.w/3:rigger.width*7/10 - this.g.w;
+			var min = 0 - this.g.w*2/3; var max = (rigger.game.room === 0)?rigger.width - this.g.w/3:rigger.LS.width - this.g.w;
 			if(this.g.y >= rigger.height - this.g.h){ // No moving away from the ladder if in the air
 				this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
 				this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
