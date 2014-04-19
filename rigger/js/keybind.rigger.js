@@ -97,7 +97,7 @@
 		39 : function(){
 			// RIGHT
 			if(rigger.state === 1){ // MAIN MENU
-				rigger.menuOption = Math.min(rigger.menuOption+1, 2);
+				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.def.players).length-1);
 			}
 		},
 		40 : function(){

@@ -246,24 +246,31 @@ var rigger = {
 			rigger.ctx.textAlign = "center";
 			rigger.ctx.fillText("Pick a character", rigger.width/2, 100);
 
+			// Set sizes
+			rigger.h.defaultCan(18);
+			rigger.ctx.textAlign = "center";
+
 			// Loop around all the players
+			var len = Object.keys(rigger.def.players).length;
+			var padding = rigger.width/6; // Third a person for padding
+			var wid = (rigger.width - (padding*len))/len; // Size (width) of each character
 			var count = 0;
 			for(var n in rigger.def.players){
-				var p = rigger.def.players[n], size = [p.w*3, p.h*3],
-				pos = [50 + (size[0]*9/5)*count, 150];
+				var p = rigger.def.players[n], size = [wid, p.h*(wid/p.w)],
+				pos = [padding/2 + padding*count + size[0]*count, 150];
 
-				rigger.h.defaultCan(18);
 
 				if(count === rigger.menuOption){
 					rigger.ctx.globalAlpha = 0.5;
 					rigger.ctx.fillStyle = "yellow";
 					rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1])
 					rigger.ctx.globalAlpha = 1;
+				}else{
+					rigger.ctx.fillStyle = "black";
 				}
 				rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
 
-
-				rigger.ctx.fillText(p.name, pos[0] + size[0]/3, pos[1] + size[1] + 10);
+				rigger.ctx.fillText(p.name, pos[0] + size[0]/2, pos[1] + size[1] + 10);
 
 				count++;
 			}
