@@ -315,6 +315,7 @@ rigger.init = function(div, w, h){
 	if(!div){throw new Error("Where do I put my canvas?!");}
 	if(w && h){
 		rigger.width = w; rigger.height = h;
+		rigger.LS.width = w/1.396; rigger.LS.height = h/1.222; // Ratio's for the lighting store
 	}
 	// Create the canvas object
 	var canvas = document.createElement("canvas");
