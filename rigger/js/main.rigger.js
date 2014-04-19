@@ -244,20 +244,26 @@ var rigger = {
 			}*/
 
 			rigger.ctx.textAlign = "center";
-			rigger.ctx.fillText("Pick a character", rigger.width/2, 100);
+			rigger.ctx.textBaseline = "bottom";
+			rigger.ctx.fillText("Pick a character", rigger.width/2, rigger.height/5);
 
 			// Set sizes
 			rigger.h.defaultCan(18);
 			rigger.ctx.textAlign = "center";
 
+			// Details
+			var top = rigger.height/5, // Top of the images
+			num = Object.keys(rigger.def.players).length, // Number of players
+			hei = rigger.height - top - rigger.height/10; // Height of the image
+
 			// Loop around all the players
-			var len = Object.keys(rigger.def.players).length;
-			var padding = rigger.width/6; // Third a person for padding
-			var wid = (rigger.width - (padding*len))/len; // Size (width) of each character
 			var count = 0;
 			for(var n in rigger.def.players){
-				var p = rigger.def.players[n], size = [wid, p.h*(wid/p.w)],
-				pos = [padding/2 + padding*count + size[0]*count, 150];
+				var p = rigger.def.players[n],
+				wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
+				padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
+				size = [wid, hei],
+				pos = [padding/2 + padding*count + size[0]*count, top];
 
 
 				if(count === rigger.menuOption){
