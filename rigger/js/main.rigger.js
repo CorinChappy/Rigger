@@ -128,44 +128,47 @@ var rigger = {
 		draw : function(){
 			rigger.ctx.clearRect(0,0, rigger.width, rigger.height); // Clear the screen (blank canvas)
 			rigger.h.defaultCan();
-			rigger.d.room();
 
-			if(rigger.state === -1){ // ERROR
-				rigger.d.error();
-				return;
-			}
-
-			if(rigger.state === 0){ // LOADING
-				rigger.d.loading();
-				return;
-			}
-
-			if(rigger.state === 1){ // MAIN MENU
-				rigger.d.menu();
-				return;
-			}
-
-			if(rigger.state === 2){ // IN GAME
-				// Display the time
-				rigger.h.defaultCan(20);
-				rigger.ctx.textAlign = "right";
-				rigger.ctx.fillText("Time: "+(rigger.game.time/1000).toFixed(3), rigger.width - 10, 10);
-
-				if(rigger.game.menu === 1){
-					rigger.d.design();
+			switch(rigger.state){
+				case -1 : { // ERROR
+					rigger.d.error();
 					return;
 				}
 
-				if(rigger.game.room === 0){ // We are in the ANNEX
-					rigger.h.defaultCan(20);
-					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText("Light Store \u21D2", rigger.width - 10, 400);
-					rigger.game.ladder.draw();
-					rigger.game.bar.draw();
+				case 0 : { // LOADING
+					rigger.d.loading();
+					return;
 				}
 
+				case 1 : { // MAIN MENU
+					rigger.d.menu();
+					return;
+				}
 
-				rigger.game.player.draw();
+				case 2 : { // IN GAME
+					rigger.d.room();
+
+					// Display the time
+					rigger.h.defaultCan(20);
+					rigger.ctx.textAlign = "right";
+					rigger.ctx.fillText("Time: "+(rigger.game.time/1000).toFixed(3), rigger.width - 10, 10);
+
+					switch(rigger.game.menu){
+						case 1 : { // Design
+							rigger.o.design();
+						break; }
+
+
+
+
+
+
+
+						case 0 : { // No overlay
+							rigger.game.player.draw();
+						break; }
+					}
+				}
 			}
 		}
 	},
@@ -178,6 +181,11 @@ var rigger = {
 				// Draw the room green for now
 				rigger.ctx.fillStyle = "green";
 				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+				rigger.h.defaultCan(20);
+				rigger.ctx.textAlign = "right";
+				rigger.ctx.fillText("Light Store \u21D2", rigger.width - 10, 400);
+				rigger.game.ladder.draw();
+				rigger.game.bar.draw();
 
 			break; }
 			case 1 : { // LIGHT STORE
@@ -205,15 +213,18 @@ var rigger = {
 
 			}
 		},
-		design : function(){
-			rigger.h.defaultCan(24);
-			rigger.ctx.fillStyle = "brown";
-			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+		o : { // Overlays/menus
+			design : function(){
+				rigger.h.defaultCan(24);
+				rigger.ctx.fillStyle = "brown";
+				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 
-			rigger.game.target.draw();
+				rigger.game.target.draw();
 
-			rigger.ctx.fillStyle = "black";
-			rigger.ctx.fillText("Design", 250, 400);
+				rigger.ctx.fillStyle = "black";
+				rigger.ctx.fillText("Design", 250, 400);
+			},
+
 		},
 		error : function(){
 			rigger.h.defaultCan(20);
@@ -231,6 +242,8 @@ var rigger = {
 			rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
 		},
 		menu : function(){
+			rigger.ctx.fillStyle = "green";
+			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 			// Welcome message
 			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
