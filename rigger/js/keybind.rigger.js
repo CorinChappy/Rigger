@@ -104,8 +104,7 @@
 			// DOWN
 		},
 
-		32 : function(){
-			// SPACE
+		32 : function(){ // SPACE
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.newGame(rigger.def.players[Object.keys(rigger.def.players)[rigger.menuOption]]);
 				return;
@@ -121,11 +120,13 @@
 				rigger.state = 1;
 			}
 		},
+
 		68 : function(){ // D
 			if(rigger.state === 2){ // IN GAME
 				rigger.game.menu = (rigger.game.menu === 0)?1:0;
 			}
 		},
+
 		82 : function(){
 			if(rigger.state === 2){ // IN GAME
 				var x = rigger.game.player.g.x,
@@ -138,4 +139,6 @@
 			}
 		}
 	};
+	rigger.keyPressAction[13] = rigger.keyPressAction[32]; // Make ENTER an alias for SPACE
+	
 })();
