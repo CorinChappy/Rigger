@@ -114,6 +114,7 @@
 				// Test for winning conditions
 				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){
 					rigger.state = 3; // Set state to victory
+					return;
 				}
 			}
 			if(rigger.state === 3){ // VICTORY
@@ -140,5 +141,5 @@
 		}
 	};
 	rigger.keyPressAction[13] = rigger.keyPressAction[32]; // Make ENTER an alias for SPACE
-	
+
 })();
