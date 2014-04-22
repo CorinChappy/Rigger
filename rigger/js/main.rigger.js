@@ -359,8 +359,8 @@ rigger.init = function(div, w, h){
 		rigger.LS.width = w/1.396; rigger.LS.height = h/1.222; // Ratio's for the lighting store
 	}
 	// Create the canvas object
-	var canvas = document.createElement("canvas");
-	var ctx = canvas.getContext("2d");
+	var canvas = document.createElement("canvas"),
+	    ctx = canvas.getContext("2d");
 	canvas.width = rigger.width;
 	canvas.height = rigger.height;
 	div.appendChild(canvas);

@@ -55,8 +55,8 @@
 
 
 		load : function(callback){
-			var toLoad = 0; var loaded = 0; var prep = false; var er= false;
-			var f = function(a){ // Function called when an asset is loaded
+			var toLoad = 0, loaded = 0, prep = false, er= false,
+			f = function(a){ // Function called when an asset is loaded
 				if(er){return;} // Error has already happened, no point here
 				if(a){
 					callback.call(rigger, false, a); // Failure
@@ -103,8 +103,8 @@
 			if(ty >= 0){
 				for(var m in rigger.assets.audio){
 					toLoad++;
-					var au = rigger.assets.audio[m][ty];
-					var i = new Audio();
+					var au = rigger.assets.audio[m][ty],
+					    i = new Audio();
 					i.addEventListener("canplaythrough",function(){rigger.assets.audio[m] = i; loaded++; f();});
 					i.addEventListener("error",function(){f(au);});
 					i.src = au;
