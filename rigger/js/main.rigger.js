@@ -174,6 +174,8 @@ var rigger = {
 					rigger.ctx.fillStyle = "green";
 					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 
+					rigger.game.bar.draw(); // Draw the bar to show the winning rig
+
 
 					rigger.h.defaultCan(40);
 					rigger.ctx.textBaseline = "bottom";
