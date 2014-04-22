@@ -248,6 +248,8 @@ var rigger = {
 
 		},
 		error : function(){
+			rigger.ctx.fillStyle = "green";
+			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 			rigger.h.defaultCan(20);
 			rigger.ctx.textBaseline = "bottom";
 			rigger.ctx.fillText("Oh PANTS.", 10, 200);
@@ -255,6 +257,8 @@ var rigger = {
 			rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
 		},
 		loading : function(){
+			rigger.ctx.fillStyle = "green";
+			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 			rigger.h.defaultCan(24);
 			rigger.ctx.textBaseline = "bottom";
 			rigger.ctx.fillText("LOADING...", 20, 200);
