@@ -154,7 +154,7 @@ var rigger = {
 
 					switch(rigger.game.menu){
 						case 1 : { // Design
-							rigger.o.design();
+							rigger.d.o.design();
 						break; }
 
 
