@@ -114,11 +114,11 @@
 				rigger.game.player.update(0, 32);
 				// Test for winning conditions
 				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){
-					rigger.locked = true;
-					var d = document.createElement("h2");
-					d.innerHTML = "You win. Time = "+rigger.game.time/1000+" seconds";
-					document.body.appendChild(d);
+					rigger.state = 3; // Set state to victory
 				}
+			}
+			if(rigger.state === 3){ // VICTORY
+				rigger.state = 1;
 			}
 		},
 		68 : function(){ // D

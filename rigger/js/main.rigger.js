@@ -17,11 +17,11 @@ var rigger = {
 	ctx : null, // The canvas context
 
 	/* State of the game
-	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game
+	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory
 	*/
 	state : 0,
 
-	menuOption : 0, // Currently selected menu option (top to bottom)
+	menuOption : 0, // Currently selected menu option (top to bottom/left to right)
 
 	locked : false, // If locked interaction is disabled
 
@@ -37,7 +37,7 @@ var rigger = {
 	game : { // Game state references
 		player : null, // The current character
 
-		time : null, // Time since game started
+		time : 0, // Time since game started
 
 		/* Current room
 		 * 0 = Annex; 1 = Light Store; 2 = Gel Draw
@@ -109,15 +109,14 @@ var rigger = {
 				}
 			}
 
-			if(rigger.state === 1){ // Main menu
+			/*if(rigger.state === 1){ // Main menu
 
-			}
+			}*/
 
 
 			/* IN GAME */
 			if(rigger.state === 2){
-				// Update the timer
-				rigger.game.time += dt*1000;
+				rigger.e.tick(dt); // Update the timer
 				// Update the bar
 				rigger.game.bar.update();
 				rigger.game.target.update();
@@ -168,8 +167,30 @@ var rigger = {
 							rigger.game.player.draw();
 						break; }
 					}
-				}
+				break; }
+
+				case 3 : { // VICTORY
+					// Draw the room green for now
+					rigger.ctx.fillStyle = "green";
+					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+
+
+					rigger.h.defaultCan(40);
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.fillText("Congratulations! You win", rigger.width/10, rigger.height*4/10);
+
+					rigger.ctx.textBaseline = "top";
+					rigger.ctx.fillText("In time: "+(rigger.game.time/1000).toFixed(3), rigger.width/10, rigger.height*4/10);
+
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillStyle = "yellow";
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/10);
+				break; }
 			}
+		},
+		tick : function(dt){
+			rigger.game.time += dt*1000;
 		}
 	},
 
@@ -312,7 +333,10 @@ var rigger = {
 		rigger.game.ladder = new rigger.Ladder();
 
 
-		rigger.game.timer = 0; // Rest timer
+		rigger.locked = false; // Unlock if locked
+		rigger.game.menu = 0;
+
+		rigger.game.time = 0; // Reset timer
 		// Set inGame
 		rigger.state = 2;
 	},
