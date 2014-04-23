@@ -246,8 +246,7 @@ var rigger = {
 
 				rigger.ctx.fillStyle = "black";
 				rigger.ctx.fillText("Design", 250, 400);
-			},
-
+			}
 		},
 		error : function(){
 			rigger.ctx.fillStyle = "green";
