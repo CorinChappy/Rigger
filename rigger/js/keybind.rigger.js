@@ -117,7 +117,7 @@
 					return;
 				}
 			}
-			if(rigger.state === 3){ // VICTORY
+			if(rigger.state === 3 || rigger.state === 4){ // VICTORY or FAILURE
 				rigger.state = 1;
 			}
 		},
