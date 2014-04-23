@@ -87,7 +87,7 @@ var rigger = {
 		},
 
 		timeConvert : function(t, p){ // Takes the time (ms) and converts it into a time of day (p represents need for second presistion)
-			var startTime = [18,0];
+			var startTime = [15,0];
 			// 1 sec = 1 min
 			var s = Math.floor(t/1000), // Secs
 				hours = Math.floor(s/60),
@@ -146,7 +146,7 @@ var rigger = {
 					rigger.e.tick(dt); // Update the timer
 				}
 				// Check for failure conditions
-				if(rigger.game.time > 1440000){ // 1440000ms = 1440s = 24 minutes = 24 hours in gametime (IE failure is at 6pm the next day)
+				if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
 					rigger.state = 4;
 				}
 			}
@@ -232,10 +232,11 @@ var rigger = {
 
 					rigger.h.defaultCan(40);
 					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Sorry the dress run started...", rigger.width/10, rigger.height*4/10);
+					rigger.ctx.fillText("Security kicked you out", rigger.width/10, rigger.height*4/10);
 
+					rigger.h.defaultCan(32);
 					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("You lose", rigger.width/10, rigger.height*4/10);
+					rigger.ctx.fillText("You should probably get late night working next time...", rigger.width/10, rigger.height*4/10);
 
 					rigger.ctx.textAlign = "center";
 					rigger.ctx.fillStyle = "yellow";
