@@ -27,9 +27,9 @@ var http = require('http');
 
 // Get the command line input (to check for compression) + filename
 var useCompress, filename = "rigger.js";
-if(useCompress = (process.argv[0] || false)){
+if(useCompress = (process.argv[2] || false)){
 	if(useCompress === true){
-		filename = process.argv[1] || "rigger.zip";
+		filename = process.argv[3] || "rigger.zip";
 	}else{
 		filename = useCompress; // Assume file if it's not a bool
 		useCompress = false;
@@ -54,17 +54,18 @@ var prefix = "";
 var files = ["main", "gels", "assets", "objects", "keybind", "audio", "def"];
 
 console.log("Reading files");
-var strings = files.forEach(function(a){
+var strings = files.map(function(a){
 	var fn = dir + prefix + a + suffix;
 	console.log("    "+fn);
-	var f = fs.openSync(fn, "r"); // Synconous to make dep order eaiser
+	var f = fs.readFileSync(fn); // Synconous to make dep order eaiser
 	if(!f){throw new Error();}
+	f = f.toString();
 
 	// Simple split
-	f = f.split("@start")[1];
-	f = f.split("@end")[0];
+	//f = f.split("@start")[1] || f;
+	//f = f.split("@end")[0] || f;
 	// Remove the last line
-	f = f.substring(0, f.lastIndexOf("\n"));
+	//f = f.substring(0, f.lastIndexOf("\n")) || f;
 
 	return f;
 });
@@ -74,9 +75,9 @@ var full = strings.reduce(function(p, c){
 	return p + c;
 }, "");
 
+
+
 console.log("Minifying - Google Closure Compiler");
-
-
 
 var post_data = querystring.stringify({
 	'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
@@ -98,10 +99,15 @@ var post_options = {
   }
 };
 
+var chunkAcc = "";
+
 // Set up the request
 var post_req = http.request(post_options, function(res) {
 	res.setEncoding('utf8');
-	res.on('data', postProcess);
+	res.on("data", function(chunk){
+		chunkAcc += chunk;
+	});
+	res.on("end", postProcess);
 });
 
 // post the data
@@ -111,11 +117,12 @@ post_req.end();
 
 
 
-function postProcess(data){
+function postProcess(){
 	console.log("Got response!");
+	var s = JSON.parse(chunkAcc).compiledCode;
 
 	// Writing data to file
-	fs.writeFileSync(filename, data);
+	fs.writeFileSync(filename, s);
 
 	console.log("Done");
 }
