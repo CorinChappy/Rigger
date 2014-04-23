@@ -1,5 +1,5 @@
 // Contains the assest locations (images, JSON, etc) + a load function
-(function(){
+(function(){ // @start
 "use strict";
 
 	rigger.assets = {
@@ -131,4 +131,4 @@
 
 		loaded : 0 // percentage loaded
 	};
-})();
+})(); // @end

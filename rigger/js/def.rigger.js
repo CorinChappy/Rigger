@@ -1,5 +1,5 @@
 /* File containing the definitions for each thing in the game */
-(function(){
+(function(){  // @start
 "use strict";
 
 /* Functions to get a width from a height or visa versa 

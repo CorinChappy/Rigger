@@ -1,5 +1,5 @@
 // Contains keybindings and functions for the game
-(function(){
+(function(){ // @start
 "use strict";
 	
 	rigger.keysDown = {}; // Contins the currently pressed keys
@@ -142,4 +142,4 @@
 	};
 	rigger.keyPressAction[13] = rigger.keyPressAction[32]; // Make ENTER an alias for SPACE
 
-})();
+})(); // @end
