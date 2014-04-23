@@ -456,6 +456,10 @@ rigger.init = function(div, w, h){
 		}
 
 	});
+
+	// Add the pause and resume listeners
+	window.addEventListener("blur", function(){rigger.pause();})
+	window.addEventListener("focus", function(){rigger.unpause();})
 };
 
 
