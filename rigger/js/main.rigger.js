@@ -87,14 +87,18 @@ var rigger = {
 		},
 
 		timeConvert : function(t, p){ // Takes the time (ms) and converts it into a time of day (p represents need for second presistion)
-			var startTime = [13,0];
+			var startTime = [18,0];
 			// 1 sec = 1 min
 			var s = Math.floor(t/1000), // Secs
-				hours = Math.floor(s / 60),
+				hours = Math.floor(s/60),
 				mins = s % 60;
 
 			var a = startTime[0]+hours,
-				b = startTime[1]+mins; b = ((b > 9)?b:(0).toString()+b);
+				b = startTime[1]+mins;
+
+			a -= 24*Math.floor(a/24);
+			b = ((b > 9)?b:(0).toString()+b);
+
 
 			var str = a + ":" + b;
 			if(p){
