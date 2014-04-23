@@ -10,6 +10,7 @@
 			rigger.keysDown[e.keyCode] = true;
 
 			if(rigger.keyPressAction[e.keyCode] && !rigger.locked){
+				e.preventDefault();
 				rigger.keyPressAction[e.keyCode].call(rigger);
 			}
 		},
