@@ -137,11 +137,14 @@ var rigger = {
 
 			/* IN GAME */
 			if(rigger.state === 2){
-				rigger.e.tick(dt); // Update the timer
 				// Update the bar
 				rigger.game.bar.update();
 				rigger.game.target.update();
 
+
+				if(rigger.game.menu !== 2){ // Do not update on pause/game menu
+					rigger.e.tick(dt); // Update the timer
+				}
 				// Check for failure conditions
 				if(rigger.game.time > 1440000){ // 1440000ms = 1440s = 24 minutes = 24 hours in gametime (IE failure is at 6pm the next day)
 					rigger.state = 4;
@@ -412,10 +415,12 @@ var rigger = {
 	pause : function(){
 		if(rigger.state !== 2){return;} // Only pause in game
 		rigger.game.menu = 2;
+		rigger.locked = true;
 	},
 	unpause : function(){
 		if(rigger.game.menu !== 2){return;} // Cannot unpause unless paused
 		rigger.game.menu = 0;
+		rigger.locked = false;
 	}
 
 };
