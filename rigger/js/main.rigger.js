@@ -696,5 +696,6 @@ rigger.resize = function(w, h){
 
 
 // Export rigger object for the rest of the JS
-window.rigger = rigger;
-})();
+window["rigger"] = rigger;
+window["rigger"]["init"] = rigger.init; // Needed for compliltion
+})(); // @end
