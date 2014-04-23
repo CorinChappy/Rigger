@@ -183,7 +183,10 @@ var rigger = {
 							rigger.d.o.design();
 						break; }
 
-
+						case 2 : { // In game menu/paused
+							rigger.game.player.draw();
+							rigger.d.o.inGame();
+						break; }
 
 
 
@@ -294,6 +297,18 @@ var rigger = {
 
 				rigger.ctx.fillStyle = "black";
 				rigger.ctx.fillText("Design", 250, 400);
+			},
+			inGame : function(){
+				rigger.h.defaultCan();
+				// Transparent layer
+				rigger.ctx.globalAlpha = 0.5;
+				rigger.ctx.fillStyle = "white";
+				rigger.ctx.fillRect(0, 0, rigger.width, rigger.height);
+
+
+				rigger.h.defaultCan(24);
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillText("Game Paused...", rigger.width/2, rigger.height/5);
 			}
 		},
 		error : function(){
@@ -395,7 +410,12 @@ var rigger = {
 	},
 
 	pause : function(){
-
+		if(rigger.state !== 2){return;} // Only pause in game
+		rigger.game.menu = 2;
+	},
+	unpause : function(){
+		if(rigger.game.menu !== 2){return;} // Cannot unpause unless paused
+		rigger.game.menu = 0;
 	}
 
 };
