@@ -28,8 +28,9 @@ var http = require('http');
 // Get the command line input (to check for compression) + filename
 var useCompress, filename = "rigger.js";
 if(useCompress = (process.argv[2] || false)){
-	if(useCompress === true){
+	if(useCompress === "-c"){
 		filename = process.argv[3] || "rigger.zip";
+		useCompress = true;
 	}else{
 		filename = useCompress; // Assume file if it's not a bool
 		useCompress = false;
