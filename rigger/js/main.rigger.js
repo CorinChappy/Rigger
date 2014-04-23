@@ -17,7 +17,7 @@ var rigger = {
 	ctx : null, // The canvas context
 
 	/* State of the game
-	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory
+	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory; 4 = failure
 	*/
 	state : 0,
 
@@ -141,6 +141,11 @@ var rigger = {
 				// Update the bar
 				rigger.game.bar.update();
 				rigger.game.target.update();
+
+				// Check for failure conditions
+				if(rigger.game.time > 1440000){ // 1440000ms = 1440s = 24 minutes = 24 hours in gametime (IE failure is at 6pm the next day)
+					rigger.state = 4;
+				}
 			}
 		},
 
@@ -209,6 +214,28 @@ var rigger = {
 					rigger.ctx.fillStyle = "yellow";
 					rigger.ctx.textBaseline = "bottom";
 					rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/10);
+				break; }
+
+				case 4 : { // FAILURE
+					// Draw the room green for now
+					rigger.ctx.fillStyle = "green";
+					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+
+					rigger.game.bar.draw(); // Draw the bar to show the winning rig
+
+
+					rigger.h.defaultCan(40);
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.fillText("Sorry the dress run started...", rigger.width/10, rigger.height*4/10);
+
+					rigger.ctx.textBaseline = "top";
+					rigger.ctx.fillText("You lose", rigger.width/10, rigger.height*4/10);
+
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillStyle = "yellow";
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/10);
+
 				break; }
 			}
 		},
