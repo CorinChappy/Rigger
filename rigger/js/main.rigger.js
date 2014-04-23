@@ -227,8 +227,12 @@ var rigger = {
 					rigger.ctx.fillStyle = "green";
 					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 
-					rigger.game.bar.draw(); // Draw the bar to show the winning rig
+					// Display the time
+					rigger.h.defaultCan(20);
+					rigger.ctx.textAlign = "right";
+					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
 
+					rigger.game.bar.draw(); // Draw the bar to show current rig
 
 					rigger.h.defaultCan(40);
 					rigger.ctx.textBaseline = "bottom";
