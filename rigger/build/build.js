@@ -62,10 +62,13 @@ var strings = files.map(function(a){
 	f = f.toString();
 
 	// Simple split
-	//f = f.split("@start")[1] || f;
-	//f = f.split("@end")[0] || f;
-	// Remove the last line
-	//f = f.substring(0, f.lastIndexOf("\n")) || f;
+	f = f.split("@start")[1] || f;
+	var v = f.split("@end");
+	if(v[1]){
+		f = v[0];
+		// Remove the last line
+		f = f.substring(0, f.lastIndexOf("\n")) || f;
+	}
 
 	return f;
 });
