@@ -86,6 +86,23 @@ var rigger = {
 			return b;
 		},
 
+		timeConvert : function(t, p){ // Takes the time (ms) and converts it into a time of day (p represents need for second presistion)
+			var startTime = [13,0];
+			// 1 sec = 1 min
+			var s = Math.floor(t/1000), // Secs
+				hours = Math.floor(s / 60),
+				mins = s % 60;
+
+			var a = startTime[0]+hours,
+				b = startTime[1]+mins; b = ((b > 9)?b:(0).toString()+b);
+
+			var str = a + ":" + b;
+			if(p){
+				str += ":" + ((t%1000)/10).toFixed(0);
+			}
+			return str;
+		},
+
 		defaultCan : function(a){
 			var a = a || 12;
 			rigger.ctx.globalAlpha = 1;
@@ -150,7 +167,7 @@ var rigger = {
 					// Display the time
 					rigger.h.defaultCan(20);
 					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText("Time: "+(rigger.game.time/1000).toFixed(3), rigger.width - 10, 10);
+					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
 
 					switch(rigger.game.menu){
 						case 1 : { // Design
@@ -179,10 +196,10 @@ var rigger = {
 
 					rigger.h.defaultCan(40);
 					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Congratulations! You win", rigger.width/10, rigger.height*4/10);
+					rigger.ctx.fillText("Good job!", rigger.width/10, rigger.height*4/10);
 
 					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("In time: "+(rigger.game.time/1000).toFixed(3), rigger.width/10, rigger.height*4/10);
+					rigger.ctx.fillText("The getin finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10);
 
 					rigger.ctx.textAlign = "center";
 					rigger.ctx.fillStyle = "yellow";
