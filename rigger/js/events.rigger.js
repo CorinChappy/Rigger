@@ -19,7 +19,7 @@
 			a = [];
 		}
 
-		a.push(func);
+		return a.push(func);
 	};
 
 	var REL = function(name, func){
@@ -31,9 +31,10 @@
 
 		var i = a.indexOf(func);
 		if(i > -1){
-			array.splice(i,1);
+			return a.splice(i,1).length;
 		}
 
+		return false;
 	};
 
 	var EM = function(name, info){
