@@ -90,14 +90,16 @@
 
 			// Load audio in a sim. way
 			var ty = (function(){ // Use the right codec
-				var a = new Audio();
-				if(a.canPlayType("audio/ogg; codecs=vorbis") != ""){
-					return 0;
-				}else{
-					if(a.canPlayType("audio/mpeg") != ""){
-						return 1;
+				try {
+					var a = new Audio();
+					if(a.canPlayType("audio/ogg; codecs=vorbis") != ""){
+						return 0;
+					}else{
+						if(a.canPlayType("audio/mpeg") != ""){
+							return 1;
+						}
 					}
-				}
+				}catch(e){}
 				return -1;
 			})();
 			if(ty >= 0){
