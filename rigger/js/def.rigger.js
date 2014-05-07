@@ -55,7 +55,7 @@ rigger.def = {
 			/* Speed of player in different situations (in px/s)
 			 * 0 = normal; 1 = up ladder; 2 = carry ladder; 3 = carry light
 			*/
-			speeds : [300, 200, 150, 200],
+			speeds : [350, 250, 200, 250],
 
 			h : 100,
 			w : 62
@@ -65,7 +65,7 @@ rigger.def = {
 
 			imgs : rigger.assets.sprites.player.trojak,
 
-			speeds : [300, 200, 150, 200],
+			speeds : [350, 250, 200, 250],
 
 			h : 100,
 			w : 62
@@ -75,7 +75,7 @@ rigger.def = {
 
 			imgs : rigger.assets.sprites.player.corin,
 
-			speeds : [300, 200, 150, 200],
+			speeds : [350, 250, 200, 250],
 
 			h : 100,
 			w : 62

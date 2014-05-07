@@ -17,7 +17,7 @@ var rigger = {
 	ctx : null, // The canvas context
 
 	/* State of the game
-	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory
+	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory; 4 = failure
 	*/
 	state : 0,
 
@@ -80,10 +80,31 @@ var rigger = {
 			var b = new rigger.Bar();
 			for(var i = 0; i <= rigger.settings.barSize; i++){
 				if(Math.random() < 0.3){
-					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*4)]), i);
+					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*rigger.def.lights.length)]), i);
 				}
 			}
 			return b;
+		},
+
+		timeConvert : function(t, p){ // Takes the time (ms) and converts it into a time of day (p represents need for second presistion)
+			var startTime = [15,0];
+			// 1 sec = 1 min
+			var s = Math.floor(t/1000), // Secs
+				hours = Math.floor(s/60),
+				mins = s % 60;
+
+			var a = startTime[0]+hours,
+				b = startTime[1]+mins;
+
+			a -= 24*Math.floor(a/24);
+			b = ((b > 9)?b:(0).toString()+b);
+
+
+			var str = a + ":" + b;
+			if(p){
+				str += ":" + ((t%1000)/10).toFixed(0);
+			}
+			return str;
 		},
 
 		defaultCan : function(a){
@@ -116,10 +137,18 @@ var rigger = {
 
 			/* IN GAME */
 			if(rigger.state === 2){
-				rigger.e.tick(dt); // Update the timer
 				// Update the bar
 				rigger.game.bar.update();
 				rigger.game.target.update();
+
+
+				if(rigger.game.menu !== 2){ // Do not update on pause/game menu
+					rigger.e.tick(dt); // Update the timer
+				}
+				// Check for failure conditions
+				if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
+					rigger.state = 4;
+				}
 			}
 		},
 
@@ -150,14 +179,17 @@ var rigger = {
 					// Display the time
 					rigger.h.defaultCan(20);
 					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText("Time: "+(rigger.game.time/1000).toFixed(3), rigger.width - 10, 10);
+					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
 
 					switch(rigger.game.menu){
 						case 1 : { // Design
 							rigger.d.o.design();
 						break; }
 
-
+						case 2 : { // In game menu/paused
+							rigger.game.player.draw();
+							rigger.d.o.inGame();
+						break; }
 
 
 
@@ -179,15 +211,42 @@ var rigger = {
 
 					rigger.h.defaultCan(40);
 					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Congratulations! You win", rigger.width/10, rigger.height*4/10);
+					rigger.ctx.fillText("Good job!", rigger.width/10, rigger.height*4/10);
 
 					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("In time: "+(rigger.game.time/1000).toFixed(3), rigger.width/10, rigger.height*4/10);
+					rigger.ctx.fillText("The getin finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10);
 
 					rigger.ctx.textAlign = "center";
 					rigger.ctx.fillStyle = "yellow";
 					rigger.ctx.textBaseline = "bottom";
 					rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/10);
+				break; }
+
+				case 4 : { // FAILURE
+					// Draw the room green for now
+					rigger.ctx.fillStyle = "green";
+					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+
+					// Display the time
+					rigger.h.defaultCan(20);
+					rigger.ctx.textAlign = "right";
+					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
+
+					rigger.game.bar.draw(); // Draw the bar to show current rig
+
+					rigger.h.defaultCan(40);
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.fillText("Security kicked you out", rigger.width/10, rigger.height*4/10);
+
+					rigger.h.defaultCan(32);
+					rigger.ctx.textBaseline = "top";
+					rigger.ctx.fillText("You should probably get late night working next time...", rigger.width/10, rigger.height*4/10);
+
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillStyle = "yellow";
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/10);
+
 				break; }
 			}
 		},
@@ -246,6 +305,18 @@ var rigger = {
 
 				rigger.ctx.fillStyle = "black";
 				rigger.ctx.fillText("Design", 250, 400);
+			},
+			inGame : function(){
+				rigger.h.defaultCan();
+				// Transparent layer
+				rigger.ctx.globalAlpha = 0.5;
+				rigger.ctx.fillStyle = "white";
+				rigger.ctx.fillRect(0, 0, rigger.width, rigger.height);
+
+
+				rigger.h.defaultCan(24);
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillText("Game Paused...", rigger.width/2, rigger.height/5);
 			}
 		},
 		error : function(){
@@ -347,7 +418,14 @@ var rigger = {
 	},
 
 	pause : function(){
-
+		if(rigger.state !== 2){return;} // Only pause in game
+		rigger.game.menu = 2;
+		rigger.locked = true;
+	},
+	unpause : function(){
+		if(rigger.game.menu !== 2){return;} // Cannot unpause unless paused
+		rigger.game.menu = 0;
+		rigger.locked = false;
 	}
 
 };
@@ -388,6 +466,10 @@ rigger.init = function(div, w, h){
 		}
 
 	});
+
+	// Add the pause and resume listeners
+	window.addEventListener("blur", function(){rigger.pause();});
+	window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
 };
 
 

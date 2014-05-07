@@ -90,25 +90,29 @@
 
 			// Load audio in a sim. way
 			var ty = (function(){ // Use the right codec
-				var a = new Audio();
-				if(a.canPlayType("audio/ogg; codecs=vorbis") != ""){
-					return 0;
-				}else{
-					if(a.canPlayType("audio/mpeg") != ""){
-						return 1;
+				try {
+					var a = new Audio();
+					if(a.canPlayType("audio/ogg; codecs=vorbis") != ""){
+						return 0;
+					}else{
+						if(a.canPlayType("audio/mpeg") != ""){
+							return 1;
+						}
 					}
-				}
+				}catch(e){}
 				return -1;
 			})();
 			if(ty >= 0){
 				for(var m in rigger.assets.audio){
-					toLoad++;
-					var au = rigger.assets.audio[m][ty],
-					    i = new Audio();
-					i.addEventListener("canplaythrough",function(){rigger.assets.audio[m] = i; loaded++; f();});
-					i.addEventListener("error",function(){f(au);});
-					i.src = au;
-					i.volume = rigger.settings.volume;
+					(function(m){
+						toLoad++;
+						var au = rigger.assets.audio[m][ty],
+						    i = new Audio();
+						i.addEventListener("loadstart",function(){rigger.assets.audio[m] = i; loaded++; f();});
+						i.addEventListener("error",function(){f(au);});
+						i.src = au;
+						i.volume = rigger.settings.volume;
+					})(m);
 				}
 			}else{ // No codec supported
 				for(var m in rigger.assets.audio){

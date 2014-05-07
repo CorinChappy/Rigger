@@ -10,6 +10,7 @@
 			rigger.keysDown[e.keyCode] = true;
 
 			if(rigger.keyPressAction[e.keyCode] && !rigger.locked){
+				e.preventDefault();
 				rigger.keyPressAction[e.keyCode].call(rigger);
 			}
 		},
@@ -117,7 +118,7 @@
 					return;
 				}
 			}
-			if(rigger.state === 3){ // VICTORY
+			if(rigger.state === 3 || rigger.state === 4){ // VICTORY or FAILURE
 				rigger.state = 1;
 			}
 		},
