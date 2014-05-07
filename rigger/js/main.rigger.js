@@ -80,7 +80,7 @@ var rigger = {
 			var b = new rigger.Bar();
 			for(var i = 0; i <= rigger.settings.barSize; i++){
 				if(Math.random() < 0.3){
-					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*4)]), i);
+					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*rigger.def.lights.length)]), i);
 				}
 			}
 			return b;
