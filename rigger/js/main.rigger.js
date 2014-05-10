@@ -130,24 +130,24 @@ var rigger = {
 				}
 			}
 
-			/*if(rigger.state === 1){ // Main menu
-
-			}*/
-
-
-			/* IN GAME */
-			if(rigger.state === 2){
-				// Update the bar
-				rigger.game.bar.update();
-				rigger.game.target.update();
+			switch(rigger.state){
+				case 2 : { // IN GAME
+					// Update the bar
+					rigger.game.bar.update();
+					rigger.game.target.update();
 
 
-				if(rigger.game.menu !== 2){ // Do not update on pause/game menu
-					rigger.e.tick(dt); // Update the timer
+					if(rigger.game.menu !== 2){ // Do not update on pause/game menu
+						rigger.e.tick(dt); // Update the timer
+					}
+					// Check for failure conditions
+					if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
+						rigger.state = 4;
+					}
 				}
-				// Check for failure conditions
-				if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
-					rigger.state = 4;
+
+				case 3 : {
+					rigger.game.bar.update();
 				}
 			}
 		},
