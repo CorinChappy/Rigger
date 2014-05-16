@@ -215,7 +215,7 @@ var rigger = {
 					rigger.ctx.fillText("Good job!", rigger.width/10, rigger.height*4/10);
 
 					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("The getin finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10);
+					rigger.ctx.fillText("The get in finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10);
 
 					rigger.ctx.textAlign = "center";
 					rigger.ctx.fillStyle = "yellow";
@@ -266,7 +266,7 @@ var rigger = {
 				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 				rigger.h.defaultCan(20);
 				rigger.ctx.textAlign = "right";
-				rigger.ctx.fillText("Light Store \u21D2", rigger.width - 10, 400);
+				rigger.ctx.fillText("Light Store \u21D2", rigger.width - 10, rigger.height*4/5);
 				rigger.game.ladder.draw();
 				rigger.game.bar.draw();
 

@@ -232,7 +232,7 @@ rigger.Ladder = function(){
 
 	this.g = {
 		w : 75,
-		h : 475,
+		h : rigger.height * 0.95,
 		x : 50
 	};
 	this.g.y = rigger.height - this.g.h;
