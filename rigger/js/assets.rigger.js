@@ -98,12 +98,39 @@
 			// Load audio using XHR
 			var Au = function(buffer, context){
 				var source = null;
+				var gainNode = null;
+
+
+				var volume = 1;
+				this.setVolume = function(vol){
+					try{
+						volume = vol;
+						gainNode.gain.value = volume;
+					}catch(e){}
+				};
+
+
+				this.loop = false;
 				this.play = function(){
 					source = context.createBufferSource();
 					source.buffer = buffer;
 					source.connect(context.destination);
+					source.loop = this.loop;
+
+					var gainNode = context.createGain();
+					source.connect(gainNode);
+					gainNode.connect(context.destination);
+					gainNode.gain.value = volume;
+
 					source.start();
 				};
+
+				this.stop = function(){
+					try{
+						source.stop();
+					}catch(e){}
+				};
+
 			};
 			window.AudioContext = window.AudioContext || window.webkitAudioContext;
 			var ty = (function(){ // Use the right codec
