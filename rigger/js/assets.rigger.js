@@ -2,6 +2,8 @@
 (function(){
 "use strict";
 
+window.AudioContext = window.AudioContext || window.webkitAudioContext; // Correct AudioContext element
+
 	rigger.assets = {
 		sprites : {
 			bg : {
@@ -89,10 +91,11 @@
 
 
 			// Load audio using XHR
+
+			// My very own audio object!
 			var Au = function(buffer, context){
 				var source = null;
 				var gainNode = null;
-
 
 				var volume = 1;
 				this.setVolume = function(vol){
@@ -102,7 +105,6 @@
 					}catch(e){}
 				};
 
-
 				this.loop = false;
 				this.play = function(){
 					source = context.createBufferSource();
@@ -110,7 +112,8 @@
 					source.connect(context.destination);
 					source.loop = this.loop;
 
-					var gainNode = context.createGain();
+					// Volume related stuff
+					gainNode = context.createGain();
 					source.connect(gainNode);
 					gainNode.connect(context.destination);
 					gainNode.gain.value = volume;
@@ -123,9 +126,8 @@
 						source.stop();
 					}catch(e){}
 				};
-
 			};
-			window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
 			var ty = (function(){ // Use the right codec
 				try {
 					var a = new Audio();
@@ -139,7 +141,7 @@
 				}catch(e){}
 				return -1;
 			})();
-			if(ty >= 0){
+			if(ty >= 0 && window.AudioContext){
 				for(var m in rigger.assets.audio){
 					(function(m){
 						toLoad++;
