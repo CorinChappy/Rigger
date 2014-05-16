@@ -112,6 +112,7 @@ var rigger = {
 			rigger.ctx.globalAlpha = 1;
 			rigger.ctx.strokeStyle = "black";
 			rigger.ctx.fillStyle = "black";
+			rigger.ctx.lineWidth = 1;
 			rigger.ctx.font = a+"px Helvetica";
 			rigger.ctx.textAlign = "start";
 			rigger.ctx.textBaseline = "top";
@@ -154,7 +155,7 @@ var rigger = {
 
 		// THE drawing function
 		draw : function(){
-			rigger.ctx.clearRect(0,0, rigger.width, rigger.height); // Clear the screen (blank canvas)
+			rigger.ctx.clearRect(0,0, rigger.canvas.width, rigger.canvas.height); // Clear the screen (blank canvas)
 			rigger.h.defaultCan();
 
 			switch(rigger.state){
@@ -328,6 +329,9 @@ var rigger = {
 			rigger.ctx.textBaseline = "top";
 			rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
 		},
+		instructions : function(){
+
+		},
 		loading : function(){
 			rigger.ctx.fillStyle = "green";
 			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
@@ -345,6 +349,15 @@ var rigger = {
 			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 
+			/* Instructions */
+			rigger.ctx.textAlign = "right";
+			rigger.ctx.textBaseline = "bottom";
+			rigger.ctx.fillText("\u21E6 \u21E8 Select character          ", rigger.width/2, rigger.height/6);
+			rigger.ctx.textAlign = "left";
+			rigger.ctx.fillText("Space    Start game!", rigger.width/2, rigger.height/6);
+			rigger.ctx.lineWidth = 3;
+			rigger.ctx.strokeRect(rigger.width/2 - 20, rigger.height/6 + 2, 105, -30);
+
 
 			/*var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
 			for(var i = 0; i < ops.length; i++){
@@ -355,7 +368,7 @@ var rigger = {
 
 			rigger.ctx.textAlign = "center";
 			rigger.ctx.textBaseline = "bottom";
-			rigger.ctx.fillText("Pick a character", rigger.width/2, rigger.height/5);
+			//rigger.ctx.fillText("Pick a character", rigger.width/2, rigger.height/6);
 
 			// Set sizes
 			rigger.h.defaultCan(18);
