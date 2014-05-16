@@ -94,7 +94,17 @@
 			})(rigger.assets, "sprites");
 
 
-			// Load audio in a sim. way
+			// Load audio using XHR
+			var Au = function(buffer, context){
+				var source = null;
+				this.play = function(){
+					source = context.createBufferSource();
+					source.buffer = buffer;
+					source.connect(context.destination);
+					source.start();
+				};
+			};
+			window.AudioContext = window.AudioContext || window.webkitAudioContext;
 			var ty = (function(){ // Use the right codec
 				try {
 					var a = new Audio();
@@ -113,11 +123,26 @@
 					(function(m){
 						toLoad++;
 						var au = rigger.assets.audio[m][ty],
-							i = new Audio();
-						i.addEventListener("loadstart",function(){rigger.assets.audio[m] = i; loaded++; f();});
-						i.addEventListener("error",function(){f(au);});
-						i.src = au;
-						i.volume = rigger.settings.volume;
+							cont = new AudioContext(),
+						    xhr = new XMLHttpRequest();
+						xhr.open('GET', au, true);
+						xhr.responseType = 'arraybuffer';
+						xhr.addEventListener("load",function(){
+							if (this.status == 200){
+								cont.decodeAudioData(xhr.response, function(buff){
+									var aud = new Au(buff, cont);
+									rigger.assets.audio[m] = aud;
+									rigger.assets.audio[m].volume = rigger.settings.volume;
+									loaded++;
+									f();
+								});
+
+							}
+
+						});
+						xhr.addEventListener("error",function(){f(au);});
+						xhr.send();
+						
 					})(m);
 				}
 			}else{ // No codec supported
