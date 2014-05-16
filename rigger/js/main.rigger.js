@@ -472,6 +472,13 @@ rigger.init = function(div, w, h){
 	window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
 };
 
+rigger.resize = function(w, h){
+	rigger.width = (!w || w < 0)?rigger.width:w;
+	rigger.height = (!h || h < 0)?rigger.height:h;
+
+	rigger.LS.width = rigger.width/1.396; rigger.LS.height = rigger.height/1.222; // Ratio's for the lighting store
+};
+
 
 // Export rigger object for the rest of the JS
 window.rigger = rigger;
