@@ -97,6 +97,16 @@
 
 
 			// Load audio using XHR
+			var Au = function(buffer, context){
+				var source = null;
+				this.play = function(){
+					source = context.createBufferSource();
+					source.buffer = buffer;
+					source.connect(context.destination);
+					source.start();
+				};
+			};
+			window.AudioContext = window.AudioContext || window.webkitAudioContext;
 			var ty = (function(){ // Use the right codec
 				try {
 					var a = new Audio();
