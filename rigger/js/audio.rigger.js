@@ -20,8 +20,7 @@
 			var p =  rigger.assets.audio[track];
 			if(p && p.play){
 				p.loop = false;
-				p.pause();
-				p.currentTime = 0; // Back to the start
+				p.stop();
 			}
 		},
 
