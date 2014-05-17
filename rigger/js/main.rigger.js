@@ -359,17 +359,7 @@ var rigger = {
 			rigger.ctx.strokeRect(rigger.width/2 - 20, rigger.height/6 + 2, 105, -30);
 
 
-			/*var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
-			for(var i = 0; i < ops.length; i++){
-				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
-				rigger.h.defaultCan(24);
-				rigger.ctx.fillText(ops[i], 10, 150 + (50*i));
-			}*/
-
-			rigger.ctx.textAlign = "center";
-			rigger.ctx.textBaseline = "bottom";
-			//rigger.ctx.fillText("Pick a character", rigger.width/2, rigger.height/6);
-
+			/* Character selection */
 			// Set sizes
 			rigger.h.defaultCan(18);
 			rigger.ctx.textAlign = "center";
