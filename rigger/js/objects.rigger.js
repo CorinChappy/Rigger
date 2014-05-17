@@ -99,7 +99,7 @@ rigger.Player = function(who){
 					ln = rigger.LS.width/2, // Length of the lighting bars
 					wI = rigger.LS.width/12, // Padding from the side
 					wG = ln/ll; // Space for each light type
-					if(this.g.x > rigger.LS.width - ln || this.g.x < rigger.LS.width - wI){ // Over the lighting part
+					if(this.g.x > (rigger.LS.width - ln) + wG/2 || this.g.x < rigger.LS.width - wI){ // Over the lighting part
 						var t = Math.floor(((rigger.LS.width - this.g.x - wI) + wG/2)/wG);
 						if(this.light){
 							if(t === this.light.type().t){
