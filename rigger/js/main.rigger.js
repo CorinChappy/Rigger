@@ -265,8 +265,7 @@ var rigger = {
 				rigger.ctx.fillStyle = "green";
 				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
 				rigger.h.defaultCan(20);
-				rigger.ctx.textAlign = "right";
-				rigger.ctx.fillText("Light Store \u21D2", rigger.width - 10, rigger.height*4/5);
+				rigger.ctx.fillText("\u21D0 Light Store", 10, rigger.height*4/5);
 				rigger.game.ladder.draw();
 				rigger.game.bar.draw();
 
@@ -281,13 +280,13 @@ var rigger = {
 				// Put in some lights
 				var l = rigger.def.lights,
 				ln = rigger.LS.width/2, // Length of the lighting bars
-				wI = rigger.LS.width/36, // Padding from the side
+				wI = rigger.LS.width/12, // Padding from the side
 				wG = ln/l.length, // Space for each light type
 				hI = (rigger.height - rigger.LS.height) + rigger.LS.height/13.6, // Top padding
 				hG = rigger.LS.height/4.5; // Distance between each bar
 				for(var i = 0; i < l.length; i++){
 					for(var j = 0; j < 4 /* Number of bars */; j++){
-						rigger.ctx.drawImage(l[i].img(), wI + (wG*i), hI + (hG*j), l[i].w, l[i].h);
+						rigger.ctx.drawImage(l[i].img(), rigger.LS.width - wI - (wG*i), hI + (hG*j), l[i].w, l[i].h);
 					}
 				}
 

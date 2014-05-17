@@ -20,13 +20,14 @@ rigger.Player = function(who){
 	this.g = {
 		w : who.w,
 		h : who.h,
-		x : 5,
+		x : 0,
 		y : 0,
-		i : this.imgs.right,
+		i : this.imgs.left,
 		cI : true, // Image flipper
 		cD : 1
 	};
 	this.g.y = rigger.height - this.g.h;
+	this.g.x = rigger.width - this.g.w - 5,
 	this.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 
@@ -41,7 +42,16 @@ rigger.Player = function(who){
 			// Left or right
 			case 37 :
 			case 39 : {
-			var min = 0 - this.g.w*2/3, max = (rigger.game.room === 0)?rigger.width - this.g.w/3:rigger.LS.width - this.g.w;
+			// Boundaries for the rooms
+			var min, max;
+			if(rigger.game.room === 0){
+				min = 0 - this.g.w*2/3;
+				max = rigger.width - this.g.w;
+			}else{
+				min = min = 0;
+				max = rigger.LS.width - this.g.w/3;
+			}
+
 			if(this.g.y >= rigger.height - this.g.h){ // No moving away from the ladder if in the air
 				this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
 				this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
@@ -87,10 +97,10 @@ rigger.Player = function(who){
 				if(rigger.game.room === 1){ // LIGHT STORE
 					var ll = rigger.def.lights.length, // Number of light types
 					ln = rigger.LS.width/2, // Length of the lighting bars
-					wI = rigger.LS.width/36, // Padding from the side
+					wI = rigger.LS.width/12, // Padding from the side
 					wG = ln/ll; // Space for each light type
-					if(this.g.x > wI || this.g.x < ln){ // Over the lighting part
-						var t = Math.floor((this.g.x + wI)/wG);
+					if(this.g.x > rigger.LS.width - ln || this.g.x < rigger.LS.width - wI){ // Over the lighting part
+						var t = Math.floor(((rigger.LS.width - this.g.x - wI) + wG/2)/wG);
 						if(this.light){
 							if(t === this.light.type().t){
 								this.light = null;
@@ -233,9 +243,9 @@ rigger.Ladder = function(){
 	this.g = {
 		w : 75,
 		h : rigger.height * 0.95,
-		x : 50
 	};
 	this.g.y = rigger.height - this.g.h;
+	this.g.x = rigger.width - this.g.w - 50;
 
 	this.draw = function(){
 		rigger.h.defaultCan();
