@@ -379,6 +379,12 @@ var rigger = {
 			num = Object.keys(rigger.def.players).length, // Number of players
 			hei = rigger.height - top - rigger.height/10; // Height of the image
 
+			if(num > 4){
+				hei /= 2.1;
+				num = Math.min(num, 6);
+			}
+
+
 			// Loop around all the players
 			var count = 0;
 			for(var n in rigger.def.players){
@@ -386,7 +392,13 @@ var rigger = {
 				wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
 				padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
 				size = [wid, hei],
-				pos = [padding/2 + padding*count + size[0]*count, top];
+				pos;
+
+				if(count >= 6){
+					pos = [padding/2 + padding*(count-6) + size[0]*(count-6), top + hei + 30];
+				}else{
+					pos = [padding/2 + padding*count + size[0]*count, top];
+				}
 
 
 				if(count === rigger.menuOption){
