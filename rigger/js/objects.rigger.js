@@ -27,93 +27,98 @@ rigger.Player = function(who){
 		cD : 1
 	};
 	this.g.y = rigger.height - this.g.h;
-	this.draw = function(){
-		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
-
-
-		// Draw light if needed
-		if(this.light){
-			this.light.draw();
-		}
-	};
-	this.update = function(dt, key){
-		switch(key){
-			// Left or right
-			case 37 :
-			case 39 : {
-			var min = 0 - this.g.w*2/3, max = (rigger.game.room === 0)?rigger.width - this.g.w/3:rigger.LS.width - this.g.w;
-			if(this.g.y >= rigger.height - this.g.h){ // No moving away from the ladder if in the air
-				this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
-				this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
-			}
-			break; }
-
-			// Up or Down
-			case 38 :
-			case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
-				var l = rigger.game.ladder.g,
-				    rW = l.w/5
-				if(rigger.game.player.g.x > l.x - (rW*2) && rigger.game.player.g.x < l.x + l.w - (rW*2)){ // Over the ladder
-					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
-					this.g.cD = this.g.cD - dt * 4;
-					if(this.g.cD <= 0){
-						this.g.cI = !this.g.cI;
-						this.g.cD = 1;
-					}
-					this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
-				}
-			break; }
-
-			// Spacebar
-			case 32 : {
-				if(rigger.game.room === 0){ // ANNEX
-					var b = rigger.game.bar;
-					// Check you are close enough to the bar (top of the ladder)
-					if(this.g.y === rigger.game.ladder.g.y){
-						// Check colision with bar position
-						var ratio = rigger.width/rigger.settings.barSize,
-						    u = Math.floor((this.g.x + (ratio/2))/ratio);
-						if(this.light){
-							// Try to add to the bar
-							if(b.addLight(this.light, u)){
-								this.light = null;
-								this.speed = this.speeds[0];
-							}
-						}else{
-							this.light = b.removeLight(u); // Get a light if you are not holding one
-						}
-					}
-				}
-				if(rigger.game.room === 1){ // LIGHT STORE
-					var ll = rigger.def.lights.length, // Number of light types
-					ln = rigger.LS.width/2, // Length of the lighting bars
-					wI = rigger.LS.width/36, // Padding from the side
-					wG = ln/ll; // Space for each light type
-					if(this.g.x > wI || this.g.x < ln){ // Over the lighting part
-						var t = Math.floor((this.g.x + wI)/wG);
-						if(this.light){
-							if(t === this.light.type().t){
-								this.light = null;
-								this.speed = this.speeds[0];
-							}
-						}else{
-							this.light = new rigger.Light(rigger.def.lights[t]);
-						}
-					}
-				}
-			break; }
-		}
-
-		
-
-		if(this.light){
-			this.speed = this.speeds[3];
-			// Place the light in his hand
-			this.light.g.x = this.g.x + this.hand.x;
-			this.light.g.y = this.g.y + this.hand.y;
-		}
-	};
 };
+/* Prototype methods for player */
+rigger.Player.prototype.draw = function(){
+	rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
+
+
+	// Draw light if needed
+	if(this.light){
+		this.light.draw();
+	}
+};
+rigger.Player.prototype.update = function(dt, key){
+	switch(key){
+		// Left or right
+		case 37 :
+		case 39 : {
+		var min = 0 - this.g.w*2/3, max = (rigger.game.room === 0)?rigger.width - this.g.w/3:rigger.LS.width - this.g.w;
+		if(this.g.y >= rigger.height - this.g.h){ // No moving away from the ladder if in the air
+			this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
+			this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
+		}
+		break; }
+
+		// Up or Down
+		case 38 :
+		case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
+			var l = rigger.game.ladder.g,
+			    rW = l.w/5
+			if(rigger.game.player.g.x > l.x - (rW*2) && rigger.game.player.g.x < l.x + l.w - (rW*2)){ // Over the ladder
+				this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
+				this.g.cD = this.g.cD - dt * 4;
+				if(this.g.cD <= 0){
+					this.g.cI = !this.g.cI;
+					this.g.cD = 1;
+				}
+				this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
+			}
+		break; }
+
+		// Spacebar
+		case 32 : {
+			if(rigger.game.room === 0){ // ANNEX
+				var b = rigger.game.bar;
+				// Check you are close enough to the bar (top of the ladder)
+				if(this.g.y === rigger.game.ladder.g.y){
+					// Check colision with bar position
+					var ratio = rigger.width/rigger.settings.barSize,
+					    u = Math.floor((this.g.x + (ratio/2))/ratio);
+					if(this.light){
+						// Try to add to the bar
+						if(b.addLight(this.light, u)){
+							this.light = null;
+							this.speed = this.speeds[0];
+						}
+					}else{
+						this.light = b.removeLight(u); // Get a light if you are not holding one
+					}
+				}
+			}
+			if(rigger.game.room === 1){ // LIGHT STORE
+				var ll = rigger.def.lights.length, // Number of light types
+				ln = rigger.LS.width/2, // Length of the lighting bars
+				wI = rigger.LS.width/36, // Padding from the side
+				wG = ln/ll; // Space for each light type
+				if(this.g.x > wI || this.g.x < ln){ // Over the lighting part
+					var t = Math.floor((this.g.x + wI)/wG);
+					if(this.light){
+						if(t === this.light.type().t){
+							this.light = null;
+							this.speed = this.speeds[0];
+						}
+					}else{
+						this.light = new rigger.Light(rigger.def.lights[t]);
+					}
+				}
+			}
+		break; }
+	}
+
+	
+
+	if(this.light){
+		this.speed = this.speeds[3];
+		// Place the light in his hand
+		this.light.g.x = this.g.x + this.hand.x;
+		this.light.g.y = this.g.y + this.hand.y;
+	}
+};
+
+
+
+
 
 rigger.Bar = function(design){ // Represents a bar in the annex (design is a boolean, whether or not it's a physical bar, or one drawn on paper)
 	this.bar = (function(b){var a = []; while(a.length < b){a.push(false)} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
@@ -144,19 +149,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 		t : 5, // Thickness of the bar
 		l : rigger.width // Length of the bar
 	};
-	this.draw = function(){
-		rigger.ctx.strokeStyle = "black";
-		rigger.ctx.lineWidth = this.g.t;
 
-		rigger.ctx.beginPath();
-		rigger.ctx.moveTo(this.g.x, this.g.y);
-		rigger.ctx.lineTo(this.g.x + this.g.l, this.g.y);
-		rigger.ctx.stroke();
-
-		this.bar.forEach(function(a){
-			if(a){a.draw()}
-		});
-	};
 	this.update = function(dt){
 		for(var u in updatables){
 			// Update the lights on bar
@@ -174,13 +167,31 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 		}
 	};
 };
-rigger.Bar.equals = function(a, b){ // Check for equality of two bars
+/* Bar prototypes */
+rigger.Bar.prototype.draw = function(){
+	rigger.ctx.strokeStyle = "black";
+	rigger.ctx.lineWidth = this.g.t;
+
+	rigger.ctx.beginPath();
+	rigger.ctx.moveTo(this.g.x, this.g.y);
+	rigger.ctx.lineTo(this.g.x + this.g.l, this.g.y);
+	rigger.ctx.stroke();
+
+	this.bar.forEach(function(a){
+		if(a){a.draw()}
+	});
+};
+rigger.Bar.prototype.equals = function(a, b){ // Check for equality of two bars
 	if(!a || !b){return false;}
 	for(var i = 0; i < rigger.settings.barSize; i++){
 		if(!rigger.Light.equals(a.bar[i], b.bar[i])){return false;}
 	}
 	return true;
 };
+
+
+
+
 
 rigger.Light = function(type) {
 	this.type = function(){return type;};
@@ -197,11 +208,12 @@ rigger.Light = function(type) {
 		h : type.h,
 		i : type.img()
 	};
-	this.draw = function(){
-		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
-	};
 };
-rigger.Light.equals = function(a, b){
+/* Light prototypes */
+rigger.Light.prototype.draw = function(){
+		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
+};
+rigger.Light.prototype.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
 	if(a.type() !== b.type()){return false;}
 	if(!rigger.Gel.equals(a.gel, b.gel)){return false;}
@@ -218,7 +230,7 @@ rigger.Gel = function(num, type){
 	var col = rigger.gelRef[num]; // Gets the HEX colour code for the Gel number
 	this.colour = function(){return col;};
 };
-rigger.Gel.equals = function(a, b){
+rigger.Gel.prototype.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
 	if(a.type() !== b.type()){return false;}
 	if(a.colour() !== b.colour()){return false;}
@@ -236,47 +248,47 @@ rigger.Ladder = function(){
 		x : 50
 	};
 	this.g.y = rigger.height - this.g.h;
+};
+/* Ladder prototypes */
+rigger.Ladder.prototype.draw = function(){
+	rigger.h.defaultCan();
+	var rW = this.g.w/5
+	rigger.ctx.lineWidth = rW;
+	rigger.ctx.strokeStyle = "gray";
 
-	this.draw = function(){
-		rigger.h.defaultCan();
-		var rW = this.g.w/5
-		rigger.ctx.lineWidth = rW;
-		rigger.ctx.strokeStyle = "gray";
+	// Left
+	rigger.ctx.beginPath();
+	rigger.ctx.moveTo(this.g.x + rW/2, this.g.y);
+	rigger.ctx.lineTo(this.g.x + rW/2, rigger.height);
+	rigger.ctx.stroke();
 
-		// Left
+	// Right
+	rigger.ctx.beginPath();
+	rigger.ctx.moveTo(this.g.x + this.g.w - rW, this.g.y);
+	rigger.ctx.lineTo(this.g.x + this.g.w - rW, rigger.height);
+	rigger.ctx.stroke();
+
+	// Rungs
+	var rungNum = 9, // 9 rungs
+	    num = this.g.h/rungNum; 
+	for(var i = 0; i < rungNum; i++){
 		rigger.ctx.beginPath();
-		rigger.ctx.moveTo(this.g.x + rW/2, this.g.y);
-		rigger.ctx.lineTo(this.g.x + rW/2, rigger.height);
+		rigger.ctx.moveTo(this.g.x - rW/2, this.g.y + (num * i) + 20);
+		rigger.ctx.lineTo(this.g.x + this.g.w, this.g.y + (num * i) + 20);
 		rigger.ctx.stroke();
+	}
+};
+rigger.Ladder.prototype.update = function(){
+	/* Check colision with player */
+	var p = rigger.game.player,
+	    rW = this.g.w/5
+	if(p.g.y === rigger.height - p.g.h // Player on ground
+	&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
+	&& !p.light){ // Player has not got a light
+		// Move ladder with player
+		this.g.x = p.g.x;
+	}
 
-		// Right
-		rigger.ctx.beginPath();
-		rigger.ctx.moveTo(this.g.x + this.g.w - rW, this.g.y);
-		rigger.ctx.lineTo(this.g.x + this.g.w - rW, rigger.height);
-		rigger.ctx.stroke();
-
-		// Rungs
-		var rungNum = 9, // 9 rungs
-		    num = this.g.h/rungNum; 
-		for(var i = 0; i < rungNum; i++){
-			rigger.ctx.beginPath();
-			rigger.ctx.moveTo(this.g.x - rW/2, this.g.y + (num * i) + 20);
-			rigger.ctx.lineTo(this.g.x + this.g.w, this.g.y + (num * i) + 20);
-			rigger.ctx.stroke();
-		}
-	};
-	this.update = function(){
-		/* Check colision with player */
-		var p = rigger.game.player,
-		    rW = this.g.w/5
-		if(p.g.y === rigger.height - p.g.h // Player on ground
-		&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
-		&& !p.light){ // Player has not got a light
-			// Move ladder with player
-			this.g.x = p.g.x;
-		}
-
-	};
 };
 
 
