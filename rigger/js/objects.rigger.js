@@ -181,7 +181,7 @@ rigger.Bar.prototype.draw = function(){
 		if(a){a.draw()}
 	});
 };
-rigger.Bar.prototype.equals = function(a, b){ // Check for equality of two bars
+rigger.Bar.equals = function(a, b){ // Check for equality of two bars
 	if(!a || !b){return false;}
 	for(var i = 0; i < rigger.settings.barSize; i++){
 		if(!rigger.Light.equals(a.bar[i], b.bar[i])){return false;}
@@ -213,7 +213,7 @@ rigger.Light = function(type) {
 rigger.Light.prototype.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 };
-rigger.Light.prototype.equals = function(a, b){
+rigger.Light.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
 	if(a.type() !== b.type()){return false;}
 	if(!rigger.Gel.equals(a.gel, b.gel)){return false;}
@@ -230,7 +230,7 @@ rigger.Gel = function(num, type){
 	var col = rigger.gelRef[num]; // Gets the HEX colour code for the Gel number
 	this.colour = function(){return col;};
 };
-rigger.Gel.prototype.equals = function(a, b){
+rigger.Gel.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
 	if(a.type() !== b.type()){return false;}
 	if(a.colour() !== b.colour()){return false;}
