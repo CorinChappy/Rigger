@@ -18,7 +18,7 @@
 			//e.preventDefault();
 			delete rigger.keysDown[e.keyCode];
 		}
-	}
+	};
 
 	/* Event listeners for the keypresses */
 	window.addEventListener("keydown", rigger.keyFunc.keydown);

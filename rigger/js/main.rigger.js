@@ -6,6 +6,33 @@ Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
 	return Math.max(min, Math.min(num, max));
 };
 
+/* Game functions */
+function showCharacter(p, top, num, hei, count){
+	var wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
+	padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
+	size = [wid, hei],
+	pos;
+
+	if(count >= 6){
+		pos = [padding/2 + padding*(count-6) + size[0]*(count-6), top + hei + 30];
+	}else{
+		pos = [padding/2 + padding*count + size[0]*count, top];
+	}
+
+
+	if(count === rigger.menuOption){
+		rigger.ctx.globalAlpha = 0.5;
+		rigger.ctx.fillStyle = "yellow";
+		rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1]);
+		rigger.ctx.globalAlpha = 1;
+	}else{
+		rigger.ctx.fillStyle = "black";
+	}
+	rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
+
+	rigger.ctx.fillText(p.name, pos[0] + size[0]/2, pos[1] + size[1] + 10);
+}
+
 
 var rigger = {
 
@@ -108,7 +135,7 @@ var rigger = {
 		},
 
 		defaultCan : function(a){
-			var a = a || 12;
+			a = a || 12;
 			rigger.ctx.globalAlpha = 1;
 			rigger.ctx.strokeStyle = "black";
 			rigger.ctx.fillStyle = "black";
@@ -145,7 +172,7 @@ var rigger = {
 					if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
 						rigger.state = 4;
 					}
-				}
+				break; }
 
 				case 3 : {
 					rigger.game.bar.update();
@@ -378,32 +405,10 @@ var rigger = {
 			// Loop around all the players
 			var count = 0;
 			for(var n in rigger.def.players){
-				var p = rigger.def.players[n],
-				wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
-				padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
-				size = [wid, hei],
-				pos;
-
-				if(count >= 6){
-					pos = [padding/2 + padding*(count-6) + size[0]*(count-6), top + hei + 30];
-				}else{
-					pos = [padding/2 + padding*count + size[0]*count, top];
+				if(rigger.def.players.hasOwnProperty(n)){
+					showCharacter(rigger.def.players[n], top, num, hei, count);
+					count++;
 				}
-
-
-				if(count === rigger.menuOption){
-					rigger.ctx.globalAlpha = 0.5;
-					rigger.ctx.fillStyle = "yellow";
-					rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1])
-					rigger.ctx.globalAlpha = 1;
-				}else{
-					rigger.ctx.fillStyle = "black";
-				}
-				rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
-
-				rigger.ctx.fillText(p.name, pos[0] + size[0]/2, pos[1] + size[1] + 10);
-
-				count++;
 			}
 		}
 
@@ -454,7 +459,7 @@ rigger.init = function(div, w, h){
 	}
 	// Create the canvas object
 	var canvas = document.createElement("canvas"),
-	    ctx = canvas.getContext("2d");
+		ctx = canvas.getContext("2d");
 	canvas.width = rigger.width;
 	canvas.height = rigger.height;
 	div.appendChild(canvas);
@@ -465,17 +470,16 @@ rigger.init = function(div, w, h){
 
 	// Create gameloop etc.
 	var reqAnimFrame = window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        (function(){
-        	throw new Error("Game not supported in this browser/version: No support for rAF");
-        	div.innerHTML = "Error has occurred: Game not supported in this browser/version";
-        	return null;
-        })();
-    var last = null;
-    var cb = function(ts){
-    	var dt = (ts - last)/1000;
-    	last = ts;
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		(function(){
+			div.innerHTML = "Error has occurred: Game not supported in this browser/version";
+			throw new Error("Game not supported in this browser/version: No support for rAF");
+		})();
+	var last = null;
+	var cb = function(ts){
+		var dt = (ts - last)/1000;
+		last = ts;
 		// Do shizz
 		rigger.e.update(dt);
 		rigger.e.draw();

@@ -54,7 +54,7 @@ rigger.Player.prototype.update = function(dt, key){
 		case 38 :
 		case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
 			var l = rigger.game.ladder.g,
-			    rW = l.w/5
+				rW = l.w/5;
 			if(rigger.game.player.g.x > l.x - (rW*2) && rigger.game.player.g.x < l.x + l.w - (rW*2)){ // Over the ladder
 				this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
 				this.g.cD = this.g.cD - dt * 4;
@@ -74,7 +74,7 @@ rigger.Player.prototype.update = function(dt, key){
 				if(this.g.y === rigger.game.ladder.g.y){
 					// Check colision with bar position
 					var ratio = rigger.width/rigger.settings.barSize,
-					    u = Math.floor((this.g.x + (ratio/2))/ratio);
+						u = Math.floor((this.g.x + (ratio/2))/ratio);
 					if(this.light){
 						// Try to add to the bar
 						if(b.addLight(this.light, u)){
@@ -121,7 +121,7 @@ rigger.Player.prototype.update = function(dt, key){
 
 
 rigger.Bar = function(design){ // Represents a bar in the annex (design is a boolean, whether or not it's a physical bar, or one drawn on paper)
-	this.bar = (function(b){var a = []; while(a.length < b){a.push(false)} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
+	this.bar = (function(b){var a = []; while(a.length < b){a.push(false);} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
 
 	var updatables = {}; // What needs updating on the bar (what's new cockadoo?)
 
@@ -158,7 +158,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 			 * Move the light onto the bar
 			 */
 			var ratio = rigger.width/rigger.settings.barSize, // Divide up the bar
-			    absPos = u * ratio; // Absolute position
+				absPos = u * ratio; // Absolute position
 
 			this.bar[u].g.x = absPos;
 			this.bar[u].g.y = this.g.y+1;
@@ -178,7 +178,7 @@ rigger.Bar.prototype.draw = function(){
 	rigger.ctx.stroke();
 
 	this.bar.forEach(function(a){
-		if(a){a.draw()}
+		if(a){a.draw();}
 	});
 };
 rigger.Bar.equals = function(a, b){ // Check for equality of two bars
@@ -252,7 +252,7 @@ rigger.Ladder = function(){
 /* Ladder prototypes */
 rigger.Ladder.prototype.draw = function(){
 	rigger.h.defaultCan();
-	var rW = this.g.w/5
+	var rW = this.g.w/5;
 	rigger.ctx.lineWidth = rW;
 	rigger.ctx.strokeStyle = "gray";
 
@@ -270,7 +270,7 @@ rigger.Ladder.prototype.draw = function(){
 
 	// Rungs
 	var rungNum = 9, // 9 rungs
-	    num = this.g.h/rungNum; 
+		num = this.g.h/rungNum; 
 	for(var i = 0; i < rungNum; i++){
 		rigger.ctx.beginPath();
 		rigger.ctx.moveTo(this.g.x - rW/2, this.g.y + (num * i) + 20);
@@ -281,7 +281,7 @@ rigger.Ladder.prototype.draw = function(){
 rigger.Ladder.prototype.update = function(){
 	/* Check colision with player */
 	var p = rigger.game.player,
-	    rW = this.g.w/5
+		rW = this.g.w/5;
 	if(p.g.y === rigger.height - p.g.h // Player on ground
 	&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
 	&& !p.light){ // Player has not got a light
