@@ -464,10 +464,26 @@ rigger.init = function(div, w, h){
 
 
 	// Create gameloop etc.
-	gameloop(function(dt){
+	var reqAnimFrame = window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        (function(){
+        	throw new Error("Game not supported in this browser/version: No support for rAF");
+        	div.innerHTML = "Error has occurred: Game not supported in this browser/version";
+        	return null;
+        })();
+    var last = null;
+    var cb = function(ts){
+    	var dt = (ts - last)/1000;
+    	last = ts;
 		// Do shizz
 		rigger.e.update(dt);
 		rigger.e.draw();
+		reqAnimFrame(cb);
+	};
+	reqAnimFrame(function(ts){
+		last = ts;
+		cb(ts);
 	});
 
 
