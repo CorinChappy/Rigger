@@ -7,6 +7,28 @@ Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
 };
 
 /* Game functions */
+function startGameloop(){
+	// Create gameloop etc.
+	var reqAnimFrame = window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		(function(){
+			throw new Error("Game not supported in this browser/version: No support for rAF");
+		})();
+	var last = null;
+	var cb = function(ts){
+		var dt = (ts - last)/1000;
+		last = ts;
+		// Do shizz
+		rigger.e.update(dt);
+		rigger.e.draw();
+		reqAnimFrame(cb);
+	};
+	reqAnimFrame(function(ts){
+		last = ts;
+		cb(ts);
+	});
+}
 function showCharacter(p, top, num, hei, count){
 	var wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
 	padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
@@ -468,27 +490,12 @@ rigger.init = function(div, w, h){
 
 
 
-	// Create gameloop etc.
-	var reqAnimFrame = window.requestAnimationFrame ||
-		window.webkitRequestAnimationFrame ||
-		window.mozRequestAnimationFrame ||
-		(function(){
-			div.innerHTML = "Error has occurred: Game not supported in this browser/version";
-			throw new Error("Game not supported in this browser/version: No support for rAF");
-		})();
-	var last = null;
-	var cb = function(ts){
-		var dt = (ts - last)/1000;
-		last = ts;
-		// Do shizz
-		rigger.e.update(dt);
-		rigger.e.draw();
-		reqAnimFrame(cb);
-	};
-	reqAnimFrame(function(ts){
-		last = ts;
-		cb(ts);
-	});
+	try{
+		startGameloop();
+	}catch(e){
+		div.innerHTML = "Error has occurred: Game not supported in this browser/version";
+		throw e;
+	}
 
 
 	// Load the assets
