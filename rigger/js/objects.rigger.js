@@ -27,17 +27,18 @@ rigger.Player = function(who){
 		cD : 1
 	};
 	this.g.y = rigger.height - this.g.h;
-	this.g.x = rigger.width - this.g.w - 5,
-	this.draw = function(){
-		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
+	this.g.x = rigger.width - this.g.w - 5;
+};
+/* Prototype methods for player */
+rigger.Player.prototype.draw = function(){
+	rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 
-
-		// Draw light if needed
-		if(this.light){
-			this.light.draw();
-		}
-	};
-	this.update = function(dt, key){
+	// Draw light if needed
+	if(this.light){
+		this.light.draw();
+	}
+};
+rigger.Player.prototype.update = function(dt, key){
 		switch(key){
 			// Left or right
 			case 37 :
@@ -114,7 +115,7 @@ rigger.Player = function(who){
 			break; }
 		}
 
-		
+
 
 		if(this.light){
 			this.speed = this.speeds[3];
@@ -122,11 +123,13 @@ rigger.Player = function(who){
 			this.light.g.x = this.g.x + this.hand.x;
 			this.light.g.y = this.g.y + this.hand.y;
 		}
-	};
 };
 
+
+
+
 rigger.Bar = function(design){ // Represents a bar in the annex (design is a boolean, whether or not it's a physical bar, or one drawn on paper)
-	this.bar = (function(b){var a = []; while(a.length < b){a.push(false)} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
+	this.bar = (function(b){var a = []; while(a.length < b){a.push(false);} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
 
 	var updatables = {}; // What needs updating on the bar (what's new cockadoo?)
 
@@ -154,19 +157,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 		t : 5, // Thickness of the bar
 		l : rigger.width // Length of the bar
 	};
-	this.draw = function(){
-		rigger.ctx.strokeStyle = "black";
-		rigger.ctx.lineWidth = this.g.t;
 
-		rigger.ctx.beginPath();
-		rigger.ctx.moveTo(this.g.x, this.g.y);
-		rigger.ctx.lineTo(this.g.x + this.g.l, this.g.y);
-		rigger.ctx.stroke();
-
-		this.bar.forEach(function(a){
-			if(a){a.draw()}
-		});
-	};
 	this.update = function(dt){
 		for(var u in updatables){
 			// Update the lights on bar
@@ -174,8 +165,8 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 			 * Position relative (position * ratio)
 			 * Move the light onto the bar
 			 */
-			var ratio = rigger.width/rigger.settings.barSize, // Divide up the bar
-			    absPos = u * ratio; // Absolute position
+			var ratio = this.g.l/rigger.settings.barSize, // Divide up the bar
+				absPos = u * ratio; // Absolute position
 
 			this.bar[u].g.x = absPos;
 			this.bar[u].g.y = this.g.y+1;
@@ -184,6 +175,20 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 		}
 	};
 };
+/* Bar prototypes */
+rigger.Bar.prototype.draw = function(){
+	rigger.ctx.strokeStyle = "black";
+	rigger.ctx.lineWidth = this.g.t;
+
+	rigger.ctx.beginPath();
+	rigger.ctx.moveTo(this.g.x, this.g.y);
+	rigger.ctx.lineTo(this.g.x + this.g.l, this.g.y);
+	rigger.ctx.stroke();
+
+	this.bar.forEach(function(a){
+		if(a){a.draw();}
+	});
+};
 rigger.Bar.equals = function(a, b){ // Check for equality of two bars
 	if(!a || !b){return false;}
 	for(var i = 0; i < rigger.settings.barSize; i++){
@@ -191,6 +196,10 @@ rigger.Bar.equals = function(a, b){ // Check for equality of two bars
 	}
 	return true;
 };
+
+
+
+
 
 rigger.Light = function(type) {
 	this.type = function(){return type;};
@@ -207,9 +216,10 @@ rigger.Light = function(type) {
 		h : type.h,
 		i : type.img()
 	};
-	this.draw = function(){
+};
+/* Light prototypes */
+rigger.Light.prototype.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
-	};
 };
 rigger.Light.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
@@ -246,23 +256,23 @@ rigger.Ladder = function(){
 	};
 	this.g.y = rigger.height - this.g.h;
 	this.g.x = rigger.width - this.g.w - 50;
+};
 
-	this.draw = function(){
-		rigger.h.defaultCan();
-		rigger.ctx.drawImage(rigger.assets.sprites.misc.ladder, this.g.x, this.g.y, this.g.w, this.g.h)
-	};
-	this.update = function(){
-		/* Check colision with player */
-		var p = rigger.game.player,
-		    rW = this.g.w/5
-		if(p.g.y === rigger.height - p.g.h // Player on ground
-		&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
-		&& !p.light){ // Player has not got a light
-			// Move ladder with player
-			this.g.x = p.g.x;
-		}
+rigger.Ladder.prototype.draw = function(){
+	rigger.h.defaultCan();
+	rigger.ctx.drawImage(rigger.assets.sprites.misc.ladder, this.g.x, this.g.y, this.g.w, this.g.h)
+};
+rigger.Ladder.prototype.update = function(){
+	/* Check colision with player */
+	var p = rigger.game.player,
+	    rW = this.g.w/5
+	if(p.g.y === rigger.height - p.g.h // Player on ground
+	&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
+	&& !p.light){ // Player has not got a light
+		// Move ladder with player
+		this.g.x = p.g.x;
+	}
 
-	};
 };
 
 

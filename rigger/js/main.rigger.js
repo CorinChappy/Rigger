@@ -5,6 +5,78 @@
 Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
 	return Math.max(min, Math.min(num, max));
 };
+// Vendor prefix independent function to check if the tab/page is hidden
+// Adpated from: http://www.html5rocks.com/en/tutorials/pagevisibility/intro/
+var pageHidden = (function(){
+	var prop = (function(){
+		var prefixes = ["webkit","moz","ms","o"];
+		if ("hidden" in document) return "hidden";
+
+		for (var i = 0; i < prefixes.length; i++){
+			if ((prefixes[i] + "Hidden") in document){
+				return prefixes[i] + "Hidden";
+			}
+		}
+		return null;
+	})();
+	
+	if (!prop){
+		return function(){return false;};
+	}
+	return function(){return document[prop];};
+})();
+
+
+
+
+/* Game functions */
+function startGameloop(){
+	// Create gameloop etc.
+	var reqAnimFrame = window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		(function(){
+			throw new Error("Game not supported in this browser/version: No support for rAF");
+		})();
+	var last = null;
+	var cb = function(ts){
+		var dt = (ts - last)/1000;
+		last = ts;
+		// Do shizz
+		rigger.e.update(dt);
+		rigger.e.draw();
+		reqAnimFrame(cb);
+	};
+	reqAnimFrame(function(ts){
+		last = ts;
+		cb(ts);
+	});
+}
+function showCharacter(p, top, num, hei, count){
+	var wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
+	padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
+	size = [wid, hei],
+	pos;
+
+	if(count >= 6){
+		pos = [padding/2 + padding*(count-6) + size[0]*(count-6), top + hei + 30];
+	}else{
+		pos = [padding/2 + padding*count + size[0]*count, top];
+	}
+
+
+	if(count === rigger.menuOption){
+		rigger.ctx.globalAlpha = 0.5;
+		rigger.ctx.fillStyle = "yellow";
+		rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1]);
+		rigger.ctx.globalAlpha = 1;
+	}else{
+		rigger.ctx.fillStyle = "black";
+	}
+	rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
+
+	rigger.ctx.fillText(p.name, pos[0] + size[0]/2, pos[1] + size[1] + 10);
+}
 
 
 var rigger = {
@@ -99,16 +171,24 @@ var rigger = {
 			a -= 24*Math.floor(a/24);
 			b = ((b > 9)?b:(0).toString()+b);
 
+			var m;
+			if(a < 12){
+				m = "am";
+			}else{
+				m = "pm";
+				a -= 12;
+			}
+
 
 			var str = a + ":" + b;
 			if(p){
 				str += ":" + ((t%1000)/10).toFixed(0);
 			}
-			return str;
+			return str + m;
 		},
 
 		defaultCan : function(a){
-			var a = a || 12;
+			a = a || 12;
 			rigger.ctx.globalAlpha = 1;
 			rigger.ctx.strokeStyle = "black";
 			rigger.ctx.fillStyle = "black";
@@ -144,8 +224,9 @@ var rigger = {
 					// Check for failure conditions
 					if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
 						rigger.state = 4;
+						rigger.emmitEvent("failure");
 					}
-				}
+				break; }
 
 				case 3 : {
 					rigger.game.bar.update();
@@ -352,17 +433,7 @@ var rigger = {
 			rigger.ctx.strokeRect(rigger.width/2 - 20, rigger.height/6 + 2, 105, -30);
 
 
-			/*var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
-			for(var i = 0; i < ops.length; i++){
-				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
-				rigger.h.defaultCan(24);
-				rigger.ctx.fillText(ops[i], 10, 150 + (50*i));
-			}*/
-
-			rigger.ctx.textAlign = "center";
-			rigger.ctx.textBaseline = "bottom";
-			//rigger.ctx.fillText("Pick a character", rigger.width/2, rigger.height/6);
-
+			/* Character selection */
 			// Set sizes
 			rigger.h.defaultCan(18);
 			rigger.ctx.textAlign = "center";
@@ -372,29 +443,19 @@ var rigger = {
 			num = Object.keys(rigger.def.players).length, // Number of players
 			hei = rigger.height - top - rigger.height/10; // Height of the image
 
+			if(num > 4){
+				hei /= 2.1;
+				num = Math.min(num, 6);
+			}
+
+
 			// Loop around all the players
 			var count = 0;
 			for(var n in rigger.def.players){
-				var p = rigger.def.players[n],
-				wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
-				padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
-				size = [wid, hei],
-				pos = [padding/2 + padding*count + size[0]*count, top];
-
-
-				if(count === rigger.menuOption){
-					rigger.ctx.globalAlpha = 0.5;
-					rigger.ctx.fillStyle = "yellow";
-					rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1])
-					rigger.ctx.globalAlpha = 1;
-				}else{
-					rigger.ctx.fillStyle = "black";
+				if(rigger.def.players.hasOwnProperty(n)){
+					showCharacter(rigger.def.players[n], top, num, hei, count);
+					count++;
 				}
-				rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
-
-				rigger.ctx.fillText(p.name, pos[0] + size[0]/2, pos[1] + size[1] + 10);
-
-				count++;
 			}
 		}
 
@@ -421,17 +482,20 @@ var rigger = {
 		rigger.game.time = 0; // Reset timer
 		// Set inGame
 		rigger.state = 2;
+		rigger.emmitEvent("newgame");
 	},
 
 	pause : function(){
 		if(rigger.state !== 2){return;} // Only pause in game
 		rigger.game.menu = 2;
 		rigger.locked = true;
+		rigger.emmitEvent("pause");
 	},
 	unpause : function(){
 		if(rigger.game.menu !== 2){return;} // Cannot unpause unless paused
 		rigger.game.menu = 0;
 		rigger.locked = false;
+		rigger.emmitEvent("unpause");
 	}
 
 };
@@ -445,7 +509,7 @@ rigger.init = function(div, w, h){
 	}
 	// Create the canvas object
 	var canvas = document.createElement("canvas"),
-	    ctx = canvas.getContext("2d");
+		ctx = canvas.getContext("2d");
 	canvas.width = rigger.width;
 	canvas.height = rigger.height;
 	div.appendChild(canvas);
@@ -454,28 +518,52 @@ rigger.init = function(div, w, h){
 
 
 
-	// Create gameloop etc.
-	gameloop(function(dt){
-		// Do shizz
-		rigger.e.update(dt);
-		rigger.e.draw();
-	});
+	try{
+		startGameloop();
+	}catch(e){
+		div.innerHTML = "Error has occurred: Game not supported in this browser/version";
+		throw e;
+	}
 
 
 	// Load the assets
 	rigger.assets.load(function(load, t){
 		if(load === true){ // Check for success (strictly)
 			rigger.state = 1; // Show the main menu, let's play!
+			rigger.emmitEvent("loaded");
 		}else{
 			rigger.state = -1;
+			rigger.emmitEvent("error");
 			throw new Error("Asset \""+t+"\" couldn't load :(");
 		}
 
 	});
 
-	// Add the pause and resume listeners
-	window.addEventListener("blur", function(){rigger.pause();});
-	window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
+	// Add the pause and resume listeners, using the PageVisibility API
+	var evname = (function(){
+		var prefixes = ["webkit","moz","ms","o"];
+		if ("hidden" in document) return "visibilitychange";
+
+		for (var i = 0; i < prefixes.length; i++){
+			if ((prefixes[i] + "Hidden") in document){
+				return prefixes[i] + "visibilitychange";
+			}
+		}
+		return null;
+	})();
+	if(evname){
+		document.addEventListener(evname,function(){
+			if(pageHidden()){
+				rigger.pause();
+			}else{
+				setTimeout(rigger.unpause, 50);
+			}
+		});
+	}else{
+		// Fallback with blur and focus
+		window.addEventListener("blur", function(){rigger.pause();});
+		window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
+	}
 };
 
 rigger.resize = function(w, h){

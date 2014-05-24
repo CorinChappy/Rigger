@@ -1,10 +1,7 @@
 /* Custom event emitter, same syntax as event naitve JS */
 (function(){
 
-(function(obj, evnts){
-	if(!(evnts === true)){ // Allows arbirtary events
-		var events = evnts || []; // List of supported events
-	}
+(function(obj){
 
 	var listeners = {}; // Pairing from name of event and array of registered listeners
 
@@ -16,7 +13,7 @@
 		var a = listeners[name];
 
 		if(!a){
-			a = [];
+			listeners[name] = a = [];
 		}
 
 		return a.push(func);
@@ -25,7 +22,7 @@
 	var REL = function(name, func){
 		var a = listeners[name];
 
-		if(!a){
+		if(!a || a.length === 0){
 			return false;
 		}
 
@@ -40,7 +37,7 @@
 	var EM = function(name, info){
 		var a = listeners[name];
 
-		if(!a){
+		if(!a || a.length === 0){
 			return;
 		}
 
