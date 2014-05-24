@@ -157,7 +157,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 			 * Position relative (position * ratio)
 			 * Move the light onto the bar
 			 */
-			var ratio = rigger.width/rigger.settings.barSize, // Divide up the bar
+			var ratio = this.g.l/rigger.settings.barSize, // Divide up the bar
 				absPos = u * ratio; // Absolute position
 
 			this.bar[u].g.x = absPos;
