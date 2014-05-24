@@ -171,12 +171,20 @@ var rigger = {
 			a -= 24*Math.floor(a/24);
 			b = ((b > 9)?b:(0).toString()+b);
 
+			var m;
+			if(a < 12){
+				m = "am";
+			}else{
+				m = "pm";
+				a -= 12;
+			}
+
 
 			var str = a + ":" + b;
 			if(p){
 				str += ":" + ((t%1000)/10).toFixed(0);
 			}
-			return str;
+			return str + m;
 		},
 
 		defaultCan : function(a){
