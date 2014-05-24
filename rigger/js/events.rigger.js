@@ -22,7 +22,7 @@
 	var REL = function(name, func){
 		var a = listeners[name];
 
-		if(!a){
+		if(!a || a.length === 0){
 			return false;
 		}
 
@@ -37,7 +37,7 @@
 	var EM = function(name, info){
 		var a = listeners[name];
 
-		if(!a){
+		if(!a || a.length === 0){
 			return;
 		}
 
