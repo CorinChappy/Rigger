@@ -259,9 +259,6 @@ var rigger = {
 			case 0 : { // ANNEX
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 
-				
-				rigger.h.defaultCan(20);
-				rigger.ctx.fillText("\u21D0 Light Store", 10, rigger.height*4/5);
 				rigger.game.ladder.draw();
 				rigger.game.bar.draw();
 
