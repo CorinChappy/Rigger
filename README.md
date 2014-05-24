@@ -9,6 +9,6 @@ The Games
 
 ### Rigger
 
-[http://games.corinchaplin.co.uk/stagesoc/rigger/](Play development demo)
+[Play development demo](http://games.corinchaplin.co.uk/stagesoc/rigger/)
 
 *In Progress*
