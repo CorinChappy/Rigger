@@ -249,31 +249,7 @@ rigger.Ladder = function(){
 
 	this.draw = function(){
 		rigger.h.defaultCan();
-		var rW = this.g.w/5
-		rigger.ctx.lineWidth = rW;
-		rigger.ctx.strokeStyle = "gray";
-
-		// Left
-		rigger.ctx.beginPath();
-		rigger.ctx.moveTo(this.g.x + rW/2, this.g.y);
-		rigger.ctx.lineTo(this.g.x + rW/2, rigger.height);
-		rigger.ctx.stroke();
-
-		// Right
-		rigger.ctx.beginPath();
-		rigger.ctx.moveTo(this.g.x + this.g.w - rW, this.g.y);
-		rigger.ctx.lineTo(this.g.x + this.g.w - rW, rigger.height);
-		rigger.ctx.stroke();
-
-		// Rungs
-		var rungNum = 9, // 9 rungs
-		    num = this.g.h/rungNum; 
-		for(var i = 0; i < rungNum; i++){
-			rigger.ctx.beginPath();
-			rigger.ctx.moveTo(this.g.x - rW/2, this.g.y + (num * i) + 20);
-			rigger.ctx.lineTo(this.g.x + this.g.w, this.g.y + (num * i) + 20);
-			rigger.ctx.stroke();
-		}
+		rigger.ctx.drawImage(rigger.assets.sprites.misc.ladder, this.g.x, this.g.y, this.g.w, this.g.h)
 	};
 	this.update = function(){
 		/* Check colision with player */
