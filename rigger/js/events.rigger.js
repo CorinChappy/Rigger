@@ -13,7 +13,7 @@
 		var a = listeners[name];
 
 		if(!a){
-			a = [];
+			listeners[name] = a = [];
 		}
 
 		return a.push(func);
