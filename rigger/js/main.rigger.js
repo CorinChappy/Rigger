@@ -535,17 +535,17 @@ rigger.init = function(div, w, h){
 	// Add the pause and resume listeners, using the PageVisibility API
 	var evname = (function(){
 		var prefixes = ["webkit","moz","ms","o"];
-		if ("visibilitychange" in document) return "visibilitychange";
+		if ("hidden" in document) return "visibilitychange";
 
 		for (var i = 0; i < prefixes.length; i++){
-			if ((prefixes[i] + "visibilitychange") in document){
+			if ((prefixes[i] + "Hidden") in document){
 				return prefixes[i] + "visibilitychange";
 			}
 		}
 		return null;
 	})();
 	if(evname){
-		document.addEventListener("evname",function(){
+		document.addEventListener(evname,function(){
 			if(pageHidden()){
 				rigger.pause();
 			}else{
