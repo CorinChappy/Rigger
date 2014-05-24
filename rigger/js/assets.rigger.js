@@ -5,7 +5,11 @@
 	rigger.assets = {
 		sprites : {
 			bg : {
+				annex : "assets/sprites/bg/annex.png",
 				lampy : "assets/sprites/bg/lampy.png"
+			},
+			misc : {
+				ladder : "assets/sprites/misc/ladder.png"
 			},
 			lights : [
 				"assets/sprites/lights/fresnel.png",
