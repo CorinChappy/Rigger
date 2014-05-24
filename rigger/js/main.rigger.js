@@ -5,6 +5,29 @@
 Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
 	return Math.max(min, Math.min(num, max));
 };
+// Vendor prefix independent function to check if the tab/page is hidden
+// Adpated from: http://www.html5rocks.com/en/tutorials/pagevisibility/intro/
+var pageHidden = (function(){
+	var prop = (function(){
+		var prefixes = ["webkit","moz","ms","o"];
+		if ("hidden" in document) return "hidden";
+
+		for (var i = 0; i < prefixes.length; i++){
+			if ((prefixes[i] + "Hidden") in document){
+				return prefixes[i] + "Hidden";
+			}
+		}
+		return null;
+	})();
+	
+	if (!prop){
+		return function(){return false;};
+	}
+	return function(){return document[prop];};
+})();
+
+
+
 
 /* Game functions */
 function startGameloop(){
@@ -509,9 +532,31 @@ rigger.init = function(div, w, h){
 
 	});
 
-	// Add the pause and resume listeners
-	window.addEventListener("blur", function(){rigger.pause();});
-	window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
+	// Add the pause and resume listeners, using the PageVisibility API
+	var evname = (function(){
+		var prefixes = ["webkit","moz","ms","o"];
+		if ("visibilitychange" in document) return "visibilitychange";
+
+		for (var i = 0; i < prefixes.length; i++){
+			if ((prefixes[i] + "visibilitychange") in document){
+				return prefixes[i] + "visibilitychange";
+			}
+		}
+		return null;
+	})();
+	if(evname){
+		document.addEventListener("evname",function(){
+			if(pageHidden()){
+				rigger.pause();
+			}else{
+				setTimeout(rigger.unpause, 50);
+			}
+		});
+	}else{
+		// Fallback with blur and focus
+		window.addEventListener("blur", function(){rigger.pause();});
+		window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
+	}
 };
 
 rigger.resize = function(w, h){
