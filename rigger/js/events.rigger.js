@@ -1,10 +1,7 @@
 /* Custom event emitter, same syntax as event naitve JS */
 (function(){
 
-(function(obj, evnts){
-	if(!(evnts === true)){ // Allows arbirtary events
-		var events = evnts || []; // List of supported events
-	}
+(function(obj){
 
 	var listeners = {}; // Pairing from name of event and array of registered listeners
 
