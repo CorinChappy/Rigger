@@ -203,9 +203,7 @@ var rigger = {
 				break; }
 
 				case 3 : { // VICTORY
-					// Draw the room green for now
-					rigger.ctx.fillStyle = "green";
-					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+					rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 
 					rigger.game.bar.draw(); // Draw the bar to show the winning rig
 
@@ -224,9 +222,7 @@ var rigger = {
 				break; }
 
 				case 4 : { // FAILURE
-					// Draw the room green for now
-					rigger.ctx.fillStyle = "green";
-					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+					rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 
 					// Display the time
 					rigger.h.defaultCan(20);
@@ -261,9 +257,9 @@ var rigger = {
 		room : function(){
 			switch(rigger.game.room){
 			case 0 : { // ANNEX
-				// Draw the room green for now
-				rigger.ctx.fillStyle = "green";
-				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+
+				
 				rigger.h.defaultCan(20);
 				rigger.ctx.fillText("\u21D0 Light Store", 10, rigger.height*4/5);
 				rigger.game.ladder.draw();
@@ -344,6 +340,7 @@ var rigger = {
 		menu : function(){
 			rigger.ctx.fillStyle = "green";
 			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+			
 			// Welcome message
 			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
