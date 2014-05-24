@@ -216,6 +216,7 @@ var rigger = {
 					// Check for failure conditions
 					if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
 						rigger.state = 4;
+						rigger.emmitEvent("failure");
 					}
 				break; }
 
@@ -480,17 +481,20 @@ var rigger = {
 		rigger.game.time = 0; // Reset timer
 		// Set inGame
 		rigger.state = 2;
+		rigger.emmitEvent("newgame");
 	},
 
 	pause : function(){
 		if(rigger.state !== 2){return;} // Only pause in game
 		rigger.game.menu = 2;
 		rigger.locked = true;
+		rigger.emmitEvent("pause");
 	},
 	unpause : function(){
 		if(rigger.game.menu !== 2){return;} // Cannot unpause unless paused
 		rigger.game.menu = 0;
 		rigger.locked = false;
+		rigger.emmitEvent("unpause");
 	}
 
 };
@@ -525,8 +529,10 @@ rigger.init = function(div, w, h){
 	rigger.assets.load(function(load, t){
 		if(load === true){ // Check for success (strictly)
 			rigger.state = 1; // Show the main menu, let's play!
+			rigger.emmitEvent("loaded");
 		}else{
 			rigger.state = -1;
+			rigger.emmitEvent("error");
 			throw new Error("Asset \""+t+"\" couldn't load :(");
 		}
 

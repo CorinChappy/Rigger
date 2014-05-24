@@ -115,6 +115,7 @@
 				// Test for winning conditions
 				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){
 					rigger.state = 3; // Set state to victory
+					rigger.emmitEvent("victory", {time: rigger.game.time, character: rigger.game.player.who()});
 					return;
 				}
 			}
