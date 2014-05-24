@@ -63,7 +63,7 @@ rigger.Player = function(who){
 			case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
 				var l = rigger.game.ladder.g,
 				    rW = l.w/5
-				if(rigger.game.player.g.x > l.x - (rW*2) && rigger.game.player.g.x < l.x + l.w - (rW*2)){ // Over the ladder
+				if(rigger.game.player.g.x > l.x && rigger.game.player.g.x < l.x + l.w - (rW*4)){ // Over the ladder
 					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
 					this.g.cD = this.g.cD - dt * 4;
 					if(this.g.cD <= 0){
