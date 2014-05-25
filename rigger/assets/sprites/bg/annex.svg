@@ -7,6 +7,7 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1000"
@@ -24,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.67402344"
+     inkscape:zoom="1.9064262"
      inkscape:cx="76.562745"
-     inkscape:cy="153.40524"
+     inkscape:cy="282.89513"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -538,20 +539,7 @@
        height="57.102196"
        x="18.699539"
        y="859.09943" />
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot3833"
-       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;font-family:VertigoFLF;-inkscape-font-specification:VertigoFLF;stroke-width:1.05232552;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       transform="matrix(1.0926603,0,0,1,-2.0201007,552.36218)"><flowRegion
-         id="flowRegion3835"><rect
-           id="rect3837"
-           width="90.501305"
-           height="45.992466"
-           x="20.77079"
-           y="307.12836"
-           style="stroke-width:1.05232552;stroke-miterlimit:4;stroke-dasharray:none;stroke:#000000;stroke-opacity:1" /></flowRegion><flowPara
-         id="flowPara3839"
-         style="font-size:30px;stroke-width:1.05232552;stroke-miterlimit:4;stroke-dasharray:none;stroke:#000000;stroke-opacity:1">Light Store</flowPara></flowRoot>    <text
+    <text
        xml:space="preserve"
        style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:VertigoFLF;-inkscape-font-specification:VertigoFLF"
        x="108.30484"
@@ -575,6 +563,13 @@
        inkscape:connector-curvature="0"
        transform="translate(0,552.36218)"
        sodipodi:nodetypes="cccc" />
+    <image
+       width="81.55825"
+       height="31.705502"
+       xlink:href="file:///D:/Catherine/Documents/Photos/Drawing/Stagesoc%20Games/Text/light%20store.png"
+       id="image3227"
+       x="23.837669"
+       y="864.45972" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.78681254;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        d="m 25.78711,357.46785 c -2.596481,-2.18835 -4.720875,-4.03184 -4.720875,-4.09665 0,-0.0648 2.124394,-2.02147 4.720875,-4.34812 l 4.720875,-4.23029 0.07214,4.08418 c 0.03968,2.24629 0.03968,5.99341 0,8.32693 l -0.07214,4.24276 -4.720875,-3.97881 z"
