@@ -261,7 +261,7 @@ var rigger = {
 					// Display the time
 					rigger.h.defaultCan(20);
 					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
+					rigger.ctx.fillText(""+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
 
 					switch(rigger.game.menu){
 						case 1 : { // Design
