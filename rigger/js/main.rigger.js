@@ -67,7 +67,7 @@ function showCharacter(p, top, num, hei, count){
 
 	if(count === rigger.menuOption){
 		rigger.ctx.globalAlpha = 0.5;
-		rigger.ctx.fillStyle = "yellow";
+		rigger.ctx.fillStyle = "blue";
 		rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1]);
 		rigger.ctx.globalAlpha = 1;
 	}else{
@@ -284,6 +284,7 @@ var rigger = {
 				break; }
 
 				case 3 : { // VICTORY
+					rigger.ctx.globalAlpha = 0.5;
 					rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 
 					rigger.game.bar.draw(); // Draw the bar to show the winning rig
@@ -299,16 +300,17 @@ var rigger = {
 					rigger.ctx.textAlign = "center";
 					rigger.ctx.fillStyle = "yellow";
 					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/10);
+					rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/8);
 				break; }
 
 				case 4 : { // FAILURE
+					rigger.ctx.globalAlpha = 0.5;
 					rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 
 					// Display the time
 					rigger.h.defaultCan(20);
 					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
+					rigger.ctx.fillText(""+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
 
 					rigger.game.bar.draw(); // Draw the bar to show current rig
 
@@ -323,7 +325,7 @@ var rigger = {
 					rigger.ctx.textAlign = "center";
 					rigger.ctx.fillStyle = "yellow";
 					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/10);
+					rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/8);
 
 				break; }
 			}
@@ -416,8 +418,8 @@ var rigger = {
 			rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
 		},
 		menu : function(){
-			rigger.ctx.fillStyle = "green";
-			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+			rigger.ctx.globalAlpha = 0.2;
+			rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 			
 			// Welcome message
 			rigger.h.defaultCan(24);
