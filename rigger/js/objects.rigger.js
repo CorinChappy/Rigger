@@ -270,7 +270,7 @@ rigger.Ladder.prototype.update = function(){
 	&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
 	&& !p.light){ // Player has not got a light
 		// Move ladder with player
-		this.g.x = p.g.x;
+		this.g.x = p.g.x - rW/2;
 	}
 
 };
