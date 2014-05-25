@@ -1,5 +1,20 @@
+
 (function(){
 "use strict";
+
+/* Import fonts from Google fonts */
+window.WebFontConfig = {
+	google: { families: [ 'Press+Start+2P::latin' ] } // By: CodeMan38,  http://www.google.com/fonts/#QuickUsePlace:quickUse/Family:Press+Start+2P
+};
+(function() {
+	var wf = document.createElement('script');
+	wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+	wf.type = 'text/javascript';
+	wf.async = 'true';
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(wf, s);
+})();
 
 /* Some util functions */
 Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
@@ -193,7 +208,7 @@ var rigger = {
 			rigger.ctx.strokeStyle = "black";
 			rigger.ctx.fillStyle = "black";
 			rigger.ctx.lineWidth = 1;
-			rigger.ctx.font = a+"px Helvetica";
+			rigger.ctx.font = a+"px 'Press Start 2P' Helvetica";
 			rigger.ctx.textAlign = "start";
 			rigger.ctx.textBaseline = "top";
 		}
@@ -284,49 +299,11 @@ var rigger = {
 				break; }
 
 				case 3 : { // VICTORY
-					rigger.ctx.globalAlpha = 0.5;
-					rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
-
-					rigger.game.bar.draw(); // Draw the bar to show the winning rig
-
-
-					rigger.h.defaultCan(40);
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Good job!", rigger.width/10, rigger.height*4/10);
-
-					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("The get in finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10);
-
-					rigger.ctx.textAlign = "center";
-					rigger.ctx.fillStyle = "yellow";
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/8);
+					rigger.d.o.victory();
 				break; }
 
 				case 4 : { // FAILURE
-					rigger.ctx.globalAlpha = 0.5;
-					rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
-
-					// Display the time
-					rigger.h.defaultCan(20);
-					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText(""+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
-
-					rigger.game.bar.draw(); // Draw the bar to show current rig
-
-					rigger.h.defaultCan(40);
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Security kicked you out", rigger.width/10, rigger.height*4/10);
-
-					rigger.h.defaultCan(32);
-					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("You should probably get late night working next time...", rigger.width/10, rigger.height*4/10);
-
-					rigger.ctx.textAlign = "center";
-					rigger.ctx.fillStyle = "yellow";
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/8);
-
+					rigger.d.o.failure();
 				break; }
 			}
 		},
@@ -393,6 +370,51 @@ var rigger = {
 				rigger.h.defaultCan(24);
 				rigger.ctx.textAlign = "center";
 				rigger.ctx.fillText("Game Paused...", rigger.width/2, rigger.height/5);
+			},
+			victory : function(){
+				rigger.ctx.globalAlpha = 0.5;
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+
+				rigger.game.bar.draw(); // Draw the bar to show the winning rig
+
+
+				rigger.h.defaultCan(40);
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Good job!", rigger.width/10, rigger.height*4/10);
+
+				rigger.h.defaultCan(26);
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText("The get in finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10 + 10);
+
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillStyle = "yellow";
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/8);
+			},
+			failure : function(){
+				rigger.ctx.globalAlpha = 0.5;
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+
+				// Display the time
+				rigger.h.defaultCan(20);
+				rigger.ctx.textAlign = "right";
+				rigger.ctx.fillText(""+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
+
+				rigger.game.bar.draw(); // Draw the bar to show current rig
+
+				rigger.h.defaultCan(32);
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Security kicked you out", rigger.width/10, rigger.height*4/10);
+
+				rigger.h.defaultCan(18);
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText("You should probably get late night", rigger.width/10 + 20, rigger.height*4/10 + 10);
+				rigger.ctx.fillText("working next time...", rigger.width/10 + 20, rigger.height*4/10 + 10 + 23);
+
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillStyle = "yellow";
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/8);
 			}
 		},
 		error : function(){
@@ -426,13 +448,14 @@ var rigger = {
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 
 			/* Instructions */
+			rigger.h.defaultCan(18);
 			rigger.ctx.textAlign = "right";
 			rigger.ctx.textBaseline = "bottom";
-			rigger.ctx.fillText("\u21E6 \u21E8 Select character          ", rigger.width/2, rigger.height/6);
+			rigger.ctx.fillText("\u21E6 \u21E8 Select character    ", rigger.width/2, rigger.height/6);
 			rigger.ctx.textAlign = "left";
-			rigger.ctx.fillText("Space    Start game!", rigger.width/2, rigger.height/6);
+			rigger.ctx.fillText("Space  Start game!", rigger.width/2, rigger.height/6);
 			rigger.ctx.lineWidth = 3;
-			rigger.ctx.strokeRect(rigger.width/2 - 20, rigger.height/6 + 2, 105, -30);
+			rigger.ctx.strokeRect(rigger.width/2 - 20, rigger.height/6 + 5, 125, -30);
 
 
 			/* Character selection */
