@@ -18,7 +18,7 @@
 			//e.preventDefault();
 			delete rigger.keysDown[e.keyCode];
 		}
-	}
+	};
 
 	/* Event listeners for the keypresses */
 	window.addEventListener("keydown", rigger.keyFunc.keydown);
@@ -39,9 +39,9 @@
 			// LEFT
 			if(rigger.state === 2){ // IN GAME
 				var p = rigger.game.player;
-				if(rigger.game.room === 1 && p.g.x <= 0 - p.g.w/2){
-					p.g.x = rigger.width - p.g.w; // Move to annex
-					rigger.game.room = 0;
+				if(rigger.game.room === 0 && p.g.x <= 0 - p.g.w/2){
+					p.g.x = rigger.width - p.g.w; // Move to light store
+					rigger.game.room = 1;
 				}
 				p.update(dt, 37);
 			}
@@ -57,9 +57,12 @@
 			if(rigger.state === 2){ // IN GAME
 				var p = rigger.game.player;
 				// Check screen edge
-				if(rigger.game.room === 0 && p.g.x >= rigger.width - p.g.w/2){
-					p.g.x = 0; // Move to light store
-					rigger.game.room = 1;
+				if(rigger.game.room === 1 && p.g.x >= rigger.LS.width - p.g.w/2){
+					p.g.x = 0; // Move to annex
+					if(rigger.game.instructions){
+						rigger.game.instructions = false; // Hide instructions after first veiwing
+					}
+					rigger.game.room = 0;
 				}
 				rigger.game.player.update(dt, 39);
 			}
@@ -115,6 +118,7 @@
 				// Test for winning conditions
 				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){
 					rigger.state = 3; // Set state to victory
+					rigger.emmitEvent("victory", {time: rigger.game.time, character: rigger.game.player.who()});
 					return;
 				}
 			}
@@ -129,6 +133,11 @@
 			}
 		},
 
+		73 : function(){ // I
+			// Show/hide the instructions
+			rigger.game.instructions = !rigger.game.instructions;
+		},
+
 		82 : function(){
 			if(rigger.state === 2){ // IN GAME
 				var x = rigger.game.player.g.x,
@@ -140,6 +149,7 @@
 				rigger.audio.play("rory");
 			}
 		}
+
 	};
 	rigger.keyPressAction[13] = rigger.keyPressAction[32]; // Make ENTER an alias for SPACE
 

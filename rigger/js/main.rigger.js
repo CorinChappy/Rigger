@@ -1,10 +1,96 @@
 (function(){
 "use strict";
 
+/* Import fonts from Google fonts */
+window.WebFontConfig = {
+	google: { families: [ 'Press+Start+2P::latin' ] } // By: CodeMan38,  http://www.google.com/fonts/#QuickUsePlace:quickUse/Family:Press+Start+2P
+};
+(function() {
+	var wf = document.createElement('script');
+	wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+	wf.type = 'text/javascript';
+	wf.async = 'true';
+	var s = document.getElementsByTagName('script')[0];
+	s.parentNode.insertBefore(wf, s);
+})();
+
 /* Some util functions */
 Math.clamp = function(num, min, max){ // Keeps a given number in some bounds
 	return Math.max(min, Math.min(num, max));
 };
+// Vendor prefix independent function to check if the tab/page is hidden
+// Adpated from: http://www.html5rocks.com/en/tutorials/pagevisibility/intro/
+var pageHidden = (function(){
+	var prop = (function(){
+		var prefixes = ["webkit","moz","ms","o"];
+		if ("hidden" in document) return "hidden";
+
+		for (var i = 0; i < prefixes.length; i++){
+			if ((prefixes[i] + "Hidden") in document){
+				return prefixes[i] + "Hidden";
+			}
+		}
+		return null;
+	})();
+	
+	if (!prop){
+		return function(){return false;};
+	}
+	return function(){return document[prop];};
+})();
+
+
+
+
+/* Game functions */
+function startGameloop(){
+	// Create gameloop etc.
+	var reqAnimFrame = window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		(function(){
+			throw new Error("Game not supported in this browser/version: No support for rAF");
+		})();
+	var last = null;
+	var cb = function(ts){
+		var dt = (ts - last)/1000;
+		last = ts;
+		// Do shizz
+		rigger.e.update(dt);
+		rigger.e.draw();
+		reqAnimFrame(cb);
+	};
+	reqAnimFrame(function(ts){
+		last = ts;
+		cb(ts);
+	});
+}
+function showCharacter(p, top, num, hei, count){
+	var wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
+	padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
+	size = [wid, hei],
+	pos;
+
+	if(count >= 6){
+		pos = [padding/2 + padding*(count-6) + size[0]*(count-6), top + hei + 30];
+	}else{
+		pos = [padding/2 + padding*count + size[0]*count, top];
+	}
+
+
+	if(count === rigger.menuOption){
+		rigger.ctx.globalAlpha = 0.5;
+		rigger.ctx.fillStyle = "blue";
+		rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1]);
+		rigger.ctx.globalAlpha = 1;
+	}else{
+		rigger.ctx.fillStyle = "black";
+	}
+	rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
+
+	rigger.ctx.fillText(p.name, pos[0] + size[0]/2, pos[1] + size[1] + 10);
+}
 
 
 var rigger = {
@@ -48,6 +134,8 @@ var rigger = {
 		 * 0 = none; 1 = design; 2 = in game menu
 		*/
 		menu : 0,
+
+		instructions : true, // Whether to display the instructions
 
 		ladder : null,
 
@@ -99,20 +187,29 @@ var rigger = {
 			a -= 24*Math.floor(a/24);
 			b = ((b > 9)?b:(0).toString()+b);
 
+			var m;
+			if(a < 12){
+				m = "am";
+			}else{
+				m = "pm";
+				a -= 12;
+			}
+
 
 			var str = a + ":" + b;
 			if(p){
 				str += ":" + ((t%1000)/10).toFixed(0);
 			}
-			return str;
+			return str + m;
 		},
 
 		defaultCan : function(a){
-			var a = a || 12;
+			a = a || 12;
 			rigger.ctx.globalAlpha = 1;
 			rigger.ctx.strokeStyle = "black";
 			rigger.ctx.fillStyle = "black";
-			rigger.ctx.font = a+"px Helvetica";
+			rigger.ctx.lineWidth = 1;
+			rigger.ctx.font = a+"px 'Press Start 2P' Helvetica";
 			rigger.ctx.textAlign = "start";
 			rigger.ctx.textBaseline = "top";
 		}
@@ -130,31 +227,32 @@ var rigger = {
 				}
 			}
 
-			/*if(rigger.state === 1){ // Main menu
-
-			}*/
-
-
-			/* IN GAME */
-			if(rigger.state === 2){
-				// Update the bar
-				rigger.game.bar.update();
-				rigger.game.target.update();
+			switch(rigger.state){
+				case 2 : { // IN GAME
+					// Update the bar
+					rigger.game.bar.update();
+					rigger.game.target.update();
 
 
-				if(rigger.game.menu !== 2){ // Do not update on pause/game menu
-					rigger.e.tick(dt); // Update the timer
-				}
-				// Check for failure conditions
-				if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
-					rigger.state = 4;
+					if(rigger.game.menu !== 2){ // Do not update on pause/game menu
+						rigger.e.tick(dt); // Update the timer
+					}
+					// Check for failure conditions
+					if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
+						rigger.state = 4;
+						rigger.emmitEvent("failure");
+					}
+				break; }
+
+				case 3 : {
+					rigger.game.bar.update();
 				}
 			}
 		},
 
 		// THE drawing function
 		draw : function(){
-			rigger.ctx.clearRect(0,0, rigger.width, rigger.height); // Clear the screen (blank canvas)
+			rigger.ctx.clearRect(0,0, rigger.canvas.width, rigger.canvas.height); // Clear the screen (blank canvas)
 			rigger.h.defaultCan();
 
 			switch(rigger.state){
@@ -179,7 +277,7 @@ var rigger = {
 					// Display the time
 					rigger.h.defaultCan(20);
 					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
+					rigger.ctx.fillText(""+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
 
 					switch(rigger.game.menu){
 						case 1 : { // Design
@@ -202,51 +300,11 @@ var rigger = {
 				break; }
 
 				case 3 : { // VICTORY
-					// Draw the room green for now
-					rigger.ctx.fillStyle = "green";
-					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
-
-					rigger.game.bar.draw(); // Draw the bar to show the winning rig
-
-
-					rigger.h.defaultCan(40);
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Good job!", rigger.width/10, rigger.height*4/10);
-
-					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("The getin finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10);
-
-					rigger.ctx.textAlign = "center";
-					rigger.ctx.fillStyle = "yellow";
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/10);
+					rigger.d.o.victory();
 				break; }
 
 				case 4 : { // FAILURE
-					// Draw the room green for now
-					rigger.ctx.fillStyle = "green";
-					rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
-
-					// Display the time
-					rigger.h.defaultCan(20);
-					rigger.ctx.textAlign = "right";
-					rigger.ctx.fillText("Time: "+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
-
-					rigger.game.bar.draw(); // Draw the bar to show current rig
-
-					rigger.h.defaultCan(40);
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Security kicked you out", rigger.width/10, rigger.height*4/10);
-
-					rigger.h.defaultCan(32);
-					rigger.ctx.textBaseline = "top";
-					rigger.ctx.fillText("You should probably get late night working next time...", rigger.width/10, rigger.height*4/10);
-
-					rigger.ctx.textAlign = "center";
-					rigger.ctx.fillStyle = "yellow";
-					rigger.ctx.textBaseline = "bottom";
-					rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/10);
-
+					rigger.d.o.failure();
 				break; }
 			}
 		},
@@ -260,12 +318,22 @@ var rigger = {
 		room : function(){
 			switch(rigger.game.room){
 			case 0 : { // ANNEX
-				// Draw the room green for now
-				rigger.ctx.fillStyle = "green";
-				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
-				rigger.h.defaultCan(20);
-				rigger.ctx.textAlign = "right";
-				rigger.ctx.fillText("Light Store \u21D2", rigger.width - 10, 400);
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+
+				if(rigger.game.instructions){
+					/* Draw the instructions */
+					rigger.h.defaultCan(21);
+					rigger.ctx.fillStyle = "white";
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText("\u21E6 \u21E7 \u21E8 \u21E9 move", rigger.width/2, rigger.height*9/20);
+					rigger.h.defaultCan(18);
+					rigger.ctx.fillStyle = "white";
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText("Hold Space to move the ladder", rigger.width/2, rigger.height*11/20);
+					rigger.ctx.fillText("Space rigs and derigs a light", rigger.width/2, rigger.height*13/20);
+					rigger.ctx.fillText("D shows/hides the lighting design", rigger.width/2, rigger.height*15/20);
+				}
+
 				rigger.game.ladder.draw();
 				rigger.game.bar.draw();
 
@@ -280,13 +348,13 @@ var rigger = {
 				// Put in some lights
 				var l = rigger.def.lights,
 				ln = rigger.LS.width/2, // Length of the lighting bars
-				wI = rigger.LS.width/36, // Padding from the side
+				wI = rigger.LS.width/12, // Padding from the side
 				wG = ln/l.length, // Space for each light type
 				hI = (rigger.height - rigger.LS.height) + rigger.LS.height/13.6, // Top padding
 				hG = rigger.LS.height/4.5; // Distance between each bar
 				for(var i = 0; i < l.length; i++){
 					for(var j = 0; j < 4 /* Number of bars */; j++){
-						rigger.ctx.drawImage(l[i].img(), wI + (wG*i), hI + (hG*j), l[i].w, l[i].h);
+						rigger.ctx.drawImage(l[i].img(), rigger.LS.width - wI - (wG*i), hI + (hG*j), l[i].w, l[i].h);
 					}
 				}
 
@@ -317,6 +385,51 @@ var rigger = {
 				rigger.h.defaultCan(24);
 				rigger.ctx.textAlign = "center";
 				rigger.ctx.fillText("Game Paused...", rigger.width/2, rigger.height/5);
+			},
+			victory : function(){
+				rigger.ctx.globalAlpha = 0.5;
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+
+				rigger.game.bar.draw(); // Draw the bar to show the winning rig
+
+
+				rigger.h.defaultCan(40);
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Good job!", rigger.width/10, rigger.height*4/10);
+
+				rigger.h.defaultCan(26);
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText("The get in finished at: "+rigger.h.timeConvert(rigger.game.time, true), rigger.width/10, rigger.height*4/10 + 10);
+
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillStyle = "yellow";
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Play again?", rigger.width/2, rigger.height - rigger.height/8);
+			},
+			failure : function(){
+				rigger.ctx.globalAlpha = 0.5;
+				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+
+				// Display the time
+				rigger.h.defaultCan(20);
+				rigger.ctx.textAlign = "right";
+				rigger.ctx.fillText(""+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
+
+				rigger.game.bar.draw(); // Draw the bar to show current rig
+
+				rigger.h.defaultCan(32);
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Security kicked you out", rigger.width/10, rigger.height*4/10);
+
+				rigger.h.defaultCan(18);
+				rigger.ctx.textBaseline = "top";
+				rigger.ctx.fillText("You should probably get late night", rigger.width/10 + 20, rigger.height*4/10 + 10);
+				rigger.ctx.fillText("working next time...", rigger.width/10 + 20, rigger.height*4/10 + 10 + 23);
+
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillStyle = "yellow";
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.fillText("Try again?", rigger.width/2, rigger.height - rigger.height/8);
 			}
 		},
 		error : function(){
@@ -327,6 +440,9 @@ var rigger = {
 			rigger.ctx.fillText("Oh PANTS.", 10, 200);
 			rigger.ctx.textBaseline = "top";
 			rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
+		},
+		instructions : function(){
+
 		},
 		loading : function(){
 			rigger.ctx.fillStyle = "green";
@@ -339,24 +455,25 @@ var rigger = {
 			rigger.ctx.fillRect(20, 205, rigger.assets.loaded*2, 20);
 		},
 		menu : function(){
-			rigger.ctx.fillStyle = "green";
-			rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+			rigger.ctx.globalAlpha = 0.2;
+			rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+			
 			// Welcome message
 			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 
-
-			/*var ops = ["New Game", "Nothing", "More Nothing"]; // Game options
-			for(var i = 0; i < ops.length; i++){
-				rigger.ctx.fillStyle = (i === rigger.menuOption)?"yellow":"black";
-				rigger.h.defaultCan(24);
-				rigger.ctx.fillText(ops[i], 10, 150 + (50*i));
-			}*/
-
-			rigger.ctx.textAlign = "center";
+			/* Instructions */
+			rigger.h.defaultCan(18);
+			rigger.ctx.textAlign = "right";
 			rigger.ctx.textBaseline = "bottom";
-			rigger.ctx.fillText("Pick a character", rigger.width/2, rigger.height/5);
+			rigger.ctx.fillText("\u21E6 \u21E8 Select character    ", rigger.width/2, rigger.height/6);
+			rigger.ctx.textAlign = "left";
+			rigger.ctx.fillText("Space  Start game!", rigger.width/2, rigger.height/6);
+			rigger.ctx.lineWidth = 3;
+			rigger.ctx.strokeRect(rigger.width/2 - 20, rigger.height/6 + 5, 125, -30);
 
+
+			/* Character selection */
 			// Set sizes
 			rigger.h.defaultCan(18);
 			rigger.ctx.textAlign = "center";
@@ -366,29 +483,19 @@ var rigger = {
 			num = Object.keys(rigger.def.players).length, // Number of players
 			hei = rigger.height - top - rigger.height/10; // Height of the image
 
+			if(num > 4){
+				hei /= 2.1;
+				num = Math.min(num, 6);
+			}
+
+
 			// Loop around all the players
 			var count = 0;
 			for(var n in rigger.def.players){
-				var p = rigger.def.players[n],
-				wid = p.w*(hei/p.h), // Width of the image, taken from the first image's height
-				padding = (rigger.width - (wid*num))/num, // Padding (this is the bit that varies)
-				size = [wid, hei],
-				pos = [padding/2 + padding*count + size[0]*count, top];
-
-
-				if(count === rigger.menuOption){
-					rigger.ctx.globalAlpha = 0.5;
-					rigger.ctx.fillStyle = "yellow";
-					rigger.ctx.fillRect(pos[0], pos[1], size[0], size[1])
-					rigger.ctx.globalAlpha = 1;
-				}else{
-					rigger.ctx.fillStyle = "black";
+				if(rigger.def.players.hasOwnProperty(n)){
+					showCharacter(rigger.def.players[n], top, num, hei, count);
+					count++;
 				}
-				rigger.ctx.drawImage(p.imgs.front, pos[0], pos[1], size[0], size[1]);
-
-				rigger.ctx.fillText(p.name, pos[0] + size[0]/2, pos[1] + size[1] + 10);
-
-				count++;
 			}
 		}
 
@@ -413,19 +520,23 @@ var rigger = {
 		rigger.game.menu = 0;
 
 		rigger.game.time = 0; // Reset timer
+		rigger.game.instructions = true;
 		// Set inGame
 		rigger.state = 2;
+		rigger.emmitEvent("newgame");
 	},
 
 	pause : function(){
 		if(rigger.state !== 2){return;} // Only pause in game
 		rigger.game.menu = 2;
 		rigger.locked = true;
+		rigger.emmitEvent("pause");
 	},
 	unpause : function(){
 		if(rigger.game.menu !== 2){return;} // Cannot unpause unless paused
 		rigger.game.menu = 0;
 		rigger.locked = false;
+		rigger.emmitEvent("unpause");
 	}
 
 };
@@ -439,7 +550,7 @@ rigger.init = function(div, w, h){
 	}
 	// Create the canvas object
 	var canvas = document.createElement("canvas"),
-	    ctx = canvas.getContext("2d");
+		ctx = canvas.getContext("2d");
 	canvas.width = rigger.width;
 	canvas.height = rigger.height;
 	div.appendChild(canvas);
@@ -448,28 +559,59 @@ rigger.init = function(div, w, h){
 
 
 
-	// Create gameloop etc.
-	gameloop(function(dt){
-		// Do shizz
-		rigger.e.update(dt);
-		rigger.e.draw();
-	});
+	try{
+		startGameloop();
+	}catch(e){
+		div.innerHTML = "Error has occurred: Game not supported in this browser/version";
+		throw e;
+	}
 
 
 	// Load the assets
 	rigger.assets.load(function(load, t){
 		if(load === true){ // Check for success (strictly)
 			rigger.state = 1; // Show the main menu, let's play!
+			rigger.emmitEvent("loaded");
 		}else{
 			rigger.state = -1;
+			rigger.emmitEvent("error");
 			throw new Error("Asset \""+t+"\" couldn't load :(");
 		}
 
 	});
 
-	// Add the pause and resume listeners
-	window.addEventListener("blur", function(){rigger.pause();});
-	window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
+	// Add the pause and resume listeners, using the PageVisibility API
+	var evname = (function(){
+		var prefixes = ["webkit","moz","ms","o"];
+		if ("hidden" in document) return "visibilitychange";
+
+		for (var i = 0; i < prefixes.length; i++){
+			if ((prefixes[i] + "Hidden") in document){
+				return prefixes[i] + "visibilitychange";
+			}
+		}
+		return null;
+	})();
+	if(evname){
+		document.addEventListener(evname,function(){
+			if(pageHidden()){
+				rigger.pause();
+			}else{
+				setTimeout(rigger.unpause, 50);
+			}
+		});
+	}else{
+		// Fallback with blur and focus
+		window.addEventListener("blur", function(){rigger.pause();});
+		window.addEventListener("focus", function(){setTimeout(rigger.unpause, 50);});
+	}
+};
+
+rigger.resize = function(w, h){
+	rigger.width = (!w || w < 0)?rigger.width:w;
+	rigger.height = (!h || h < 0)?rigger.height:h;
+
+	rigger.LS.width = rigger.width/1.396; rigger.LS.height = rigger.height/1.222; // Ratio's for the lighting store
 };
 
 

@@ -9,7 +9,7 @@
 */
 function keepProportions(a, b, c){
 	return (b/a)*c;
-};
+}
 
 
 rigger.def = {
@@ -17,29 +17,36 @@ rigger.def = {
 		{
 			name : "fresnel",
 			t : 0,
-			img : function(){return rigger.assets.sprites.lights[0]},
+			img : function(){return rigger.assets.sprites.lights[0];},
 			h : 68,
 			w : 38
 		},
 		{
 			name : "pc",
 			t : 1,
-			img : function(){return rigger.assets.sprites.lights[1]},
+			img : function(){return rigger.assets.sprites.lights[1];},
 			h : 68,
 			w : 38
 		},
 		{
 			name : "parcan",
 			t : 2,
-			img : function(){return rigger.assets.sprites.lights[2]},
+			img : function(){return rigger.assets.sprites.lights[2];},
 			h : 64,
 			w : 50
 		},
 		{
 			name : "source 4",
 			t : 3,
-			img : function(){return rigger.assets.sprites.lights[3]},
+			img : function(){return rigger.assets.sprites.lights[3];},
 			h : 76,
+			w : 50
+		},
+		{
+			name : "flood",
+			t : 4,
+			img : function(){return rigger.assets.sprites.lights[4];},
+			h : 41,
 			w : 50
 		}
 
