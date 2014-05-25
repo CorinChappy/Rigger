@@ -135,6 +135,8 @@ var rigger = {
 		*/
 		menu : 0,
 
+		instructions : true, // Whether to display the instructions
+
 		ladder : null,
 
 		bar : null, // The bar's current state
@@ -317,6 +319,20 @@ var rigger = {
 			switch(rigger.game.room){
 			case 0 : { // ANNEX
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
+
+				if(rigger.game.instructions){
+					/* Draw the instructions */
+					rigger.h.defaultCan(21);
+					rigger.ctx.fillStyle = "white";
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText("\u21E6 \u21E7 \u21E8 \u21E9 move", rigger.width/2, rigger.height*9/20);
+					rigger.h.defaultCan(18);
+					rigger.ctx.fillStyle = "white";
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText("Hold Space to move the ladder", rigger.width/2, rigger.height*11/20);
+					rigger.ctx.fillText("Space rigs and derigs a light", rigger.width/2, rigger.height*13/20);
+					rigger.ctx.fillText("D shows/hides the lighting design", rigger.width/2, rigger.height*15/20);
+				}
 
 				rigger.game.ladder.draw();
 				rigger.game.bar.draw();
@@ -504,6 +520,7 @@ var rigger = {
 		rigger.game.menu = 0;
 
 		rigger.game.time = 0; // Reset timer
+		rigger.game.instructions = true;
 		// Set inGame
 		rigger.state = 2;
 		rigger.emmitEvent("newgame");

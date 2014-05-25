@@ -59,6 +59,9 @@
 				// Check screen edge
 				if(rigger.game.room === 1 && p.g.x >= rigger.LS.width - p.g.w/2){
 					p.g.x = 0; // Move to annex
+					if(rigger.game.instructions){
+						rigger.game.instructions = false; // Hide instructions after first veiwing
+					}
 					rigger.game.room = 0;
 				}
 				rigger.game.player.update(dt, 39);
@@ -130,6 +133,11 @@
 			}
 		},
 
+		73 : function(){ // I
+			// Show/hide the instructions
+			rigger.game.instructions = !rigger.game.instructions;
+		},
+
 		82 : function(){
 			if(rigger.state === 2){ // IN GAME
 				var x = rigger.game.player.g.x,
@@ -141,6 +149,7 @@
 				rigger.audio.play("rory");
 			}
 		}
+
 	};
 	rigger.keyPressAction[13] = rigger.keyPressAction[32]; // Make ENTER an alias for SPACE
 
