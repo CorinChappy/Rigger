@@ -41,6 +41,13 @@ rigger.def = {
 			img : function(){return rigger.assets.sprites.lights[3];},
 			h : 76,
 			w : 50
+		},
+		{
+			name : "flood",
+			t : 4,
+			img : function(){return rigger.assets.sprites.lights[4];},
+			h : 41,
+			w : 50
 		}
 
 	],
