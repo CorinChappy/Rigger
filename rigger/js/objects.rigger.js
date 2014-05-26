@@ -63,7 +63,7 @@ rigger.Player.prototype.update = function(dt, key){
 			case 38 :
 			case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
 				var l = rigger.game.ladder.g,
-				    rW = l.w/5
+					rW = l.w/5;
 				if(rigger.game.player.g.x > l.x && rigger.game.player.g.x < l.x + l.w - (rW*4)){ // Over the ladder
 					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
 					this.g.cD = this.g.cD - dt * 4;
@@ -83,7 +83,7 @@ rigger.Player.prototype.update = function(dt, key){
 					if(this.g.y === rigger.game.ladder.g.y){
 						// Check colision with bar position
 						var ratio = rigger.width/rigger.settings.barSize,
-						    u = Math.floor((this.g.x + (ratio/2))/ratio);
+							u = Math.floor((this.g.x + (ratio/2))/ratio);
 						if(this.light){
 							// Try to add to the bar
 							if(b.addLight(this.light, u)){
@@ -252,7 +252,7 @@ rigger.Ladder = function(){
 
 	this.g = {
 		w : 75,
-		h : rigger.height * 0.95,
+		h : rigger.height * 0.95
 	};
 	this.g.y = rigger.height - this.g.h;
 	this.g.x = rigger.width - this.g.w - 50;
@@ -260,12 +260,12 @@ rigger.Ladder = function(){
 
 rigger.Ladder.prototype.draw = function(){
 	rigger.h.defaultCan();
-	rigger.ctx.drawImage(rigger.assets.sprites.misc.ladder, this.g.x, this.g.y, this.g.w, this.g.h)
+	rigger.ctx.drawImage(rigger.assets.sprites.misc.ladder, this.g.x, this.g.y, this.g.w, this.g.h);
 };
 rigger.Ladder.prototype.update = function(){
 	/* Check colision with player */
 	var p = rigger.game.player,
-	    rW = this.g.w/5
+		rW = this.g.w/5;
 	if(p.g.y === rigger.height - p.g.h // Player on ground
 	&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
 	&& !p.light){ // Player has not got a light
