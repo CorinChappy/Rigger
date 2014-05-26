@@ -345,6 +345,13 @@ var rigger = {
 				rigger.ctx.fillRect(0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.lampy, 0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
 
+				/* Instructions */
+				if(rigger.game.instructions){
+					rigger.h.defaultCan(16);
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText("Press Space to pick up a light!", rigger.width/2, rigger.height*3/20);
+				}
+
 				// Put in some lights
 				var l = rigger.def.lights,
 				ln = rigger.LS.width/2, // Length of the lighting bars
