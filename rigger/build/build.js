@@ -79,7 +79,6 @@ var full = strings.reduce(function(p, c){
 	return p + c;
 }, "");
 
-//fs.writeFileSync("test.js", full);
 
 console.log("Minifying - Google Closure Compiler");
 
@@ -87,8 +86,7 @@ var post_data = querystring.stringify({
 	//'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
 	'compilation_level' : 'SIMPLE_OPTIMIZATIONS',
 	'output_format': 'json',
-	'output_info': 'compiled_code',
-	'warning_level' : 'QUIET',
+	'output_info': ['compiled_code', 'errors'],
 	'js_code' : full
 });
 
@@ -124,10 +122,21 @@ post_req.end();
 
 function postProcess(){
 	console.log("Got response!");
-	var s = JSON.parse(chunkAcc).compiledCode;
+	var s = JSON.parse(chunkAcc);
+
+	if(s.errors){
+		console.log();
+		console.log("=========Errors during compliation:============");
+		console.log(JSON.stringify(s.errors));
+		console.log();
+		console.log("Writing merged file");
+		fs.writeFileSync("merged.js", full);
+		return;
+	}
+
 
 	// Writing data to file
-	fs.writeFileSync(filename, s);
+	fs.writeFileSync(filename, s.compiledCode);
 
 	console.log("Done");
 }
