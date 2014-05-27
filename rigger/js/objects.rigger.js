@@ -1,6 +1,6 @@
 // Contains the objects used in the game
-(function(){ // @start
-"use strict";
+(function(){ 
+"use strict"; // @start
 
 rigger.Player = function(who){
 	this.who = function(){return who;};

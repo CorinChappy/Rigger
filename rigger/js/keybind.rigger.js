@@ -1,6 +1,6 @@
 // Contains keybindings and functions for the game
-(function(){ // @start
-"use strict";
+(function(){ 
+"use strict"; // @start
 	
 	rigger.keysDown = {}; // Contins the currently pressed keys
 

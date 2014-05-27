@@ -1,6 +1,6 @@
 /* File containing the definitions for each thing in the game */
-(function(){  // @start
-"use strict";
+(function(){
+"use strict"; // @start
 
 /* Functions to get a width from a height or visa versa 
  * Gets the ratio of a and b and applies it to c
