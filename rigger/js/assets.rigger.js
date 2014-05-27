@@ -1,6 +1,6 @@
 // Contains the assest locations (images, JSON, etc) + a load function
-(function(){ // @start
-"use strict";
+(function(){
+"use strict"; // @start
 
 	rigger.assets = {
 		sprites : {

@@ -1,6 +1,6 @@
 // Audio control for music and sound effects in the game
-(function(){  // @start
-"use strict";
+(function(){
+"use strict"; // @start
 	
 	rigger.audio = {
 		

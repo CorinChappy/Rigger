@@ -1,6 +1,6 @@
 /* Custom event emitter, same syntax as event naitve JS */
-(function(){ // @start
-"use strict";
+(function(){ 
+"use strict"; // @start
 
 (function(obj){
 
