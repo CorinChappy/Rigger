@@ -42,6 +42,10 @@ console.log("Using compression = "+useCompress);
 console.log("Output file = "+filename);
 console.log();
 
+/* Read the copyright file */
+var copyfile = "../../CopyrightNotice";
+var copyright = "/*\n" + fs.readFileSync(copyfile) + "\n*/\n";
+
 /*
 	Read each file (assumes that root dir is the parent of the current dir)
 	Remove bits before @start and after @end on each file
@@ -134,9 +138,9 @@ function postProcess(){
 		return;
 	}
 
-
+	var cc = copyright + s.compiledCode;
 	// Writing data to file
-	fs.writeFileSync(filename, s.compiledCode);
+	fs.writeFileSync(filename, cc);
 
 	console.log("Done");
 }
