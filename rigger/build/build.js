@@ -52,7 +52,7 @@ var dir = rootDir + "js/";
 var suffix = ".rigger.js";
 var prefix = "";
 
-var files = ["main", "gels", "assets", "objects", "keybind", "audio", "def"];
+var files = ["main", "gels", "events", "assets", "objects", "keybind", "audio", "def"];
 
 console.log("Reading files");
 var strings = files.map(function(a){

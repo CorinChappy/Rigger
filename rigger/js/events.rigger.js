@@ -1,6 +1,5 @@
 /* Custom event emitter, same syntax as event naitve JS */
-(function(){
-"use strict";
+(function(){ // @start
 
 (function(obj){
 
@@ -53,4 +52,4 @@
 	obj.emmitEvent = EM;
 })(rigger);
 
-})();
+})(); // @end
