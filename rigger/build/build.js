@@ -26,14 +26,18 @@ var http = require('http');
 
 
 // Get the command line input (to check for compression) + filename
-var useCompress, filename = "rigger.js";
+var useCompress, merge, filename = "rigger.js";
 if(useCompress = (process.argv[2] || false)){
 	if(useCompress === "-c"){
 		filename = process.argv[3] || "rigger.zip";
 		useCompress = true;
 	}else{
-		filename = useCompress; // Assume file if it's not a bool
-		useCompress = false;
+		if(useCompress === "-m"){
+			merge = true;
+		}else{
+			filename = useCompress; // Assume file if it's not a bool
+			useCompress = false;
+		}
 	}
 }
 
@@ -83,6 +87,10 @@ var full = strings.reduce(function(p, c){
 	return p + c;
 }, "");
 
+if(merge){
+	console.log("Outputting merged file");
+	fs.writeFileSync("merged.js", copyright + full);
+}
 
 console.log("Minifying - Google Closure Compiler");
 
@@ -130,7 +138,7 @@ function postProcess(){
 
 	if(s.errors){
 		console.log();
-		console.log("=========Errors during compliation:============");
+		console.log("=========Errors during compliation============");
 		console.log(JSON.stringify(s.errors));
 		console.log();
 		console.log("Writing merged file");
