@@ -446,6 +446,7 @@ var rigger = {
 				if(rigger.menuOption === 0){
 					rigger.ctx.strokeRect(padd[0]/2, padd[1]/2 + (rigger.height - rigger.LS.height), size[0], size[1]);
 				}
+				rigger.ctx.globalAlpha = 0.8;
 				main : for(var i = 0; i < rows; i++){
 					var j = (i === 0)?1:0;
 					for(; j < cols; j++){
