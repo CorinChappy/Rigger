@@ -112,7 +112,9 @@ rigger.Player.prototype.update = function(dt, key){
 									this.speed = this.speeds[0];
 								}
 							}else{
-								this.light = new rigger.Light(rigger.def.lights[t]);
+								try{
+									this.light = new rigger.Light(rigger.def.lights[t]);
+								}catch(e){}
 							}
 						}
 					}
@@ -206,7 +208,8 @@ rigger.Bar.equals = function(a, b){ // Check for equality of two bars
 
 
 
-rigger.Light = function(type) {
+rigger.Light = function(type){
+	if(!type){throw new Error();}
 	this.type = function(){return type;};
 
 	this.gel = null; // The Gel
@@ -226,6 +229,17 @@ rigger.Light = function(type) {
 /* Light prototypes */
 rigger.Light.prototype.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
+		if(this.gel){
+			rigger.ctx.fillStyle = this.gel.colour();
+			rigger.ctx.fillRect(this.g.x + this.gelPos.x, this.g.y + this.gelPos.y, this.gelPos.w, this.gelPos.h);
+		}
+};
+rigger.Light.prototype.addGel = function(gelRef){
+	try{
+		this.gel = new rigger.Gel(gelRef);
+	}catch(e){
+		this.gel = null;
+	}
 };
 rigger.Light.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
@@ -237,6 +251,7 @@ rigger.Light.equals = function(a, b){
 
 
 rigger.Gel = function(num){
+	if(!rigger.gelRef[num]){throw new Error();}
 	this.number = function(){return num;};
 
 	var col = rigger.gelRef[num]; // Gets the HEX colour code for the Gel number

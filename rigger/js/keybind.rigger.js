@@ -94,6 +94,9 @@
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.max(0, rigger.menuOption-1);
 			}
+			if(rigger.game.menu === 3){
+				rigger.menuOption = Math.max(0, rigger.menuOption-1);
+			}
 		},
 		38 : function(){
 			// UP
@@ -102,6 +105,9 @@
 			// RIGHT
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.def.players).length-1);
+			}
+			if(rigger.game.menu === 3){
+				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.gelRef).length);
 			}
 		},
 		40 : function(){
@@ -114,6 +120,17 @@
 				return;
 			}
 			if(rigger.state === 2){ // IN game
+				if(rigger.game.menu === 3){
+					if(rigger.game.player.light){
+						if(rigger.menuOption === 0){
+							rigger.game.player.light.addGel(null);
+						}else{
+							rigger.game.player.light.addGel(Object.keys(rigger.gelRef).sort()[rigger.menuOption - 1]);
+						}
+						rigger.game.menu = 0;
+					}
+					return;
+				}
 				rigger.game.player.update(0, 32);
 				// Test for winning conditions
 				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){

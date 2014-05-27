@@ -405,8 +405,37 @@ var rigger = {
 				rigger.ctx.textBaseline = "bottom";
 				rigger.ctx.textAlign = "center";
 				rigger.ctx.fillText("Pick a gel", rigger.LS.width/2, rigger.height - rigger.LS.height);
+
+
+				rigger.h.defaultCan(18);
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.textBaseline = "middle";
+				rigger.ctx.lineWidth = 5;
 				// Create some kind of square grid
+				// Do some maths
 				var gelsNos = Object.keys(rigger.gelRef).sort();
+				var acc = 5,
+				cols = 5,
+				padd = [rigger.LS.width/20, rigger.LS.height/20],
+				size = [(rigger.LS.width - (padd[0]*acc))/acc, (rigger.LS.width - (padd[0]*cols))/cols];
+				/* Draw the 'none' section */
+				rigger.ctx.fillText("None", padd[0]/2 + (size[0]/2), (rigger.height - rigger.LS.height) + padd[1]/2 + (size[1]/2));
+				if(rigger.menuOption === 0){
+					rigger.ctx.strokeRect(padd[0]/2, padd[1]/2 + (rigger.height - rigger.LS.height), size[0], size[1]);
+				}
+				main : for(var i = 0; i <= cols; i++){
+					if(i === 0){var j = 1;}else{var j = 0;}
+					for(; j <= acc; j++){
+						var gelNo = (i*acc + j) - ((i === 0)?1:0);
+						if(gelsNos.length <= gelNo){break main;}
+						rigger.ctx.fillStyle = rigger.gelRef[gelsNos[gelNo]];
+						rigger.ctx.fillRect(padd[0]/2 + size[0]*j + padd[0]*j, (rigger.height - rigger.LS.height) + padd[1]/2 + size[1]*i + padd[1]*i, size[0], size[1]);
+						if(rigger.menuOption === gelNo+1){
+							rigger.ctx.strokeRect(padd[0]/2 + size[0]*j + padd[0]*j, (rigger.height - rigger.LS.height) + padd[1]/2 + size[1]*i + padd[1]*i, size[0], size[1]);
+						}
+					}
+				}
+
 
 			},
 			victory : function(){
