@@ -18,7 +18,7 @@ rigger.def = {
 			name : "fresnel",
 			t : 0,
 			img : function(){return rigger.assets.sprites.lights[0];},
-			h : 68,
+			h : 58,
 			w : 38,
 			gelPos : {
 				x : 5,
@@ -31,7 +31,7 @@ rigger.def = {
 			name : "pc",
 			t : 1,
 			img : function(){return rigger.assets.sprites.lights[1];},
-			h : 68,
+			h : 58,
 			w : 38,
 			gelPos : {
 				x : 2,
@@ -44,8 +44,8 @@ rigger.def = {
 			name : "parcan",
 			t : 2,
 			img : function(){return rigger.assets.sprites.lights[2];},
-			h : 64,
-			w : 50,
+			h : 58,
+			w : 45,
 			gelPos : {
 				x : 2,
 				y : 15,
@@ -58,7 +58,7 @@ rigger.def = {
 			t : 3,
 			img : function(){return rigger.assets.sprites.lights[3];},
 			h : 76,
-			w : 50,
+			w : 35,
 			gelPos : {
 				x : 2,
 				y : 15,
