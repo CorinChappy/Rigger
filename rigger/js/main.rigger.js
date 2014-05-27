@@ -440,10 +440,10 @@ var rigger = {
 				if(rigger.menuOption === 0){
 					rigger.ctx.strokeRect(padd[0]/2, padd[1]/2 + (rigger.height - rigger.LS.height), size[0], size[1]);
 				}
-				main : for(var i = 0; i <= rows; i++){
-					if(i === 0){var j = 1;}else{var j = 0;}
-					for(; j <= cols; j++){
-						var gelNo = (i*cols + j) - ((i === 0)?1:0);
+				main : for(var i = 0; i < rows; i++){
+					var j = (i === 0)?1:0;
+					for(; j < cols; j++){
+						var gelNo = (i*cols + j) - 1;
 						if(gelsNos.length <= gelNo){break main;}
 						rigger.ctx.fillStyle = rigger.gelRef[gelsNos[gelNo]];
 						rigger.ctx.fillRect(padd[0]/2 + size[0]*j + padd[0]*j, (rigger.height - rigger.LS.height) + padd[1]/2 + size[1]*i + padd[1]*i, size[0], size[1]);

@@ -94,24 +94,30 @@
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.max(0, rigger.menuOption-1);
 			}
-			if(rigger.game.menu === 3){
+			if(rigger.game.menu === 3){ // Gel selection
 				rigger.menuOption = Math.max(0, rigger.menuOption-1);
 			}
 		},
 		38 : function(){
 			// UP
+			if(rigger.game.menu === 3){ // Gel selection
+				rigger.menuOption = Math.max(0, rigger.menuOption-5);
+			}
 		},
 		39 : function(){
 			// RIGHT
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.def.players).length-1);
 			}
-			if(rigger.game.menu === 3){
+			if(rigger.game.menu === 3){ // Gel selection
 				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.gelRef).length);
 			}
 		},
 		40 : function(){
 			// DOWN
+			if(rigger.game.menu === 3){ // Gel selection
+				rigger.menuOption = Math.min(rigger.menuOption+5, Object.keys(rigger.gelRef).length);
+			}
 		},
 
 		32 : function(){ // SPACE
@@ -120,7 +126,7 @@
 				return;
 			}
 			if(rigger.state === 2){ // IN game
-				if(rigger.game.menu === 3){
+				if(rigger.game.menu === 3){ // Gel selection
 					if(rigger.game.player.light){
 						if(rigger.menuOption === 0){
 							rigger.game.player.light.addGel(null);
