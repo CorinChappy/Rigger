@@ -1,5 +1,6 @@
 /* Custom event emitter, same syntax as event naitve JS */
 (function(){ // @start
+"use strict";
 
 (function(obj){
 
@@ -51,5 +52,6 @@
 	obj.removeEventListener = REL;
 	obj.emmitEvent = EM;
 })(rigger);
+
 
 })(); // @end

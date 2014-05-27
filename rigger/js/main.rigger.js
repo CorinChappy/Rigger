@@ -112,14 +112,6 @@ var rigger = {
 	locked : false, // If locked interaction is disabled
 
 
-	/* Mapping from the integer representations to the string representations (name)
-	 * Running rigger.objs.lights[num] will return the name of the light that num represents
-	*/
-	objs : {
-		rooms : ["annex", "light store", "gel draw"],
-		lights : ["fresnel", "pc", "parcan", "source 4", "flood"]
-	},
-
 	game : { // Game state references
 		player : null, // The current character
 
@@ -154,15 +146,6 @@ var rigger = {
 
 	// Helper functions
 	h : {
-		// String of the obj to it's int value
-		strToName : function(s, t){
-			if(parseInt(t) % 1 === 0){
-				return (t >= rigger.objs[s].length || t < 0)?0:t;
-			}
-			var index = rigger.objs[s].indexOf(t);
-			return (index < 0)?0:index;
-		},
-
 		// Generate a random bar
 		genBar : function(){
 			var b = new rigger.Bar(),
@@ -446,6 +429,7 @@ var rigger = {
 				if(rigger.menuOption === 0){
 					rigger.ctx.strokeRect(padd[0]/2, padd[1]/2 + (rigger.height - rigger.LS.height), size[0], size[1]);
 				}
+				rigger.ctx.globalAlpha = 0.8;
 				main : for(var i = 0; i < rows; i++){
 					var j = (i === 0)?1:0;
 					for(; j < cols; j++){

@@ -231,6 +231,7 @@ rigger.Light.prototype.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 		if(this.gel){
 			rigger.ctx.fillStyle = this.gel.colour();
+			rigger.ctx.globalAlpha = 0.8;
 			rigger.ctx.fillRect(this.g.x + this.gelPos.x, this.g.y + this.gelPos.y, this.gelPos.w, this.gelPos.h);
 		}
 };
