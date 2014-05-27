@@ -165,10 +165,16 @@ var rigger = {
 
 		// Generate a random bar
 		genBar : function(){
-			var b = new rigger.Bar();
+			var b = new rigger.Bar(),
+			l, k;
 			for(var i = 0; i <= rigger.settings.barSize; i++){
 				if(Math.random() < 0.3){
-					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*rigger.def.lights.length)]), i);
+					l = new rigger.Light(rigger.def.lights[Math.floor(Math.random()*rigger.def.lights.length)]);
+					if(Math.random() < 0.3){
+						k = Object.keys(rigger.gelRef);
+						l.addGel(k[Math.floor(Math.random()*k.length)]);
+					}
+					b.addLight(l, i);
 				}
 			}
 			return b;
