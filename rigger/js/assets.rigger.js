@@ -112,7 +112,7 @@
 					(function(m){
 						toLoad++;
 						var au = rigger.assets.audio[m][ty],
-						    i = new Audio();
+							i = new Audio();
 						i.addEventListener("loadstart",function(){rigger.assets.audio[m] = i; loaded++; f();});
 						i.addEventListener("error",function(){f(au);});
 						i.src = au;

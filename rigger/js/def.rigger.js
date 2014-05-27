@@ -18,36 +18,66 @@ rigger.def = {
 			name : "fresnel",
 			t : 0,
 			img : function(){return rigger.assets.sprites.lights[0];},
-			h : 68,
-			w : 38
+			h : 58,
+			w : 38,
+			gelPos : {
+				x : 2,
+				y : 13,
+				h : 5,
+				w: 34
+			}
 		},
 		{
 			name : "pc",
 			t : 1,
 			img : function(){return rigger.assets.sprites.lights[1];},
-			h : 68,
-			w : 38
+			h : 58,
+			w : 38,
+			gelPos : {
+				x : 2,
+				y : 13,
+				h : 5,
+				w: 34
+			}
 		},
 		{
 			name : "parcan",
 			t : 2,
 			img : function(){return rigger.assets.sprites.lights[2];},
-			h : 64,
-			w : 50
+			h : 58,
+			w : 45,
+			gelPos : {
+				x : 2,
+				y : 18,
+				h : 5,
+				w: 41
+			}
 		},
 		{
 			name : "source 4",
 			t : 3,
 			img : function(){return rigger.assets.sprites.lights[3];},
 			h : 76,
-			w : 50
+			w : 35,
+			gelPos : {
+				x : 5,
+				y : 15,
+				h : 5,
+				w: 25
+			}
 		},
 		{
 			name : "flood",
 			t : 4,
 			img : function(){return rigger.assets.sprites.lights[4];},
 			h : 41,
-			w : 50
+			w : 50,
+			gelPos : {
+				x : 2,
+				y : 15,
+				h : 5,
+				w: 46
+			}
 		}
 
 	],

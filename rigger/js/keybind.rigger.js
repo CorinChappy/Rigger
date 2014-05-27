@@ -37,7 +37,7 @@
 	rigger.keyAction = {
 		37 : function(dt, a){
 			// LEFT
-			if(rigger.state === 2){ // IN GAME
+			if(rigger.state === 2 && rigger.game.menu === 0){ // IN GAME
 				var p = rigger.game.player;
 				if(rigger.game.room === 0 && p.g.x <= 0 - p.g.w/2){
 					p.g.x = rigger.width - p.g.w; // Move to light store
@@ -48,13 +48,13 @@
 		},
 		38 : function(dt, a){
 			// UP
-			if(rigger.state === 2){
+			if(rigger.state === 2 && rigger.game.menu === 0){
 				rigger.game.player.update(dt, 38);
 			}
 		},
 		39 : function(dt, a){
 			// RIGHT
-			if(rigger.state === 2){ // IN GAME
+			if(rigger.state === 2 && rigger.game.menu === 0){ // IN GAME
 				var p = rigger.game.player;
 				// Check screen edge
 				if(rigger.game.room === 1 && p.g.x >= rigger.LS.width - p.g.w/2){
@@ -69,7 +69,7 @@
 		},
 		40 : function(dt, a){
 			// DOWN
-			if(rigger.state === 2){
+			if(rigger.state === 2 && rigger.game.menu === 0){
 				rigger.game.player.update(dt, 40);
 			}
 		},
@@ -94,18 +94,30 @@
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.max(0, rigger.menuOption-1);
 			}
+			if(rigger.game.menu === 3){ // Gel selection
+				rigger.menuOption = Math.max(0, rigger.menuOption-1);
+			}
 		},
 		38 : function(){
 			// UP
+			if(rigger.game.menu === 3){ // Gel selection
+				rigger.menuOption = Math.max(0, rigger.menuOption-5);
+			}
 		},
 		39 : function(){
 			// RIGHT
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.def.players).length-1);
 			}
+			if(rigger.game.menu === 3){ // Gel selection
+				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.gelRef).length);
+			}
 		},
 		40 : function(){
 			// DOWN
+			if(rigger.game.menu === 3){ // Gel selection
+				rigger.menuOption = Math.min(rigger.menuOption+5, Object.keys(rigger.gelRef).length);
+			}
 		},
 
 		32 : function(){ // SPACE
@@ -114,6 +126,17 @@
 				return;
 			}
 			if(rigger.state === 2){ // IN game
+				if(rigger.game.menu === 3){ // Gel selection
+					if(rigger.game.player.light){
+						if(rigger.menuOption === 0){
+							rigger.game.player.light.addGel(null);
+						}else{
+							rigger.game.player.light.addGel(Object.keys(rigger.gelRef).sort()[rigger.menuOption - 1]);
+						}
+						rigger.game.menu = 0;
+					}
+					return;
+				}
 				rigger.game.player.update(0, 32);
 				// Test for winning conditions
 				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){

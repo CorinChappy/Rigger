@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="131.08186"
-     inkscape:cy="187.60138"
+     inkscape:cx="206.26836"
+     inkscape:cy="147.60138"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1085,40 +1085,32 @@
        id="image3390"
        x="2.0133972"
        y="791.29333" />
+    <image
+       width="60.32198"
+       height="86.548401"
+       xlink:href="file:///C:/Users/Catherine/Downloads/4053_sHHiKDeh.jpg"
+       id="image3380"
+       x="283.76804"
+       y="760.30389" />
     <g
-       id="g3269"
-       transform="translate(-2,-16)">
-      <g
-         transform="translate(-2,0)"
-         id="g3205">
-        <g
-           id="g3454"
-           transform="translate(-81.420621,110.93559)">
-          <image
-             y="793.36829"
-             x="242.83865"
-             id="image3370"
-             xlink:href="file:///C:/Users/Catherine/Downloads/4029_g12YN96i.jpg"
-             height="74.73629"
-             width="61.844692" />
-          <rect
-             y="868.05029"
-             x="243.39397"
-             height="10.524671"
-             width="60.734055"
-             id="rect3446"
-             style="fill:#fefe00;fill-opacity:1;fill-rule:nonzero;stroke:#fefe00;stroke-width:0.9921577;stroke-opacity:1" />
-        </g>
-        <image
-           width="60.32198"
-           height="86.548401"
-           xlink:href="file:///C:/Users/Catherine/Downloads/4053_sHHiKDeh.jpg"
-           id="image3380"
-           x="223.44606"
-           y="904.30389" />
-      </g>
+       id="g7884"
+       transform="translate(126.35001,-37)">
+      <image
+         y="888.30389"
+         x="157.41803"
+         id="image3370"
+         xlink:href="file:///C:/Users/Catherine/Downloads/4029_g12YN96i.jpg"
+         height="74.73629"
+         width="61.844692" />
+      <rect
+         y="962.9859"
+         x="157.97334"
+         height="10.524671"
+         width="60.734055"
+         id="rect3446"
+         style="fill:#fefe00;fill-opacity:1;fill-rule:nonzero;stroke:#fefe00;stroke-width:0.9921577;stroke-opacity:1" />
       <flowRoot
-         transform="matrix(1.3034664,0,0,1.3034664,-141.09753,525.20339)"
+         transform="matrix(1.3034664,0,0,1.3034664,-143.09753,509.20339)"
          style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:VertigoFLF;-inkscape-font-specification:VertigoFLF"
          id="flowRoot3478"
          xml:space="preserve"><flowRegion
@@ -1130,7 +1122,7 @@
              id="rect3482" /></flowRegion><flowPara
            style="font-size:6px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;stroke:#000000;stroke-width:0;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;font-family:Belizarius;-inkscape-font-specification:Belizarius"
            id="flowPara3484">td: David Schult</flowPara></flowRoot>      <flowRoot
-         transform="translate(-61.927199,640.25037)"
+         transform="translate(-63.927199,624.25037)"
          style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:VertigoFLF;-inkscape-font-specification:VertigoFLF"
          id="flowRoot4254"
          xml:space="preserve"><flowRegion
@@ -1211,5 +1203,26 @@
        id="image3588"
        x="218.78598"
        y="684.96979" />
+    <image
+       width="62"
+       height="87.632507"
+       xlink:href="file:///C:/Users/Catherine/Downloads/4031_cUmYaTtX.jpg"
+       id="image7834"
+       x="283.76804"
+       y="667.72784" />
+    <image
+       width="60"
+       height="85.083611"
+       xlink:href="file:///C:/Users/Catherine/Downloads/3291_nH4jTYsI.jpg"
+       id="image7904"
+       x="285.78598"
+       y="941.62537" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3.55427003;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="rect7951"
+       width="123.94573"
+       height="160.94572"
+       x="153.31311"
+       y="883.65253" />
   </g>
 </svg>

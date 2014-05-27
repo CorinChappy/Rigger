@@ -126,12 +126,12 @@ var rigger = {
 		time : 0, // Time since game started
 
 		/* Current room
-		 * 0 = Annex; 1 = Light Store; 2 = Gel Draw
+		 * 0 = Annex; 1 = Light Store;
 		*/
 		room : 0,
 
 		/* Currently displayed menu overlay
-		 * 0 = none; 1 = design; 2 = in game menu
+		 * 0 = none; 1 = design; 2 = in game menu; 3 = Gel Draw
 		*/
 		menu : 0,
 
@@ -165,10 +165,16 @@ var rigger = {
 
 		// Generate a random bar
 		genBar : function(){
-			var b = new rigger.Bar();
+			var b = new rigger.Bar(),
+			l, k;
 			for(var i = 0; i <= rigger.settings.barSize; i++){
 				if(Math.random() < 0.3){
-					b.addLight(new rigger.Light(rigger.def.lights[Math.floor(Math.random()*rigger.def.lights.length)]), i);
+					l = new rigger.Light(rigger.def.lights[Math.floor(Math.random()*rigger.def.lights.length)]);
+					if(Math.random() < 0.3){
+						k = Object.keys(rigger.gelRef);
+						l.addGel(k[Math.floor(Math.random()*k.length)]);
+					}
+					b.addLight(l, i);
 				}
 			}
 			return b;
@@ -289,7 +295,10 @@ var rigger = {
 							rigger.d.o.inGame();
 						break; }
 
-
+						case 3 : { // Gel draw
+							rigger.game.player.draw();
+							rigger.d.o.gels();
+						break; }
 
 
 
@@ -345,6 +354,19 @@ var rigger = {
 				rigger.ctx.fillRect(0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.lampy, 0, rigger.height - rigger.LS.height, rigger.LS.width, rigger.LS.height);
 
+				/* Instructions */
+				if(rigger.game.instructions){
+					rigger.h.defaultCan(16);
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText("Press Space to pick up a light!", rigger.width/2, rigger.height*3/20);
+					rigger.h.defaultCan(11);
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.fillText("Press Space", 0, rigger.height - rigger.LS.height*2/5);
+					rigger.ctx.fillText("your light", 0, rigger.height - rigger.LS.height/3 - 5);
+					rigger.ctx.textBaseline = "top";
+					rigger.ctx.fillText("here to gel \u21E9", 0, rigger.height - rigger.LS.height*2/5);
+				}
+
 				// Put in some lights
 				var l = rigger.def.lights,
 				ln = rigger.LS.width/2, // Length of the lighting bars
@@ -385,6 +407,59 @@ var rigger = {
 				rigger.h.defaultCan(24);
 				rigger.ctx.textAlign = "center";
 				rigger.ctx.fillText("Game Paused...", rigger.width/2, rigger.height/5);
+			},
+			gels : function(){
+				rigger.ctx.globalAlpha = 0.9;
+				rigger.ctx.fillStyle = "white";
+				rigger.ctx.fillRect(0, 0, rigger.width, rigger.height);
+
+
+
+
+				// Do some maths
+				var gelsNos = Object.keys(rigger.gelRef).sort();
+				var cols = 5,
+				rows = 5,
+				padd = [rigger.LS.width/20, rigger.LS.height/20],
+				size = [(rigger.LS.width - (padd[0]*cols))/cols, (rigger.LS.width - (padd[0]*rows))/rows];
+
+
+				/* Instructions */
+				rigger.h.defaultCan(21);
+				rigger.ctx.textBaseline = "bottom";
+				if(rigger.menuOption === 0){
+					rigger.ctx.fillText("Pick a gel.", rigger.LS.width/3, rigger.height - rigger.LS.height);
+				}else{
+					rigger.ctx.fillText("Pick a gel. Selected: "+gelsNos[rigger.menuOption - 1], rigger.LS.width/3, rigger.height - rigger.LS.height);
+				}
+
+
+
+				rigger.h.defaultCan(18);
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.textBaseline = "middle";
+				rigger.ctx.lineWidth = 5;
+				// Draw a square grid
+
+				/* Draw the 'none' section */
+				rigger.ctx.fillText("None", padd[0]/2 + (size[0]/2), (rigger.height - rigger.LS.height) + padd[1]/2 + (size[1]/2));
+				if(rigger.menuOption === 0){
+					rigger.ctx.strokeRect(padd[0]/2, padd[1]/2 + (rigger.height - rigger.LS.height), size[0], size[1]);
+				}
+				main : for(var i = 0; i < rows; i++){
+					var j = (i === 0)?1:0;
+					for(; j < cols; j++){
+						var gelNo = (i*cols + j) - 1;
+						if(gelsNos.length <= gelNo){break main;}
+						rigger.ctx.fillStyle = rigger.gelRef[gelsNos[gelNo]];
+						rigger.ctx.fillRect(padd[0]/2 + size[0]*j + padd[0]*j, (rigger.height - rigger.LS.height) + padd[1]/2 + size[1]*i + padd[1]*i, size[0], size[1]);
+						if(rigger.menuOption === gelNo+1){
+							rigger.ctx.strokeRect(padd[0]/2 + size[0]*j + padd[0]*j, (rigger.height - rigger.LS.height) + padd[1]/2 + size[1]*i + padd[1]*i, size[0], size[1]);
+						}
+					}
+				}
+
+
 			},
 			victory : function(){
 				rigger.ctx.globalAlpha = 0.5;

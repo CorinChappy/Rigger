@@ -63,7 +63,7 @@ rigger.Player.prototype.update = function(dt, key){
 			case 38 :
 			case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
 				var l = rigger.game.ladder.g,
-				    rW = l.w/5
+					rW = l.w/5;
 				if(rigger.game.player.g.x > l.x && rigger.game.player.g.x < l.x + l.w - (rW*4)){ // Over the ladder
 					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
 					this.g.cD = this.g.cD - dt * 4;
@@ -83,7 +83,7 @@ rigger.Player.prototype.update = function(dt, key){
 					if(this.g.y === rigger.game.ladder.g.y){
 						// Check colision with bar position
 						var ratio = rigger.width/rigger.settings.barSize,
-						    u = Math.floor((this.g.x + (ratio/2))/ratio);
+							u = Math.floor((this.g.x + (ratio/2))/ratio);
 						if(this.light){
 							// Try to add to the bar
 							if(b.addLight(this.light, u)){
@@ -96,19 +96,26 @@ rigger.Player.prototype.update = function(dt, key){
 					}
 				}
 				if(rigger.game.room === 1){ // LIGHT STORE
-					var ll = rigger.def.lights.length, // Number of light types
-					ln = rigger.LS.width/2, // Length of the lighting bars
-					wI = rigger.LS.width/12, // Padding from the side
-					wG = ln/ll; // Space for each light type
-					if(this.g.x > (rigger.LS.width - ln) + wG/2 || this.g.x < rigger.LS.width - wI){ // Over the lighting part
-						var t = Math.floor(((rigger.LS.width - this.g.x - wI) + wG/2)/wG);
-						if(this.light){
-							if(t === this.light.type().t){
-								this.light = null;
-								this.speed = this.speeds[0];
+					if(this.g.x < rigger.LS.width*0.2 && this.light){ // Over the gels draw
+						rigger.menuOption = 0;
+						rigger.game.menu = 3;
+					}else{
+						var ll = rigger.def.lights.length, // Number of light types
+						ln = rigger.LS.width/2, // Length of the lighting bars
+						wI = rigger.LS.width/12, // Padding from the side
+						wG = ln/ll; // Space for each light type
+						if(this.g.x > (rigger.LS.width - ln) - wG/2 && this.g.x < rigger.LS.width - wI){ // Over the lighting part
+							var t = Math.floor(((rigger.LS.width - this.g.x - wI) + wG/2)/wG);
+							if(this.light){
+								if(t === this.light.type().t){
+									this.light = null;
+									this.speed = this.speeds[0];
+								}
+							}else{
+								try{
+									this.light = new rigger.Light(rigger.def.lights[t]);
+								}catch(e){}
 							}
-						}else{
-							this.light = new rigger.Light(rigger.def.lights[t]);
 						}
 					}
 				}
@@ -201,10 +208,12 @@ rigger.Bar.equals = function(a, b){ // Check for equality of two bars
 
 
 
-rigger.Light = function(type) {
+rigger.Light = function(type){
+	if(!type){throw new Error();}
 	this.type = function(){return type;};
 
 	this.gel = null; // The Gel
+	this.gelPos = type.gelPos;
 
 	this.barPos = null; // Light's position on the bar
 
@@ -220,6 +229,17 @@ rigger.Light = function(type) {
 /* Light prototypes */
 rigger.Light.prototype.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
+		if(this.gel){
+			rigger.ctx.fillStyle = this.gel.colour();
+			rigger.ctx.fillRect(this.g.x + this.gelPos.x, this.g.y + this.gelPos.y, this.gelPos.w, this.gelPos.h);
+		}
+};
+rigger.Light.prototype.addGel = function(gelRef){
+	try{
+		this.gel = new rigger.Gel(gelRef);
+	}catch(e){
+		this.gel = null;
+	}
 };
 rigger.Light.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
@@ -230,17 +250,15 @@ rigger.Light.equals = function(a, b){
 
 
 
-rigger.Gel = function(num, type){
+rigger.Gel = function(num){
+	if(!rigger.gelRef[num]){throw new Error();}
 	this.number = function(){return num;};
-	var type = rigger.h.strToName("lights", type);
-	this.type = function(){return type;};
 
 	var col = rigger.gelRef[num]; // Gets the HEX colour code for the Gel number
 	this.colour = function(){return col;};
 };
 rigger.Gel.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
-	if(a.type() !== b.type()){return false;}
 	if(a.colour() !== b.colour()){return false;}
 	return true;
 };
@@ -252,7 +270,7 @@ rigger.Ladder = function(){
 
 	this.g = {
 		w : 75,
-		h : rigger.height * 0.95,
+		h : rigger.height * 0.95
 	};
 	this.g.y = rigger.height - this.g.h;
 	this.g.x = rigger.width - this.g.w - 50;
@@ -260,12 +278,12 @@ rigger.Ladder = function(){
 
 rigger.Ladder.prototype.draw = function(){
 	rigger.h.defaultCan();
-	rigger.ctx.drawImage(rigger.assets.sprites.misc.ladder, this.g.x, this.g.y, this.g.w, this.g.h)
+	rigger.ctx.drawImage(rigger.assets.sprites.misc.ladder, this.g.x, this.g.y, this.g.w, this.g.h);
 };
 rigger.Ladder.prototype.update = function(){
 	/* Check colision with player */
 	var p = rigger.game.player,
-	    rW = this.g.w/5
+		rW = this.g.w/5;
 	if(p.g.y === rigger.height - p.g.h // Player on ground
 	&& p.g.x > this.g.x - (rW*2) && p.g.x < this.g.x + this.g.w - (rW*2) // Player over the ladder
 	&& !p.light){ // Player has not got a light

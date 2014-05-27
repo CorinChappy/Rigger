@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="260.40625"
-   height="394.53125"
+   width="170.39059"
+   height="374.52957"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="source4.svg">
+   sodipodi:docname="source4.zip">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.62730239"
-     inkscape:cx="47.960908"
-     inkscape:cy="388.07047"
+     inkscape:cx="1.9458024"
+     inkscape:cy="378.05867"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -35,10 +35,10 @@
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     fit-margin-left="10"
-     fit-margin-top="10"
-     fit-margin-right="10"
-     fit-margin-bottom="10" />
+     fit-margin-left="0"
+     fit-margin-top="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -55,7 +55,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-81.4375,-125.53125)">
+     transform="translate(-127.45261,-135.52114)">
     <path
        style="fill:#1a1a1a;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:5.9291687;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        d="m 230.81062,152.57595 0,-14.09023 15.21744,0 15.21745,0 0,14.09023 0,14.09023 -15.21745,0 -15.21744,0 0,-14.09023 z"
@@ -236,5 +236,5 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer"
-     transform="translate(-81.4375,-125.53125)" />
+     transform="translate(-127.45261,-135.52114)" />
 </svg>
