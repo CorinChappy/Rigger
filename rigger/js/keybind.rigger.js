@@ -37,7 +37,7 @@
 	rigger.keyAction = {
 		37 : function(dt, a){
 			// LEFT
-			if(rigger.state === 2){ // IN GAME
+			if(rigger.state === 2 && rigger.game.menu === 0){ // IN GAME
 				var p = rigger.game.player;
 				if(rigger.game.room === 0 && p.g.x <= 0 - p.g.w/2){
 					p.g.x = rigger.width - p.g.w; // Move to light store
@@ -48,13 +48,13 @@
 		},
 		38 : function(dt, a){
 			// UP
-			if(rigger.state === 2){
+			if(rigger.state === 2 && rigger.game.menu === 0){
 				rigger.game.player.update(dt, 38);
 			}
 		},
 		39 : function(dt, a){
 			// RIGHT
-			if(rigger.state === 2){ // IN GAME
+			if(rigger.state === 2 && rigger.game.menu === 0){ // IN GAME
 				var p = rigger.game.player;
 				// Check screen edge
 				if(rigger.game.room === 1 && p.g.x >= rigger.LS.width - p.g.w/2){
@@ -69,7 +69,7 @@
 		},
 		40 : function(dt, a){
 			// DOWN
-			if(rigger.state === 2){
+			if(rigger.state === 2 && rigger.game.menu === 0){
 				rigger.game.player.update(dt, 40);
 			}
 		},

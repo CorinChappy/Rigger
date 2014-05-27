@@ -126,12 +126,12 @@ var rigger = {
 		time : 0, // Time since game started
 
 		/* Current room
-		 * 0 = Annex; 1 = Light Store; 2 = Gel Draw
+		 * 0 = Annex; 1 = Light Store;
 		*/
 		room : 0,
 
 		/* Currently displayed menu overlay
-		 * 0 = none; 1 = design; 2 = in game menu
+		 * 0 = none; 1 = design; 2 = in game menu; 3 = Gel Draw
 		*/
 		menu : 0,
 
@@ -289,7 +289,10 @@ var rigger = {
 							rigger.d.o.inGame();
 						break; }
 
-
+						case 3 : { // Gel draw
+							rigger.game.player.draw();
+							rigger.d.o.gels();
+						break; }
 
 
 
@@ -392,6 +395,19 @@ var rigger = {
 				rigger.h.defaultCan(24);
 				rigger.ctx.textAlign = "center";
 				rigger.ctx.fillText("Game Paused...", rigger.width/2, rigger.height/5);
+			},
+			gels : function(){
+				rigger.ctx.globalAlpha = 0.9;
+				rigger.ctx.fillStyle = "white";
+				rigger.ctx.fillRect(0, 0, rigger.width, rigger.height);
+
+				rigger.h.defaultCan(21);
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillText("Pick a gel", rigger.LS.width/2, rigger.height - rigger.LS.height);
+				// Create some kind of square grid
+				var gelsNos = Object.keys(rigger.gelRef).sort();
+
 			},
 			victory : function(){
 				rigger.ctx.globalAlpha = 0.5;

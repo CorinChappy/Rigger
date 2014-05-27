@@ -96,19 +96,24 @@ rigger.Player.prototype.update = function(dt, key){
 					}
 				}
 				if(rigger.game.room === 1){ // LIGHT STORE
-					var ll = rigger.def.lights.length, // Number of light types
-					ln = rigger.LS.width/2, // Length of the lighting bars
-					wI = rigger.LS.width/12, // Padding from the side
-					wG = ln/ll; // Space for each light type
-					if(this.g.x > (rigger.LS.width - ln) + wG/2 || this.g.x < rigger.LS.width - wI){ // Over the lighting part
-						var t = Math.floor(((rigger.LS.width - this.g.x - wI) + wG/2)/wG);
-						if(this.light){
-							if(t === this.light.type().t){
-								this.light = null;
-								this.speed = this.speeds[0];
+					if(this.g.x < rigger.LS.width*0.2 && this.light){ // Over the gels draw
+						rigger.menuOption = 0;
+						rigger.game.menu = 3;
+					}else{
+						var ll = rigger.def.lights.length, // Number of light types
+						ln = rigger.LS.width/2, // Length of the lighting bars
+						wI = rigger.LS.width/12, // Padding from the side
+						wG = ln/ll; // Space for each light type
+						if(this.g.x > (rigger.LS.width - ln) - wG/2 && this.g.x < rigger.LS.width - wI){ // Over the lighting part
+							var t = Math.floor(((rigger.LS.width - this.g.x - wI) + wG/2)/wG);
+							if(this.light){
+								if(t === this.light.type().t){
+									this.light = null;
+									this.speed = this.speeds[0];
+								}
+							}else{
+								this.light = new rigger.Light(rigger.def.lights[t]);
 							}
-						}else{
-							this.light = new rigger.Light(rigger.def.lights[t]);
 						}
 					}
 				}
@@ -205,6 +210,7 @@ rigger.Light = function(type) {
 	this.type = function(){return type;};
 
 	this.gel = null; // The Gel
+	this.gelPos = type.gelPos;
 
 	this.barPos = null; // Light's position on the bar
 
@@ -230,17 +236,14 @@ rigger.Light.equals = function(a, b){
 
 
 
-rigger.Gel = function(num, type){
+rigger.Gel = function(num){
 	this.number = function(){return num;};
-	var type = rigger.h.strToName("lights", type);
-	this.type = function(){return type;};
 
 	var col = rigger.gelRef[num]; // Gets the HEX colour code for the Gel number
 	this.colour = function(){return col;};
 };
 rigger.Gel.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
-	if(a.type() !== b.type()){return false;}
 	if(a.colour() !== b.colour()){return false;}
 	return true;
 };
