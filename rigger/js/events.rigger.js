@@ -48,8 +48,8 @@
 	};
 
 	// Add to the object
-	obj.addEventListener = AEL;
-	obj.removeEventListener = REL;
+	obj["addEventListener"] = AEL;
+	obj["removeEventListener"] = REL;
 	obj.emmitEvent = EM;
 })(rigger);
 

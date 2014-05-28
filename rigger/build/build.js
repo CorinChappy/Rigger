@@ -95,8 +95,8 @@ if(merge){
 console.log("Minifying - Google Closure Compiler");
 
 var post_data = querystring.stringify({
-	//'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
-	'compilation_level' : 'SIMPLE_OPTIMIZATIONS',
+	'compilation_level' : 'ADVANCED_OPTIMIZATIONS',
+	//'compilation_level' : 'SIMPLE_OPTIMIZATIONS',
 	'output_format': 'json',
 	'output_info': ['compiled_code', 'errors'],
 	'js_code' : full

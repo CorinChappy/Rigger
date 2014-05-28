@@ -87,7 +87,7 @@
 
 			// Create new Image objects for each asset and wait till the have all loaded
 			(function ims(l, p){
-				var s = l[p];
+				var s = (!p)?l:l[p];
 				if(typeof s === 'string'){ // String means load
 					toLoad++;
 					var i = new Image();
@@ -99,7 +99,7 @@
 						ims(s, a); // Recurse
 					}
 				}
-			})(rigger.assets, "sprites");
+			})(rigger.assets.sprites);
 
 
 			// Load audio in a sim. way
