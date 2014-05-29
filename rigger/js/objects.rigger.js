@@ -243,6 +243,7 @@ rigger.Light.prototype.draw = function(){
 			rigger.ctx.fillStyle = this.gel.colour();
 			rigger.ctx.globalAlpha = 0.8;
 			rigger.ctx.fillRect(this.g.x + this.gelPos.x, this.g.y + this.gelPos.y, this.gelPos.w, this.gelPos.h);
+			rigger.ctx.globalAlpha = 1;
 		}
 };
 rigger.Light.prototype.addGel = function(gelRef){

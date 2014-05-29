@@ -193,14 +193,11 @@ var rigger = {
 		},
 
 		defaultCan : function(a){
-			a = a || 12;
-			rigger.ctx.globalAlpha = 1;
-			rigger.ctx.strokeStyle = "black";
-			rigger.ctx.fillStyle = "black";
-			rigger.ctx.lineWidth = 1;
-			rigger.ctx.font = a+"px 'Press Start 2P' Helvetica";
-			rigger.ctx.textAlign = "start";
-			rigger.ctx.textBaseline = "top";
+			rigger.ctx.restore();
+			rigger.ctx.save();
+			if(a % 1 === 0){
+				rigger.ctx.font = a+"px 'Press Start 2P' Helvetica";
+			}
 		}
 	},
 
@@ -615,6 +612,11 @@ rigger.init = function(div, w, h){
 	div.appendChild(canvas);
 	rigger.canvas = canvas;
 	rigger.ctx = ctx;
+
+	// Default fonts, etc for drawing
+	rigger.ctx.font = "12px 'Press Start 2P' Helvetica";
+	rigger.ctx.textBaseline = "top";
+	rigger.ctx.save();
 
 
 
