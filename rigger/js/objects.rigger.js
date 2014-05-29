@@ -137,6 +137,7 @@ rigger.Player.prototype.update = function(dt, key){
 
 rigger.Bar = function(design){ // Represents a bar in the annex (design is a boolean, whether or not it's a physical bar, or one drawn on paper)
 	this.bar = (function(b){var a = []; while(a.length < b){a.push(false);} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
+	this.design = design;
 
 	var updatables = {}; // What needs updating on the bar (what's new cockadoo?)
 
@@ -193,8 +194,17 @@ rigger.Bar.prototype.draw = function(){
 	rigger.ctx.stroke();
 
 	this.bar.forEach(function(a){
-		if(a){a.draw();}
-	});
+		if(a){
+			a.draw();
+			if(this.design && a.gel){
+				var num = a.gel.number();
+				rigger.h.defaultCan();
+				rigger.ctx.textBaseline = "bottom";
+				rigger.ctx.textAlign = "center";
+				rigger.ctx.fillText(num, a.g.x + a.g.w/2, a.g.y - 10);
+			}
+		}
+	}.bind(this));
 };
 rigger.Bar.equals = function(a, b){ // Check for equality of two bars
 	if(!a || !b){return false;}

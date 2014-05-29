@@ -147,8 +147,8 @@ var rigger = {
 	// Helper functions
 	h : {
 		// Generate a random bar
-		genBar : function(){
-			var b = new rigger.Bar(),
+		genBar : function(design){
+			var b = new rigger.Bar(design === true),
 			l, k;
 			for(var i = 0; i <= rigger.settings.barSize; i++){
 				if(Math.random() < 0.3){
@@ -567,7 +567,7 @@ var rigger = {
 		rigger.game.player = new rigger.Player(p);
 
 		// Generate a random target bar
-		rigger.game.target = rigger.h.genBar();
+		rigger.game.target = rigger.h.genBar(true);
 		// Create the new, empty bar
 		rigger.game.bar = new rigger.Bar();
 
