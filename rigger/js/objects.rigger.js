@@ -39,10 +39,10 @@ rigger.Player.prototype.draw = function(){
 	}
 };
 rigger.Player.prototype.update = function(dt, key){
-		switch(key){
-			// Left or right
-			case 37 :
-			case 39 : {
+	switch(key){
+		// Left or right
+		case 37 :
+		case 39 : {
 			// Boundaries for the rooms
 			var min, max;
 			if(rigger.game.room === 0){
@@ -57,27 +57,33 @@ rigger.Player.prototype.update = function(dt, key){
 				this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
 				this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
 			}
-			break; }
+		break; }
 
-			// Up or Down
-			case 38 :
-			case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
-				var l = rigger.game.ladder.g,
-					rW = l.w/5;
-				if(rigger.game.player.g.x > l.x && rigger.game.player.g.x < l.x + l.w - (rW*4)){ // Over the ladder
-					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
-					this.g.cD = this.g.cD - dt * 4;
-					if(this.g.cD <= 0){
-						this.g.cI = !this.g.cI;
-						this.g.cD = 1;
-					}
-					this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
+
+
+		// Up or Down
+		case 38 :
+		case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
+			var l = rigger.game.ladder.g,
+				rW = l.w/5;
+			if(rigger.game.player.g.x > l.x && rigger.game.player.g.x < l.x + l.w - (rW*4)){ // Over the ladder
+				this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
+				this.g.cD = this.g.cD - dt * 4;
+				if(this.g.cD <= 0){
+					this.g.cI = !this.g.cI;
+					this.g.cD = 1;
 				}
-			break; }
+				this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
+			}
+		break; }
 
-			// Spacebar
-			case 32 : {
-				if(rigger.game.room === 0){ // ANNEX
+
+
+
+		// Spacebar
+		case 32 : {
+			switch(rigger.game.room){
+				case 0 : { // ANNEX
 					var b = rigger.game.bar;
 					// Check you are close enough to the bar (top of the ladder)
 					if(this.g.y === rigger.game.ladder.g.y){
@@ -94,8 +100,10 @@ rigger.Player.prototype.update = function(dt, key){
 							this.light = b.removeLight(u); // Get a light if you are not holding one
 						}
 					}
-				}
-				if(rigger.game.room === 1){ // LIGHT STORE
+				break; }
+
+
+				case 1 : { // LIGHT STORE
 					if(this.g.x < rigger.LS.width*0.2 && this.light){ // Over the gels draw
 						rigger.menuOption = 0;
 						rigger.game.menu = 3;
@@ -118,18 +126,20 @@ rigger.Player.prototype.update = function(dt, key){
 							}
 						}
 					}
-				}
-			break; }
-		}
+				break; }
+			}
+		break; }
+
+	}
 
 
 
-		if(this.light){
-			this.speed = this.speeds[3];
-			// Place the light in his hand
-			this.light.g.x = this.g.x + this.hand.x;
-			this.light.g.y = this.g.y + this.hand.y;
-		}
+	if(this.light){
+		this.speed = this.speeds[3];
+		// Place the light in his hand
+		this.light.g.x = this.g.x + this.hand.x;
+		this.light.g.y = this.g.y + this.hand.y;
+	}
 };
 
 
@@ -143,7 +153,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 
 	// Please use these methods for adding & removing lights!
 	this.addLight = function(light, pos){
-		if(!light || pos < 0 || pos >= rigger.settings.barSize){return false;}
+		if(!light || pos < 0 || pos >= this.bar.length){return false;}
 		if(this.bar[pos]){return false;} // Already got a light there
 		this.bar[pos] = light;
 		updatables[pos] = true;
@@ -151,7 +161,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 		return true;
 	};
 	this.removeLight = function(pos){
-		if(pos < 0 || pos >= rigger.settings.barSize){return;}
+		if(pos < 0 || pos >= this.bar.length){return;}
 		if(!this.bar[pos]){return null;} // No light there
 		var light = this.bar[pos];
 		this.bar[pos] = false;
@@ -173,7 +183,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 			 * Position relative (position * ratio)
 			 * Move the light onto the bar
 			 */
-			var ratio = this.g.l/rigger.settings.barSize, // Divide up the bar
+			var ratio = this.g.l/this.bar.length, // Divide up the bar
 				absPos = u * ratio; // Absolute position
 
 			this.bar[u].g.x = absPos;
@@ -271,7 +281,7 @@ rigger.Gel = function(num){
 };
 rigger.Gel.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
-	if(a.colour() !== b.colour()){return false;}
+	if(a.number() !== b.number()){return false;}
 	return true;
 };
 
