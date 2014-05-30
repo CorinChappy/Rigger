@@ -205,13 +205,17 @@ rigger.Bar.prototype.draw = function(){
 
 	this.bar.forEach(function(a){
 		if(a){
-			a.draw();
-			if(this.design && a.gel){
-				var num = a.gel.number();
-				rigger.h.defaultCan();
-				rigger.ctx.textBaseline = "bottom";
-				rigger.ctx.textAlign = "center";
-				rigger.ctx.fillText(num, a.g.x + a.g.w/2, a.g.y - 10);
+			if(!this.design){
+				a.drawWithBeam();
+			}else{
+				a.draw();
+				if(a.gel){
+					var num = a.gel.number();
+					rigger.h.defaultCan();
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText(num, a.g.x + a.g.w/2, a.g.y - 10);
+				}
 			}
 		}
 	}.bind(this));
@@ -250,11 +254,36 @@ rigger.Light = function(type){
 rigger.Light.prototype.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 		if(this.gel){
+			rigger.ctx.save();
 			rigger.ctx.fillStyle = this.gel.colour();
 			rigger.ctx.globalAlpha = 0.8;
 			rigger.ctx.fillRect(this.g.x + this.gelPos.x, this.g.y + this.gelPos.y, this.gelPos.w, this.gelPos.h);
-			rigger.ctx.globalAlpha = 1;
+			rigger.ctx.restore();
 		}
+};
+rigger.Light.prototype.drawWithBeam = function(){
+	var ratio = 0.1, // 0.1px across for every 1 down
+	defaultBeamColour = "yellow",
+	points = [
+		[(this.g.x + 5), this.g.y + (this.g.h - 5)], // Left corner of light
+		[(this.g.x - 5) + this.g.w, this.g.y + (this.g.h - 5)] // Right corner of light
+	];
+	points.push([points[1][0] + (points[1][1] + rigger.height)*ratio, points[1][1] + rigger.height]); // Bottom right
+	points.push([points[0][0] - (points[1][1] + rigger.height)*ratio, points[0][1] + rigger.height]); // Bottom left
+	
+	rigger.ctx.save();
+	rigger.ctx.globalAlpha = 0.5;
+	rigger.ctx.fillStyle = (this.gel)?this.gel.colour():defaultBeamColour;
+	rigger.ctx.moveTo(points[3][0], points[3][1]);
+	rigger.ctx.beginPath();
+	for(var a = 0; a < points.length; a++){
+		rigger.ctx.lineTo(points[a][0], points[a][1]);
+	}
+	rigger.ctx.closePath();
+	rigger.ctx.fill();
+	rigger.ctx.restore();
+
+	this.draw();
 };
 rigger.Light.prototype.addGel = function(gelRef){
 	try{
