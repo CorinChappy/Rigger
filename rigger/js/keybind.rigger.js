@@ -11,7 +11,7 @@
 
 			if(rigger.keyPressAction[e.keyCode] && !rigger.locked){
 				e.preventDefault();
-				rigger.keyPressAction[e.keyCode].call(rigger);
+				rigger.keyPressAction[e.keyCode].call(rigger, e);
 			}
 		},
 		keyup : function(e){
@@ -89,7 +89,7 @@
 	 * The actions taken when each key is PRESSED
 	 */
 	rigger.keyPressAction = {
-		37 : function(){
+		37 : function(e){
 			// LEFT
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.max(0, rigger.menuOption-1);
@@ -98,13 +98,13 @@
 				rigger.menuOption = Math.max(0, rigger.menuOption-1);
 			}
 		},
-		38 : function(){
+		38 : function(e){
 			// UP
 			if(rigger.game.menu === 3){ // Gel selection
 				rigger.menuOption = Math.max(0, rigger.menuOption-5);
 			}
 		},
-		39 : function(){
+		39 : function(e){
 			// RIGHT
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.def.players).length-1);
@@ -113,14 +113,14 @@
 				rigger.menuOption = Math.min(rigger.menuOption+1, Object.keys(rigger.gelRef).length);
 			}
 		},
-		40 : function(){
+		40 : function(e){
 			// DOWN
 			if(rigger.game.menu === 3){ // Gel selection
 				rigger.menuOption = Math.min(rigger.menuOption+5, Object.keys(rigger.gelRef).length);
 			}
 		},
 
-		32 : function(){ // SPACE
+		32 : function(e){ // SPACE
 			if(rigger.state === 1){ // MAIN MENU
 				rigger.newGame(rigger.def.players[Object.keys(rigger.def.players)[rigger.menuOption]]);
 				return;
@@ -150,19 +150,19 @@
 			}
 		},
 
-		68 : function(){ // D
+		68 : function(e){ // D
 			if(rigger.state === 2){ // IN GAME
 				rigger.game.menu = (rigger.game.menu === 0)?1:0;
 			}
 		},
 
-		73 : function(){ // I
+		73 : function(e){ // I
 			// Show/hide the instructions
 			rigger.game.instructions = !rigger.game.instructions;
 		},
 
-		82 : function(){
-			if(rigger.state === 2){ // IN GAME
+		82 : function(e){
+			if(rigger.state === 2 && e.shiftKey){ // IN GAME & shift is pressed
 				var x = rigger.game.player.g.x,
 				l = rigger.game.player.light, p = new rigger.Player(rigger.def.hidden.rory);
 				p.g.x = x;
