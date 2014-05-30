@@ -103,7 +103,7 @@ var rigger = {
 	ctx : null, // The canvas context
 
 	/* State of the game
-	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory; 4 = failure
+	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory; 4 = failure; 5 = instructions
 	*/
 	state : 0,
 
@@ -294,6 +294,10 @@ var rigger = {
 
 				case 4 : { // FAILURE
 					rigger.d.o.failure();
+				break; }
+
+				case 5 : { // INSTRUCTIONS
+					rigger.d.instructions();
 				break; }
 			}
 		},
@@ -498,7 +502,11 @@ var rigger = {
 			rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
 		},
 		instructions : function(){
-
+			/* More detailed instructions */
+			rigger.h.defaultCan(24);
+			rigger.ctx.strokeRect(0, 0, rigger.width, rigger.height);
+			rigger.ctx.fillText("How to play", 10, 10);
+			rigger.ctx.fillText("Detailed instructions coming soon...", 20, 200);
 		},
 		loading : function(){
 			rigger.ctx.fillStyle = "green";
@@ -518,7 +526,13 @@ var rigger = {
 			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 
-			/* Instructions */
+
+			// Press I for instructions
+			rigger.h.defaultCan(12);
+			rigger.ctx.textAlign = "right";
+			rigger.ctx.fillText("Press I for How to Play", rigger.width - 20, 10);
+
+			/* Main menuInstructions */
 			rigger.h.defaultCan(18);
 			rigger.ctx.textAlign = "right";
 			rigger.ctx.textBaseline = "bottom";

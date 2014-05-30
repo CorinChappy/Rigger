@@ -141,7 +141,7 @@
 				// Test for winning conditions
 				if(rigger.Bar.equals(rigger.game.bar, rigger.game.target)){
 					rigger.state = 3; // Set state to victory
-					rigger.emmitEvent("victory", {time: rigger.game.time, character: rigger.game.player.who()});
+					rigger.emmitEvent("victory", {time: rigger.game.time, character: rigger.game.player.who(), bar: rigger.game.target.bar.slice(0)});
 					return;
 				}
 			}
@@ -158,7 +158,19 @@
 
 		73 : function(e){ // I
 			// Show/hide the instructions
-			rigger.game.instructions = !rigger.game.instructions;
+			switch(rigger.state){
+				case 1 : { // MAIN MENU
+					rigger.state = 5;
+				break; }
+
+				case 2 : { // IN GAME
+					rigger.game.instructions = !rigger.game.instructions;
+				break; }
+
+				case 5 : { // ALREADY IN INSTRUCTIONS
+					rigger.state = 1;
+				break; }
+			}
 		},
 
 		82 : function(e){
