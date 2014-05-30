@@ -110,6 +110,9 @@
 				}catch(e){}
 				return -1;
 			})();
+			var dud = {  // Stub methods for audio.js to call
+				play : function(){}, stop : function(){}, setVolume : function(){}, loop : 0
+			};
 			if(ty >= 0 && window.AudioContext){
 				// Function that loads each audio file
 				var audioLoader = function(m){
@@ -144,9 +147,6 @@
 					}
 				}
 			}else{ // No codec supported
-				var dud = {  // Stub methods for audio.js to call
-						play : function(){}, stop : function(){}, setVolume : function(){}, loop : 0
-				};
 				for(var m in rigger.assets.audio){
 					if(rigger.assets.audio.hasOwnProperty(m)){
 						rigger.assets.audio[m] = dud;
