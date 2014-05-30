@@ -101,7 +101,7 @@
 		38 : function(e){
 			// UP
 			if(rigger.game.menu === 3){ // Gel selection
-				rigger.menuOption = Math.max(0, rigger.menuOption-5);
+				rigger.menuOption = Math.max(0, rigger.menuOption-7);
 			}
 		},
 		39 : function(e){
@@ -116,7 +116,7 @@
 		40 : function(e){
 			// DOWN
 			if(rigger.game.menu === 3){ // Gel selection
-				rigger.menuOption = Math.min(rigger.menuOption+5, Object.keys(rigger.gelRef).length);
+				rigger.menuOption = Math.min(rigger.menuOption+7, Object.keys(rigger.gelRef).length);
 			}
 		},
 

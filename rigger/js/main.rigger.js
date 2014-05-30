@@ -398,19 +398,19 @@ var rigger = {
 
 				// Do some maths
 				var gelsNos = Object.keys(rigger.gelRef).sort();
-				var cols = 5,
-				rows = 5,
-				padd = [rigger.LS.width/20, rigger.LS.height/20],
-				size = [(rigger.LS.width - (padd[0]*cols))/cols, (rigger.LS.width - (padd[0]*rows))/rows];
+				var cols = 7,
+				rows = 7,
+				padd = [rigger.width/20, rigger.height/20],
+				size = [(rigger.width - (padd[0]*cols))/cols, (rigger.width - (padd[0]*rows))/rows];
 
 
 				/* Instructions */
 				rigger.h.defaultCan(21);
 				rigger.ctx.textBaseline = "bottom";
 				if(rigger.menuOption === 0){
-					rigger.ctx.fillText("Pick a gel.", rigger.LS.width/3, rigger.height - rigger.LS.height);
+					rigger.ctx.fillText("Pick a gel.", rigger.width/4, rigger.height - rigger.LS.height);
 				}else{
-					rigger.ctx.fillText("Pick a gel. Selected: "+gelsNos[rigger.menuOption - 1], rigger.LS.width/3, rigger.height - rigger.LS.height);
+					rigger.ctx.fillText("Pick a gel. Selected: "+gelsNos[rigger.menuOption - 1], rigger.width/4, rigger.height - rigger.LS.height);
 				}
 
 
