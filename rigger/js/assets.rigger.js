@@ -2,7 +2,6 @@
 (function(){
 "use strict";
 
-window.AudioContext = window.AudioContext || window.webkitAudioContext; // Correct AudioContext element
 
 	rigger.assets = {
 		sprites : {
@@ -57,7 +56,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext; // Corre
 
 
 		load : function(callback){
-			var toLoad = 0, loaded = 0, prep = false, er= false,
+			var toLoad = 0, loaded = 0, prep = false, er = false,
 			f = function(a){ // Function called when an asset is loaded
 				if(er){return;} // Error has already happened, no point here
 				if(a){
@@ -91,43 +90,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext; // Corre
 
 
 			// Load audio using XHR
-
-			// My very own audio object!
-			var Au = function(buffer, context){
-				var source = null;
-				var gainNode = null;
-
-				var volume = 1;
-				this.setVolume = function(vol){
-					try{
-						volume = vol;
-						gainNode.gain.value = volume;
-					}catch(e){}
-				};
-
-				this.loop = false;
-				this.play = function(){
-					source = context.createBufferSource();
-					source.buffer = buffer;
-					source.connect(context.destination);
-					source.loop = this.loop;
-
-					// Volume related stuff
-					gainNode = context.createGain();
-					source.connect(gainNode);
-					gainNode.connect(context.destination);
-					gainNode.gain.value = volume;
-
-					source.start();
-				};
-
-				this.stop = function(){
-					try{
-						source.stop();
-					}catch(e){}
-				};
-			};
-
 			var ty = (function(){ // Use the right codec
 				try {
 					var a = new Audio();
@@ -142,37 +104,40 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext; // Corre
 				return -1;
 			})();
 			if(ty >= 0 && window.AudioContext){
+				// Function that loads each audio file
+				var audioLoader = function(m){
+					toLoad++;
+					var au = rigger.assets.audio[m][ty],
+					    xhr = new XMLHttpRequest();
+					xhr.open('GET', au, true);
+					xhr.responseType = 'arraybuffer';
+					xhr.addEventListener("load",function(){
+						if(this.status == 200){
+							rigger.audio.create(xhr.response, function(aud){
+								rigger.assets.audio[m] = aud;
+								rigger.assets.audio[m].volume = rigger.settings.volume;
+								loaded++;
+								f();
+							});
+						}
+					});
+					xhr.addEventListener("error",function(){f(au);});
+					xhr.send();
+				}
+
 				for(var m in rigger.assets.audio){
-					(function(m){
-						toLoad++;
-						var au = rigger.assets.audio[m][ty],
-							cont = new AudioContext(),
-						    xhr = new XMLHttpRequest();
-						xhr.open('GET', au, true);
-						xhr.responseType = 'arraybuffer';
-						xhr.addEventListener("load",function(){
-							if (this.status == 200){
-								cont.decodeAudioData(xhr.response, function(buff){
-									var aud = new Au(buff, cont);
-									rigger.assets.audio[m] = aud;
-									rigger.assets.audio[m].volume = rigger.settings.volume;
-									loaded++;
-									f();
-								});
-
-							}
-
-						});
-						xhr.addEventListener("error",function(){f(au);});
-						xhr.send();
-						
-					})(m);
+					if(rigger.assets.audio.hasOwnProperty(m)){
+						audioLoader(m);
+					}
 				}
 			}else{ // No codec supported
+				var dud = {  // Stub methods for audio.js to call
+						play : function(){}, stop : function(){}, setVolume : function(){}, loop : 0
+				};
 				for(var m in rigger.assets.audio){
-					rigger.assets.audio[m] = {
-						pause : function(){}, play : function(){} // Stub methods for audio.js to call
-					};
+					if(rigger.assets.audio.hasOwnProperty(m)){
+						rigger.assets.audio[m] = dud;
+					}
 				}
 			}
 
