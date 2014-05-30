@@ -110,6 +110,9 @@
 				}catch(e){}
 				return -1;
 			})();
+			var dud = {  // Stub methods for audio.js to call
+				play : function(){}, stop : function(){}, setVolume : function(){}, loop : 0
+			};
 			if(ty >= 0 && window.AudioContext){
 				// Function that loads each audio file
 				var audioLoader = function(m){
@@ -128,8 +131,14 @@
 							});
 						}
 					});
-					xhr.addEventListener("error",function(){f(au);});
-					xhr.send();
+					xhr.addEventListener("error",function(){ // Losing sound is not the end of the world, do not throw an error
+						rigger.assets.audio[m] = dud;
+						loaded++;
+						f();
+					});
+					try{
+						xhr.send(); // Attempt to send, if running the game locally (file:///) audio will fail and an error will be thrown here
+					}catch(e){}
 				}
 
 				for(var m in rigger.assets.audio){
@@ -138,9 +147,6 @@
 					}
 				}
 			}else{ // No codec supported
-				var dud = {  // Stub methods for audio.js to call
-						play : function(){}, stop : function(){}, setVolume : function(){}, loop : 0
-				};
 				for(var m in rigger.assets.audio){
 					if(rigger.assets.audio.hasOwnProperty(m)){
 						rigger.assets.audio[m] = dud;
