@@ -54,7 +54,7 @@ function startGameloop(){
 		})();
 	var last = null;
 	var cb = function(ts){
-		var dt = (ts - last)/1000;
+		var dt = Math.min(80, (ts - last))/1000;
 		last = ts;
 		// Do shizz
 		rigger.e.update(dt);
@@ -672,7 +672,7 @@ rigger.init = function(div, w, h){
 			if(pageHidden()){
 				rigger.pause();
 			}else{
-				setTimeout(rigger.unpause, 50);
+				rigger.unpause();
 			}
 		});
 	}else{
