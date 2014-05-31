@@ -32,11 +32,11 @@
 		},
 
 		volUp : function(){
-			setVol(0.1);
+			rigger.audio.setVol(0.1);
 		},
 
 		volDown : function(){
-			setVol(-0.1);
+			rigger.audio.etVol(-0.1);
 		}
 		
 		

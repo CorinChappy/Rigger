@@ -56,7 +56,7 @@ function startGameloop(){
 		})();
 	var last = null;
 	var cb = function(ts){
-		var dt = (ts - last)/1000;
+		var dt = Math.min(80, (ts - last))/1000;
 		last = ts;
 		// Do shizz
 		rigger.e.update(dt);
@@ -105,7 +105,7 @@ var rigger = {
 	ctx : null, // The canvas context
 
 	/* State of the game
-	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory; 4 = failure
+	 * -1 = error; 0 = loading; 1 = main menu; 2 = in game; 3 = victory; 4 = failure; 5 = instructions
 	*/
 	state : 0,
 
@@ -149,8 +149,8 @@ var rigger = {
 	// Helper functions
 	h : {
 		// Generate a random bar
-		genBar : function(){
-			var b = new rigger.Bar(),
+		genBar : function(design){
+			var b = new rigger.Bar(design === true),
 			l, k;
 			for(var i = 0; i <= rigger.settings.barSize; i++){
 				if(Math.random() < 0.3){
@@ -195,14 +195,11 @@ var rigger = {
 		},
 
 		defaultCan : function(a){
-			a = a || 12;
-			rigger.ctx.globalAlpha = 1;
-			rigger.ctx.strokeStyle = "black";
-			rigger.ctx.fillStyle = "black";
-			rigger.ctx.lineWidth = 1;
-			rigger.ctx.font = a+"px 'Press Start 2P' Helvetica";
-			rigger.ctx.textAlign = "start";
-			rigger.ctx.textBaseline = "top";
+			rigger.ctx.restore();
+			rigger.ctx.save();
+			if(a % 1 === 0){
+				rigger.ctx.font = a+"px 'Press Start 2P' Helvetica";
+			}
 		}
 	},
 
@@ -299,6 +296,10 @@ var rigger = {
 
 				case 4 : { // FAILURE
 					rigger.d.o.failure();
+				break; }
+
+				case 5 : { // INSTRUCTIONS
+					rigger.d.instructions();
 				break; }
 			}
 		},
@@ -403,19 +404,19 @@ var rigger = {
 
 				// Do some maths
 				var gelsNos = Object.keys(rigger.gelRef).sort();
-				var cols = 5,
-				rows = 5,
-				padd = [rigger.LS.width/20, rigger.LS.height/20],
-				size = [(rigger.LS.width - (padd[0]*cols))/cols, (rigger.LS.width - (padd[0]*rows))/rows];
+				var cols = 7,
+				rows = 7,
+				padd = [rigger.width/20, rigger.height/20],
+				size = [(rigger.width - (padd[0]*cols))/cols, (rigger.width - (padd[0]*rows))/rows];
 
 
 				/* Instructions */
 				rigger.h.defaultCan(21);
 				rigger.ctx.textBaseline = "bottom";
 				if(rigger.menuOption === 0){
-					rigger.ctx.fillText("Pick a gel.", rigger.LS.width/3, rigger.height - rigger.LS.height);
+					rigger.ctx.fillText("Pick a gel.", rigger.width/4, rigger.height - rigger.LS.height);
 				}else{
-					rigger.ctx.fillText("Pick a gel. Selected: "+gelsNos[rigger.menuOption - 1], rigger.LS.width/3, rigger.height - rigger.LS.height);
+					rigger.ctx.fillText("Pick a gel. Selected: "+gelsNos[rigger.menuOption - 1], rigger.width/4, rigger.height - rigger.LS.height);
 				}
 
 
@@ -448,9 +449,11 @@ var rigger = {
 
 			},
 			victory : function(){
+				rigger.h.defaultCan();
 				rigger.ctx.globalAlpha = 0.5;
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 
+				rigger.h.defaultCan();
 				rigger.game.bar.draw(); // Draw the bar to show the winning rig
 
 
@@ -503,7 +506,11 @@ var rigger = {
 			rigger.ctx.fillText("An error has occurred, see the console for more info", 25, 205);
 		},
 		instructions : function(){
-
+			/* More detailed instructions */
+			rigger.h.defaultCan(24);
+			rigger.ctx.strokeRect(0, 0, rigger.width, rigger.height);
+			rigger.ctx.fillText("How to play", 10, 10);
+			rigger.ctx.fillText("Detailed instructions coming soon...", 20, 200);
 		},
 		loading : function(){
 			rigger.ctx.fillStyle = "green";
@@ -523,7 +530,13 @@ var rigger = {
 			rigger.h.defaultCan(24);
 			rigger.ctx.fillText("Welcome to Rigger!", 20, 10);
 
-			/* Instructions */
+
+			// Press I for instructions
+			rigger.h.defaultCan(12);
+			rigger.ctx.textAlign = "right";
+			rigger.ctx.fillText("Press I for How to Play", rigger.width - 20, 10);
+
+			/* Main menuInstructions */
 			rigger.h.defaultCan(18);
 			rigger.ctx.textAlign = "right";
 			rigger.ctx.textBaseline = "bottom";
@@ -569,7 +582,7 @@ var rigger = {
 		rigger.game.player = new rigger.Player(p);
 
 		// Generate a random target bar
-		rigger.game.target = rigger.h.genBar();
+		rigger.game.target = rigger.h.genBar(true);
 		// Create the new, empty bar
 		rigger.game.bar = new rigger.Bar();
 
@@ -618,6 +631,11 @@ rigger.init = function(div, w, h){
 	rigger.canvas = canvas;
 	rigger.ctx = ctx;
 
+	// Default fonts, etc for drawing
+	rigger.ctx.font = "12px 'Press Start 2P' Helvetica";
+	rigger.ctx.textBaseline = "top";
+	rigger.ctx.save();
+
 
 
 	try{
@@ -658,7 +676,7 @@ rigger.init = function(div, w, h){
 			if(pageHidden()){
 				rigger.pause();
 			}else{
-				setTimeout(rigger.unpause, 50);
+				rigger.unpause();
 			}
 		});
 	}else{

@@ -39,10 +39,10 @@ rigger.Player.prototype.draw = function(){
 	}
 };
 rigger.Player.prototype.update = function(dt, key){
-		switch(key){
-			// Left or right
-			case 37 :
-			case 39 : {
+	switch(key){
+		// Left or right
+		case 37 :
+		case 39 : {
 			// Boundaries for the rooms
 			var min, max;
 			if(rigger.game.room === 0){
@@ -57,27 +57,33 @@ rigger.Player.prototype.update = function(dt, key){
 				this.g.x = Math.clamp(this.g.x + (this.speed * (dt * (key - 38) /*Clever directional trick*/)), min, max);
 				this.g.i = (key === 39)?this.imgs.right:this.imgs.left;
 			}
-			break; }
+		break; }
 
-			// Up or Down
-			case 38 :
-			case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
-				var l = rigger.game.ladder.g,
-					rW = l.w/5;
-				if(rigger.game.player.g.x > l.x && rigger.game.player.g.x < l.x + l.w - (rW*4)){ // Over the ladder
-					this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
-					this.g.cD = this.g.cD - dt * 4;
-					if(this.g.cD <= 0){
-						this.g.cI = !this.g.cI;
-						this.g.cD = 1;
-					}
-					this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
+
+
+		// Up or Down
+		case 38 :
+		case 40 : { if(rigger.game.room !== 0){break;} // Not on the ANNEX
+			var l = rigger.game.ladder.g,
+				rW = l.w/5;
+			if(rigger.game.player.g.x > l.x && rigger.game.player.g.x < l.x + l.w - (rW*4)){ // Over the ladder
+				this.g.y = Math.clamp(this.g.y + (this.speed * (dt * (key - 39) /*Clever directional trick*/)), l.y, rigger.height - this.g.h);
+				this.g.cD = this.g.cD - dt * 4;
+				if(this.g.cD <= 0){
+					this.g.cI = !this.g.cI;
+					this.g.cD = 1;
 				}
-			break; }
+				this.g.i = (this.g.cI)?this.imgs.climb:this.imgs.climb2;
+			}
+		break; }
 
-			// Spacebar
-			case 32 : {
-				if(rigger.game.room === 0){ // ANNEX
+
+
+
+		// Spacebar
+		case 32 : {
+			switch(rigger.game.room){
+				case 0 : { // ANNEX
 					var b = rigger.game.bar;
 					// Check you are close enough to the bar (top of the ladder)
 					if(this.g.y === rigger.game.ladder.g.y){
@@ -94,8 +100,10 @@ rigger.Player.prototype.update = function(dt, key){
 							this.light = b.removeLight(u); // Get a light if you are not holding one
 						}
 					}
-				}
-				if(rigger.game.room === 1){ // LIGHT STORE
+				break; }
+
+
+				case 1 : { // LIGHT STORE
 					if(this.g.x < rigger.LS.width*0.2 && this.light){ // Over the gels draw
 						rigger.menuOption = 0;
 						rigger.game.menu = 3;
@@ -118,18 +126,20 @@ rigger.Player.prototype.update = function(dt, key){
 							}
 						}
 					}
-				}
-			break; }
-		}
+				break; }
+			}
+		break; }
+
+	}
 
 
 
-		if(this.light){
-			this.speed = this.speeds[3];
-			// Place the light in his hand
-			this.light.g.x = this.g.x + this.hand.x;
-			this.light.g.y = this.g.y + this.hand.y;
-		}
+	if(this.light){
+		this.speed = this.speeds[3];
+		// Place the light in his hand
+		this.light.g.x = this.g.x + this.hand.x;
+		this.light.g.y = this.g.y + this.hand.y;
+	}
 };
 
 
@@ -137,12 +147,13 @@ rigger.Player.prototype.update = function(dt, key){
 
 rigger.Bar = function(design){ // Represents a bar in the annex (design is a boolean, whether or not it's a physical bar, or one drawn on paper)
 	this.bar = (function(b){var a = []; while(a.length < b){a.push(false);} return a;})(rigger.settings.barSize); // Create an array of 20 false values (false means empty)
+	this.design = design;
 
 	var updatables = {}; // What needs updating on the bar (what's new cockadoo?)
 
 	// Please use these methods for adding & removing lights!
 	this.addLight = function(light, pos){
-		if(!light || pos < 0 || pos >= rigger.settings.barSize){return false;}
+		if(!light || pos < 0 || pos >= this.bar.length){return false;}
 		if(this.bar[pos]){return false;} // Already got a light there
 		this.bar[pos] = light;
 		updatables[pos] = true;
@@ -150,7 +161,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 		return true;
 	};
 	this.removeLight = function(pos){
-		if(pos < 0 || pos >= rigger.settings.barSize){return;}
+		if(pos < 0 || pos >= this.bar.length){return;}
 		if(!this.bar[pos]){return null;} // No light there
 		var light = this.bar[pos];
 		this.bar[pos] = false;
@@ -172,7 +183,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 			 * Position relative (position * ratio)
 			 * Move the light onto the bar
 			 */
-			var ratio = this.g.l/rigger.settings.barSize, // Divide up the bar
+			var ratio = this.g.l/this.bar.length, // Divide up the bar
 				absPos = u * ratio; // Absolute position
 
 			this.bar[u].g.x = absPos;
@@ -193,8 +204,21 @@ rigger.Bar.prototype.draw = function(){
 	rigger.ctx.stroke();
 
 	this.bar.forEach(function(a){
-		if(a){a.draw();}
-	});
+		if(a){
+			if(!this.design){
+				a.drawWithBeam();
+			}else{
+				a.draw();
+				if(a.gel){
+					var num = a.gel.number();
+					rigger.h.defaultCan();
+					rigger.ctx.textBaseline = "bottom";
+					rigger.ctx.textAlign = "center";
+					rigger.ctx.fillText(num, a.g.x + a.g.w/2, a.g.y - 10);
+				}
+			}
+		}
+	}.bind(this));
 };
 rigger.Bar.equals = function(a, b){ // Check for equality of two bars
 	if(!a || !b){return false;}
@@ -230,10 +254,36 @@ rigger.Light = function(type){
 rigger.Light.prototype.draw = function(){
 		rigger.ctx.drawImage(this.g.i, this.g.x, this.g.y, this.g.w, this.g.h);
 		if(this.gel){
+			rigger.ctx.save();
 			rigger.ctx.fillStyle = this.gel.colour();
 			rigger.ctx.globalAlpha = 0.8;
 			rigger.ctx.fillRect(this.g.x + this.gelPos.x, this.g.y + this.gelPos.y, this.gelPos.w, this.gelPos.h);
+			rigger.ctx.restore();
 		}
+};
+rigger.Light.prototype.drawWithBeam = function(){
+	var ratio = 0.1, // 0.1px across for every 1 down
+	defaultBeamColour = "yellow",
+	points = [
+		[(this.g.x + 5), this.g.y + (this.g.h - 5)], // Left corner of light
+		[(this.g.x - 5) + this.g.w, this.g.y + (this.g.h - 5)] // Right corner of light
+	];
+	points.push([points[1][0] + (points[1][1] + rigger.height)*ratio, points[1][1] + rigger.height]); // Bottom right
+	points.push([points[0][0] - (points[1][1] + rigger.height)*ratio, points[0][1] + rigger.height]); // Bottom left
+	
+	rigger.ctx.save();
+	rigger.ctx.globalAlpha = 0.4;
+	rigger.ctx.fillStyle = (this.gel)?this.gel.colour():defaultBeamColour;
+	rigger.ctx.moveTo(points[3][0], points[3][1]);
+	rigger.ctx.beginPath();
+	for(var a = 0; a < points.length; a++){
+		rigger.ctx.lineTo(points[a][0], points[a][1]);
+	}
+	rigger.ctx.closePath();
+	rigger.ctx.fill();
+	rigger.ctx.restore();
+
+	this.draw();
 };
 rigger.Light.prototype.addGel = function(gelRef){
 	try{
@@ -260,7 +310,7 @@ rigger.Gel = function(num){
 };
 rigger.Gel.equals = function(a, b){
 	if(!a || !b){return (!a && !b);} // Two falsy values (nulls) are the same, one fasly value is not good
-	if(a.colour() !== b.colour()){return false;}
+	if(a.number() !== b.number()){return false;}
 	return true;
 };
 
