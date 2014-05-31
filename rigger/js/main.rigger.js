@@ -447,9 +447,11 @@ var rigger = {
 
 			},
 			victory : function(){
+				rigger.h.defaultCan();
 				rigger.ctx.globalAlpha = 0.5;
 				rigger.ctx.drawImage(rigger.assets.sprites.bg.annex, 0,0, rigger.width, rigger.height);
 
+				rigger.h.defaultCan();
 				rigger.game.bar.draw(); // Draw the bar to show the winning rig
 
 

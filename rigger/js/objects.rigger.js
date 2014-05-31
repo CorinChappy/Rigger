@@ -272,7 +272,7 @@ rigger.Light.prototype.drawWithBeam = function(){
 	points.push([points[0][0] - (points[1][1] + rigger.height)*ratio, points[0][1] + rigger.height]); // Bottom left
 	
 	rigger.ctx.save();
-	rigger.ctx.globalAlpha = 0.5;
+	rigger.ctx.globalAlpha = 0.4;
 	rigger.ctx.fillStyle = (this.gel)?this.gel.colour():defaultBeamColour;
 	rigger.ctx.moveTo(points[3][0], points[3][1]);
 	rigger.ctx.beginPath();
