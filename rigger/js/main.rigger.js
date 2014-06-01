@@ -596,22 +596,29 @@ var rigger = {
 		// Set inGame
 		rigger.state = 2;
 		rigger.emmitEvent("newgame");
-	},
+	}
 
-	pause : function(){
+};
+
+(function(){
+	var tempVol = rigger.settings.volume;
+	rigger.pause = function(){
+		tempVol = rigger.settings.volume;
+		rigger.audio.setVol(0);
 		if(rigger.state !== 2){return;} // Only pause in game
 		rigger.game.menu = 2;
 		rigger.locked = true;
 		rigger.emmitEvent("pause");
-	},
-	unpause : function(){
+	};
+	rigger.unpause = function(){
+		rigger.audio.setVol(tempVol);
 		if(rigger.game.menu !== 2){return;} // Cannot unpause unless paused
 		rigger.game.menu = 0;
 		rigger.locked = false;
 		rigger.emmitEvent("unpause");
-	}
+	};
+})();
 
-};
 
 
 rigger.init = function(div, w, h){

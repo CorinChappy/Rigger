@@ -26,8 +26,11 @@
 		},
 
 		setVol : function(vol){
+			rigger.settings.volume = vol;
 			for(var a in rigger.assets.audio){
-				rigger.assets.audio[a].volume = vol;
+				if(rigger.assets.audio.hasOwnProperty(a)){
+					rigger.assets.audio[a].volume = vol;
+				}
 			}
 		},
 
@@ -36,7 +39,7 @@
 		},
 
 		volDown : function(){
-			rigger.audio.etVol(-0.1);
+			rigger.audio.setVol(-0.1);
 		}
 		
 		
