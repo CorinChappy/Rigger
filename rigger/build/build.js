@@ -26,23 +26,20 @@ var http = require('http');
 
 
 // Get the command line input (to check for compression) + filename
-var useCompress, merge, filename = "rigger.js";
-if(useCompress = (process.argv[2] || false)){
-	if(useCompress === "-c"){
-		filename = process.argv[3] || "rigger.zip";
-		useCompress = true;
-	}else{
-		if(useCompress === "-m"){
-			merge = true;
-		}else{
-			filename = useCompress; // Assume file if it's not a bool
-			useCompress = false;
-		}
-	}
+var a = process.argv,
+useCompress = a.indexOf("-c"),
+merge = a.indexOf("-m"),
+filename = "rigger.js";
+
+if(a.length-1 > useCompress && a.length-1 > merge && a.length-1 > 2){
+	filename = a[a.length-1];
 }
+useCompress = (useCompress < 0)?false:true;
+merge = (merge < 0)?false:true;
 
 console.log("Build file for Rigger");
 console.log("Using compression = "+useCompress);
+console.log("Outputting merged file = "+merge);
 console.log("Output file = "+filename);
 console.log();
 
