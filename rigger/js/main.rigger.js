@@ -590,9 +590,10 @@ var rigger = {
 
 		rigger.locked = false; // Unlock if locked
 		rigger.game.menu = 0;
-
+		rigger.game.room = 1;
 		rigger.game.time = 0; // Reset timer
 		rigger.game.instructions = true;
+		
 		// Set inGame
 		rigger.state = 2;
 		rigger.emmitEvent("newgame");
