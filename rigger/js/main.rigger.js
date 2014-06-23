@@ -371,14 +371,9 @@ var rigger = {
 		},
 		o : { // Overlays/menus
 			design : function(){
-				rigger.h.defaultCan(24);
-				rigger.ctx.fillStyle = "brown";
-				rigger.ctx.fillRect(0,0, rigger.width, rigger.height);
+				rigger.ctx.drawImage(rigger.assets.sprites.misc.design, 0, 50, rigger.width, 400);
 
 				rigger.game.target.draw();
-
-				rigger.ctx.fillStyle = "black";
-				rigger.ctx.fillText("Design", 250, 400);
 			},
 			inGame : function(){
 				rigger.h.defaultCan();

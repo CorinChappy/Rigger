@@ -171,10 +171,10 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 
 	this.g = {
 		x : 0,
-		y : 50,
 		t : 5, // Thickness of the bar
 		l : rigger.width // Length of the bar
 	};
+	this.g.y = (design)?150:50;
 
 	this.update = function(dt){
 		for(var u in updatables){

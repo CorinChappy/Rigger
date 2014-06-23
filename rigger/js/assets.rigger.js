@@ -9,7 +9,8 @@
 				lampy : "assets/sprites/bg/lampy.png"
 			},
 			misc : {
-				ladder : "assets/sprites/misc/ladder.png"
+				ladder : "assets/sprites/misc/ladder.png",
+				design : "assets/sprites/misc/design.png"
 			},
 			lights : [
 				"assets/sprites/lights/fresnel.png",
