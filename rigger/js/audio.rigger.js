@@ -72,7 +72,9 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext; // Corre
 		setVol : function(vol){
 			rigger.settings.volume = vol;
 			for(var a in rigger.assets.audio){
-				rigger.assets.audio[a].setVolume(vol);
+				if(rigger.assets.audio.hasOwnProperty(a)){
+					rigger.assets.audio[a].setVolume(vol);
+				}
 			}
 		},
 
