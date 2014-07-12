@@ -34,14 +34,25 @@ filename = "rigger.js";
 if(a.length-1 > useCompress && a.length-1 > merge && a.length-1 > 2){
 	filename = a[a.length-1];
 }
-useCompress = (useCompress < 0)?false:true;
-merge = (merge < 0)?false:true;
+useCompress = (useCompress >= 0);
+merge = (merge >= 0);
 
 console.log("Build file for Rigger");
 console.log("Using compression = "+useCompress);
 console.log("Outputting merged file = "+merge);
 console.log("Output file = "+filename);
 console.log();
+
+if(useCompress){
+	try{
+		var JSZip = require("jszip");
+	}catch(e){
+		console.log("===========ERROR: Cannot load jszip module===========");
+		console.log("==       Have you run 'npm install jszip' yet?     ==");
+		console.log("=====================================================");
+		process.exit(0);
+	}
+}
 
 /* Read the copyright file */
 var copyfile = "../../CopyrightNotice";
@@ -144,8 +155,38 @@ function postProcess(){
 	}
 
 	var cc = copyright + s.compiledCode;
-	// Writing data to file
-	fs.writeFileSync(filename, cc);
+
+	// Compress
+	if(useCompress){
+		console.log("Compressing files");
+		var zip = new JSZip();
+
+		var assRoot = rootDir + "assets";
+		compresser(assRoot, zip);
+
+		var blob = zip.file("js/rigger.js", cc)
+			.file("example.html", fs.readFileSync(rootDir + "index.html"))
+			.file("CopyrightNotice", fs.readFileSync(rootDir + "../CopyrightNotice"))
+			.file("LICENSE", fs.readFileSync(rootDir + "../LICENSE"))
+			.generate({type:"nodebuffer", compression: "DEFLATE"});
+		fs.writeFileSync(filename, blob);
+	}else{
+		// Writing data to file
+		fs.writeFileSync(filename, cc);
+	}
 
 	console.log("Done");
+}
+
+
+function compresser(dir, zip){
+	fs.readdirSync(dir).forEach(function(a){
+		var f = dir + "/" + a;
+		var stat = fs.statSync(f);
+		if(stat.isDirectory()){
+			compresser(f, zip);
+		}else{
+			zip.file(f.split("../")[1], fs.readFileSync(f));
+		}
+	});
 }
