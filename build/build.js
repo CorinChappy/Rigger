@@ -24,6 +24,19 @@ var fs = require("fs");
 var querystring = require('querystring');
 var http = require('http');
 
+if(process.argv.indexOf("-h") >= 0 || process.argv.indexOf("--help") >= 0){
+	console.log("Build file for Rigger");
+	console.log();
+	console.log("Usage:");
+	console.log("     node build [-h] [-c] [-m] [<filename>]");
+	console.log();
+	console.log("             -h   Output this message");
+	console.log("             -c   Compress the program and it's assets into a zip file");
+	console.log("             -m   Output a merged file (do not compile using Google Closure Compiler). Can be used in combination with -c");
+	console.log("     <filename>   Specify the filename for the outputted (zip or js) file");
+	console.log();
+	process.exit(0);
+}
 
 // Get the command line input (to check for compression) + filename
 var a = process.argv,
@@ -50,7 +63,7 @@ if(useCompress){
 		console.log("===========ERROR: Cannot load jszip module===========");
 		console.log("==       Have you run 'npm install jszip' yet?     ==");
 		console.log("=====================================================");
-		process.exit(0);
+		process.exit(1);
 	}
 }
 
@@ -97,7 +110,13 @@ var full = strings.reduce(function(p, c){
 
 if(merge){
 	console.log("Outputting merged file");
-	fs.writeFileSync("merged.js", copyright + full);
+	if(useCompress){
+		preCompress(copyright + full);
+	}else{
+		fs.writeFileSync(filename, copyright + full);
+	}
+	console.log("Done!");
+	process.exit(0);
 }
 
 console.log("Minifying - Google Closure Compiler");
@@ -158,24 +177,28 @@ function postProcess(){
 
 	// Compress
 	if(useCompress){
-		console.log("Compressing files");
-		var zip = new JSZip();
-
-		var assRoot = rootDir + "assets";
-		compresser(assRoot, zip);
-
-		var blob = zip.file("js/rigger.js", cc)
-			.file("example.html", fs.readFileSync("example.html"))
-			.file("CopyrightNotice", fs.readFileSync(rootDir + "../CopyrightNotice"))
-			.file("LICENSE", fs.readFileSync(rootDir + "../LICENSE"))
-			.generate({type:"nodebuffer", compression: "DEFLATE"});
-		fs.writeFileSync(filename, blob);
+		preCompress(cc);
 	}else{
 		// Writing data to file
 		fs.writeFileSync(filename, cc);
 	}
 
 	console.log("Done");
+}
+
+function preCompress(riggerjs){
+	console.log("Compressing files");
+	var zip = new JSZip();
+
+	var assRoot = rootDir + "assets";
+	compresser(assRoot, zip);
+
+	var blob = zip.file("js/rigger.js", riggerjs)
+		.file("example.html", fs.readFileSync("example.html"))
+		.file("CopyrightNotice", fs.readFileSync(rootDir + "CopyrightNotice"))
+		.file("LICENSE", fs.readFileSync(rootDir + "LICENSE"))
+		.generate({type:"nodebuffer", compression: "DEFLATE"});
+	fs.writeFileSync(filename, blob);
 }
 
 
