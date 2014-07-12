@@ -31,7 +31,7 @@ if(process.argv.indexOf("-h") >= 0 || process.argv.indexOf("--help") >= 0){
 	console.log("     node build [-h] [-c] [-m] [<filename>]");
 	console.log();
 	console.log("             -h   Output this message");
-	console.log("             -c   Compress the program and it's assets into a zip file");
+	console.log("             -c   Compress the program and it's assets into a zip file. Note: For this to work jszip must be installed (run 'npm install jszip')");
 	console.log("             -m   Output a merged file (do not compile using Google Closure Compiler). Can be used in combination with -c");
 	console.log("     <filename>   Specify the filename for the outputted (zip or js) file");
 	console.log();
@@ -60,6 +60,7 @@ if(useCompress){
 	try{
 		var JSZip = require("jszip");
 	}catch(e){
+		console.log();
 		console.log("===========ERROR: Cannot load jszip module===========");
 		console.log("==       Have you run 'npm install jszip' yet?     ==");
 		console.log("=====================================================");
