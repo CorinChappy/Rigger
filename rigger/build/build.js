@@ -165,7 +165,7 @@ function postProcess(){
 		compresser(assRoot, zip);
 
 		var blob = zip.file("js/rigger.js", cc)
-			.file("example.html", fs.readFileSync(rootDir + "index.html"))
+			.file("example.html", fs.readFileSync("example.html"))
 			.file("CopyrightNotice", fs.readFileSync(rootDir + "../CopyrightNotice"))
 			.file("LICENSE", fs.readFileSync(rootDir + "../LICENSE"))
 			.generate({type:"nodebuffer", compression: "DEFLATE"});

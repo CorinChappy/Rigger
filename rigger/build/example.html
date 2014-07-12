@@ -1,0 +1,49 @@
+<!--
+    StageSoc Games (Including Rigger)
+    Copyright (C) 2014  Corin Chaplin
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+
+	<title>StageSoc Games: Rigger</title>
+
+    <style type="text/css">
+    *{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    #game{
+        margin: auto; width: 1000px;
+    }
+    </style>
+</head>
+<body>
+<h1>Rigger</h1>
+<div id="game"></div>
+
+<!-- Load JS here for the common good -->
+<script src="js/rigger.js"></script>
+<script>
+    rigger.init(document.getElementById("game")); // Call rigger.init and pass in the element for the game to be contained in
+</script>
+</body>
+</html>
