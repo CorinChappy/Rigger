@@ -69,7 +69,7 @@ if(useCompress){
 }
 
 /* Read the copyright file */
-var copyfile = "../../CopyrightNotice";
+var copyfile = "../CopyrightNotice";
 var copyright = "/*\n" + fs.readFileSync(copyfile) + "\n*/\n";
 
 /*
@@ -196,7 +196,7 @@ function preCompress(riggerjs){
 
 	var blob = zip.file("js/rigger.js", riggerjs)
 		.file("example.html", fs.readFileSync("example.html"))
-		.file("CopyrightNotice", fs.readFileSync(rootDir + "CopyrightNotice"))
+		.file("CopyrightNotice", copyright)
 		.file("LICENSE", fs.readFileSync(rootDir + "LICENSE"))
 		.generate({type:"nodebuffer", compression: "DEFLATE"});
 	fs.writeFileSync(filename, blob);
@@ -210,7 +210,9 @@ function compresser(dir, zip){
 		if(stat.isDirectory()){
 			compresser(f, zip);
 		}else{
-			zip.file(f.split("../")[1], fs.readFileSync(f));
+			if(a.indexOf(".svg") === -1){ // Do NOT export svgs
+				zip.file(f.split("../")[1], fs.readFileSync(f));
+			}
 		}
 	});
 }
