@@ -29,7 +29,7 @@ var http = require('http');
 var a = process.argv,
 useCompress = a.indexOf("-c"),
 merge = a.indexOf("-m"),
-filename = "rigger.js";
+filename = (useCompress >= 0)?"rigger.zip":"rigger.js";
 
 if(a.length-1 > useCompress && a.length-1 > merge && a.length-1 > 2){
 	filename = a[a.length-1];
