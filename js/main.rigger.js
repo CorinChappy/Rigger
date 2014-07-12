@@ -164,7 +164,7 @@ var rigger = {
 		},
 
 		timeConvert : function(t, p){ // Takes the time (ms) and converts it into a time of day (p represents need for second presistion)
-			var startTime = [15,0];
+			var startTime = [18,0];
 			// 1 sec = 1 min
 			var s = Math.floor(t/1000), // Secs
 				hours = Math.floor(s/60),
@@ -224,7 +224,7 @@ var rigger = {
 						rigger.e.tick(dt); // Update the timer
 					}
 					// Check for failure conditions
-					if(rigger.game.time > 480000){ // 480000ms = 480s = 8 minutes = 8 hours in gametime (IE failure is at 11pm)
+					if(rigger.game.time > 300000){ // 300000ms = 300s = 5 minutes = 5 hours in gametime (IE failure is at 11pm)
 						rigger.state = 4;
 						rigger.emmitEvent("failure");
 					}

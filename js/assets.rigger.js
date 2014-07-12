@@ -41,6 +41,13 @@
 					climb : "assets/sprites/player/corin/climb.png",
 					climb2 : "assets/sprites/player/corin/climb2.png",
 					front : "assets/sprites/player/corin/front.png"
+				},
+				ruth : {
+					left : "assets/sprites/player/ruth/left.png",
+					right : "assets/sprites/player/ruth/right.png",
+					climb : "assets/sprites/player/ruth/climb.png",
+					climb2 : "assets/sprites/player/ruth/climb2.png",
+					front : "assets/sprites/player/ruth/front.png"
 				}
 			},
 			hidden : {
