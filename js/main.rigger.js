@@ -2,9 +2,11 @@
 "use strict";
 
 /* Import fonts from Google fonts */
-window.WebFontConfig = {
-	google: { families: [ 'Press+Start+2P::latin' ] } // By: CodeMan38,  http://www.google.com/fonts/#QuickUsePlace:quickUse/Family:Press+Start+2P
-};
+window["WebFontConfig"] = {};
+window["WebFontConfig"]["google"] = {};
+window["WebFontConfig"]["google"]["families"] = [
+	'Press+Start+2P::latin' // By: CodeMan38,  http://www.google.com/fonts/#QuickUsePlace:quickUse/Family:Press+Start+2P
+];
 (function() {
 	var wf = document.createElement('script');
 	wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
@@ -696,5 +698,6 @@ rigger.resize = function(w, h){
 
 
 // Export rigger object for the rest of the JS
-window.rigger = rigger;
-})();
+window["rigger"] = rigger;
+window["rigger"]["init"] = rigger.init; // Needed for compliltion
+})(); // @end

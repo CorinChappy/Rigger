@@ -1,6 +1,6 @@
 // Audio control for music and sound effects in the game
 (function(){
-"use strict";
+"use strict"; // @start
 	
 window.AudioContext = window.AudioContext || window.webkitAudioContext; // Correct AudioContext element
 
@@ -91,4 +91,4 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext; // Corre
 		
 		
 	};
-})();
+})(); // @end

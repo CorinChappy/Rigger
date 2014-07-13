@@ -1,6 +1,6 @@
 /* Custom event emitter, same syntax as event naitve JS */
-(function(){
-"use strict";
+(function(){ 
+"use strict"; // @start
 
 (function(obj){
 
@@ -48,9 +48,9 @@
 	};
 
 	// Add to the object
-	obj.addEventListener = AEL;
-	obj.removeEventListener = REL;
+	obj["addEventListener"] = AEL;
+	obj["removeEventListener"] = REL;
 	obj.emmitEvent = EM;
 })(rigger);
 
-})();
+})(); // @end

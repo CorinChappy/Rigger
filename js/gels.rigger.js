@@ -1,6 +1,6 @@
 // Contains the mappings from Gel Numbers to the HEX represenation of the colour
 (function(){
-"use strict";
+"use strict"; // @start
 
 rigger.gelRef = {
 	156 : "#000000",
@@ -13,4 +13,4 @@ rigger.gelRef = {
 
 
 };
-})();
+})(); // @end

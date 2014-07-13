@@ -1,6 +1,6 @@
 // Contains the objects used in the game
-(function(){
-"use strict";
+(function(){ 
+"use strict"; // @start
 
 rigger.Player = function(who){
 	this.who = function(){return who;};
@@ -345,4 +345,4 @@ rigger.Ladder.prototype.update = function(){
 };
 
 
-})();
+})(); // @end
