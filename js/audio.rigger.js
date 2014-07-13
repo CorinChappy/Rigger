@@ -18,6 +18,9 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext; // Corre
 					gainNode.gain.value = volume;
 				}catch(e){}
 			};
+			this.getVolume = function(){
+				return volume;
+			};
 
 			this.loop = false;
 			this.play = function(){
@@ -79,11 +82,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext; // Corre
 		},
 
 		volUp : function(){
-			rigger.audio.setVol(0.1);
+			rigger.audio.setVol(rigger.settings.volume + 0.1);
 		},
 
 		volDown : function(){
-			rigger.audio.setVol(-0.1);
+			rigger.audio.setVol(rigger.settings.volume - 0.1);
 		}
 		
 		
