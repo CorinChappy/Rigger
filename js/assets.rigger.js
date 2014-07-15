@@ -48,6 +48,13 @@
 					climb : "assets/sprites/player/ruth/climb.png",
 					climb2 : "assets/sprites/player/ruth/climb2.png",
 					front : "assets/sprites/player/ruth/front.png"
+				},
+				young_david : {
+					left : "assets/sprites/player/young_david/left.png",
+					right : "assets/sprites/player/young_david/right.png",
+					climb : "assets/sprites/player/young_david/climb.png",
+					climb2 : "assets/sprites/player/young_david/climb2.png",
+					front : "assets/sprites/player/young_david/front.png"
 				}
 			},
 			hidden : {

@@ -126,6 +126,16 @@ rigger.def = {
 
 			h : 100,
 			w : 62
+		},
+		young_david : {
+			name : "Young David",
+
+			imgs : rigger.assets.sprites.player.young_david,
+
+			speeds : [350, 250, 200, 250],
+
+			h : 100,
+			w : 62
 		}
 	},
 	hidden : {
