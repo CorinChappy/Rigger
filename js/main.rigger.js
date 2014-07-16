@@ -126,6 +126,8 @@ var rigger = {
 
 	LS : {width : 716, height : 409},
 
+	assetDir : "assets/",
+
 	canvas : null, // The canvas object
 	ctx : null, // The canvas context
 
@@ -643,11 +645,14 @@ var rigger = {
 
 
 
-rigger.init = function(div, w, h){
+rigger.init = function(div, assetDir, w, h){
 	if(!div){throw new Error("Where do I put my canvas?!");}
 	if(w && h){
 		rigger.width = w; rigger.height = h;
 		rigger.LS.width = w/1.396; rigger.LS.height = h/1.222; // Ratio's for the lighting store
+	}
+	if(assetDir){
+		rigger.assetDir = (assetDir.lastIndexOf("/") === assetDir.length-1)?assetDir:assetDir+"/"; // Check if parameter has a trailing slash, and if not add one
 	}
 	// Create the canvas object
 	var canvas = document.createElement("canvas"),

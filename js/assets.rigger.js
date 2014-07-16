@@ -6,64 +6,64 @@
 	rigger.assets = {
 		sprites : {
 			bg : {
-				annex : "assets/sprites/bg/annex.png",
-				lampy : "assets/sprites/bg/lampy.png"
+				annex : "sprites/bg/annex.png",
+				lampy : "sprites/bg/lampy.png"
 			},
 			misc : {
-				ladder : "assets/sprites/misc/ladder.png",
-				design : "assets/sprites/misc/design.png"
+				ladder : "sprites/misc/ladder.png",
+				design : "sprites/misc/design.png"
 			},
 			lights : [
-				"assets/sprites/lights/fresnel.png",
-				"assets/sprites/lights/pc.png",
-				"assets/sprites/lights/par.png",
-				"assets/sprites/lights/source4.png",
-				"assets/sprites/lights/flood.png"
+				"sprites/lights/fresnel.png",
+				"sprites/lights/pc.png",
+				"sprites/lights/par.png",
+				"sprites/lights/source4.png",
+				"sprites/lights/flood.png"
 			],
 			player : {
 				danbarr : {
-					left : "assets/sprites/player/danbarr/left.png",
-					right : "assets/sprites/player/danbarr/right.png",
-					climb : "assets/sprites/player/danbarr/climb.png",
-					climb2 : "assets/sprites/player/danbarr/climb2.png",
-					front : "assets/sprites/player/danbarr/front.png"
+					left : "sprites/player/danbarr/left.png",
+					right : "sprites/player/danbarr/right.png",
+					climb : "sprites/player/danbarr/climb.png",
+					climb2 : "sprites/player/danbarr/climb2.png",
+					front : "sprites/player/danbarr/front.png"
 				},
 				trojak : {
-					left : "assets/sprites/player/trojak/left.png",
-					right : "assets/sprites/player/trojak/right.png",
-					climb : "assets/sprites/player/trojak/climb.png",
-					climb2 : "assets/sprites/player/trojak/climb2.png",
-					front : "assets/sprites/player/trojak/front.png"
+					left : "sprites/player/trojak/left.png",
+					right : "sprites/player/trojak/right.png",
+					climb : "sprites/player/trojak/climb.png",
+					climb2 : "sprites/player/trojak/climb2.png",
+					front : "sprites/player/trojak/front.png"
 				},
 				corin : {
-					left : "assets/sprites/player/corin/left.png",
-					right : "assets/sprites/player/corin/right.png",
-					climb : "assets/sprites/player/corin/climb.png",
-					climb2 : "assets/sprites/player/corin/climb2.png",
-					front : "assets/sprites/player/corin/front.png"
+					left : "sprites/player/corin/left.png",
+					right : "sprites/player/corin/right.png",
+					climb : "sprites/player/corin/climb.png",
+					climb2 : "sprites/player/corin/climb2.png",
+					front : "sprites/player/corin/front.png"
 				},
 				ruth : {
-					left : "assets/sprites/player/ruth/left.png",
-					right : "assets/sprites/player/ruth/right.png",
-					climb : "assets/sprites/player/ruth/climb.png",
-					climb2 : "assets/sprites/player/ruth/climb2.png",
-					front : "assets/sprites/player/ruth/front.png"
+					left : "sprites/player/ruth/left.png",
+					right : "sprites/player/ruth/right.png",
+					climb : "sprites/player/ruth/climb.png",
+					climb2 : "sprites/player/ruth/climb2.png",
+					front : "sprites/player/ruth/front.png"
 				},
 				young_david : {
-					left : "assets/sprites/player/young_david/left.png",
-					right : "assets/sprites/player/young_david/right.png",
-					climb : "assets/sprites/player/young_david/climb.png",
-					climb2 : "assets/sprites/player/young_david/climb2.png",
-					front : "assets/sprites/player/young_david/front.png"
+					left : "sprites/player/young_david/left.png",
+					right : "sprites/player/young_david/right.png",
+					climb : "sprites/player/young_david/climb.png",
+					climb2 : "sprites/player/young_david/climb2.png",
+					front : "sprites/player/young_david/front.png"
 				}
 			},
 			hidden : {
 				rory : {
-					left : "assets/sprites/player/rory/rory.png",
-					right : "assets/sprites/player/rory/rory.png",
-					climb : "assets/sprites/player/rory/rory.png",
-					climb2 : "assets/sprites/player/rory/rory.png",
-					front : "assets/sprites/player/rory/rory.png"
+					left : "sprites/player/rory/rory.png",
+					right : "sprites/player/rory/rory.png",
+					climb : "sprites/player/rory/rory.png",
+					climb2 : "sprites/player/rory/rory.png",
+					front : "sprites/player/rory/rory.png"
 				}
 			}
 		},
@@ -71,8 +71,8 @@
 		// Audio stored in an array, index: 0 = ogg; 1 = mp3
 		/* Audio keys need to be strings so the closure compiler will not rename them */
 		audio : {
-			//"bgMusic" : ["assets/audio/ss.mp3", "assets/audio/ss.mp3"],
-			"rory" : ["assets/audio/rory.ogg","assets/audio/rory.mp3"]
+			//"bgMusic" : ["audio/ss.mp3", "audio/ss.mp3"],
+			"rory" : ["audio/rory.ogg","audio/rory.mp3"]
 		},
 
 
@@ -101,7 +101,7 @@
 					var i = new Image();
 					i.addEventListener("load", function(){l[p] = i; loaded++; f();});
 					i.addEventListener("error", function(){f(s);});
-					i.src = s;
+					i.src = rigger.assetDir + s;
 				}else{ // Assume string OR object/array
 					for(var a in s){
 						ims(s, a); // Recurse
@@ -131,7 +131,7 @@
 				// Function that loads each audio file
 				var audioLoader = function(m){
 					toLoad++;
-					var au = rigger.assets.audio[m][ty],
+					var au = rigger.assetDir + rigger.assets.audio[m][ty],
 					    xhr = new XMLHttpRequest();
 					xhr.open('GET', au, true);
 					xhr.responseType = 'arraybuffer';
