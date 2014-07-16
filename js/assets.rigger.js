@@ -55,6 +55,13 @@
 					climb : "sprites/player/young_david/climb.png",
 					climb2 : "sprites/player/young_david/climb2.png",
 					front : "sprites/player/young_david/front.png"
+				},
+				aggus : {
+					left : "sprites/player/aggus/left.png",
+					right : "sprites/player/aggus/right.png",
+					climb : "sprites/player/aggus/climb.png",
+					climb2 : "sprites/player/aggus/climb2.png",
+					front : "sprites/player/aggus/front.png"
 				}
 			},
 			hidden : {

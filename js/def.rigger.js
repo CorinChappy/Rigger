@@ -136,6 +136,16 @@ rigger.def = {
 
 			h : 100,
 			w : 62
+		},
+		aggus : {
+			name : "Aggus",
+
+			imgs : rigger.assets.sprites.player.aggus,
+
+			speeds : [350, 250, 200, 250],
+
+			h : 100,
+			w : 62
 		}
 	},
 	hidden : {
