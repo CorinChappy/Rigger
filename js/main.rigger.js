@@ -397,7 +397,7 @@ var rigger = {
 		},
 		o : { // Overlays/menus
 			design : function(){
-				rigger.ctx.drawImage(rigger.assets.sprites.misc.design, 0, 50, rigger.width, 400);
+				rigger.ctx.drawImage(rigger.assets.sprites.misc.design, 10, 20, rigger.width - 20, 400);
 
 				rigger.game.target.draw();
 			},

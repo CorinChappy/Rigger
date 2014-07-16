@@ -170,11 +170,17 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 	};
 
 	this.g = {
-		x : 0,
-		t : 5, // Thickness of the bar
-		l : rigger.width // Length of the bar
+		t : 5 // Thickness of the bar
 	};
-	this.g.y = (design)?150:50;
+	if(design){
+		this.g.x = 15;
+		this.g.y = 150;
+		this.g.l = rigger.width - 30;
+	}else{
+		this.g.x = 0;
+		this.g.y = 50;
+		this.g.l = rigger.width; // Length of the bar
+	}
 
 	this.update = function(dt){
 		for(var u in updatables){
@@ -184,7 +190,7 @@ rigger.Bar = function(design){ // Represents a bar in the annex (design is a boo
 			 * Move the light onto the bar
 			 */
 			var ratio = this.g.l/this.bar.length, // Divide up the bar
-				absPos = u * ratio; // Absolute position
+				absPos = this.g.x + (u * ratio); // Absolute position
 
 			this.bar[u].g.x = absPos;
 			this.bar[u].g.y = this.g.y+1;
