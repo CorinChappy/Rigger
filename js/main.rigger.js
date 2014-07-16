@@ -292,25 +292,24 @@ var rigger = {
 					rigger.ctx.textAlign = "right";
 					rigger.ctx.fillText(""+rigger.h.timeConvert(rigger.game.time), rigger.width - 10, 10);
 
+					rigger.game.player.draw();
+
 					switch(rigger.game.menu){
 						case 1 : { // Design
 							rigger.d.o.design();
 						break; }
 
 						case 2 : { // In game menu/paused
-							rigger.game.player.draw();
 							rigger.d.o.inGame();
 						break; }
 
 						case 3 : { // Gel draw
-							rigger.game.player.draw();
 							rigger.d.o.gels();
 						break; }
 
 
 
 						case 0 : { // No overlay
-							rigger.game.player.draw();
 						break; }
 					}
 				break; }
