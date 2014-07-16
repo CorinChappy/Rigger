@@ -23,7 +23,7 @@ For a single file release of just the source code (without the image and audio a
 
 Build from source
 ------------------
-You can play the game by simply downloading or cloning the repository. To minify and/or package you can use build/build.js, the build file is written in [nodejs](http://nodejs.org).
+You can play the game by simply downloading or cloning the repository. To minify and/or package you can use [build/build.js](../master/build/build.js), the build file is written in [nodejs](http://nodejs.org).
 
 *Please note the module [jszip](https://www.npmjs.org/package/jszip) is required for compression*
 
@@ -33,5 +33,5 @@ To run the build file enter `node build [options]`. -c enables compression, -m s
 
 Embedding the game
 -------------------
-To embed the game into your site all you need to do is include rigger.js in your webpage and execute rigger.init() passing in the DOM element you want the game to be placed in. See [example.html](../master/build/example.html) for an example.
-The game's dimensions are 1000x500.
+To embed the game into your site all you need to do is include rigger.js in your webpage and execute rigger.init() passing in the DOM element you want the game to be placed in. The assest folder must be placed in the same directory as the page the game is to be embedded in. See [example.html](../master/build/example.html) for an example.
+The game's dimensions are 1000x500px.
