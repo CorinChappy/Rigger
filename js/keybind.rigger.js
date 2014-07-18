@@ -4,31 +4,41 @@
 	
 	rigger.keysDown = {}; // Contins the currently pressed keys
 
+	var arrows = [37, 38, 39, 40];
+
 	rigger.keyFunc = {
 		keydown : function(e){
 			//e.preventDefault();
-			rigger.keysDown[e.keyCode] = true;
+			var kc = e.keyCode;
+			rigger.keysDown[kc] = true;
 
-			if(rigger.keyPressAction[e.keyCode] && !rigger.locked){
+			// Enable exclusive arrow keys
+			if(rigger.settings.exclusiveArrows && arrows.indexOf(kc) > -1){
+				rigger.keyFunc.exclusiveArrows(kc);
+			}
+
+			if(rigger.keyPressAction[kc] && !rigger.locked){
 				e.preventDefault();
-				rigger.keyPressAction[e.keyCode].call(rigger, e);
+				rigger.keyPressAction[kc].call(rigger, e);
 			}
 		},
-		keyup : function(e){
+		keyup : function(e){ // Can take both the event object or the keycode itself
 			//e.preventDefault();
-			delete rigger.keysDown[e.keyCode];
+			delete rigger.keysDown[(e % 1 === 0)?e:e.keyCode];
+		},
+		exclusiveArrows : function(key){
+			arrows.forEach(function(k){
+				if(key !== k){
+					rigger.keyFunc.keyup(k);
+				}
+			});
 		}
 	};
+
 
 	/* Event listeners for the keypresses */
 	window.addEventListener("keydown", rigger.keyFunc.keydown);
 	window.addEventListener("keyup", rigger.keyFunc.keyup);
-
-	/* Mapping from char to keycode for each key */
-	window.what = {
-		"left":37, "up":38, "right":39, "down":40,
-		"space":32
-	};
 
 
 	/* The actions taken when each key is HELD
