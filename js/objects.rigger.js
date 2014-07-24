@@ -220,7 +220,7 @@ rigger.Bar.prototype.draw = function(){
 					rigger.h.defaultCan();
 					rigger.ctx.textBaseline = "bottom";
 					rigger.ctx.textAlign = "center";
-					rigger.ctx.fillText(num, a.g.x + a.g.w/2, a.g.y - 10);
+					rigger.ctx.fillText("L"+num, a.g.x + a.g.w/2, a.g.y - 10);
 				}
 			}
 		}

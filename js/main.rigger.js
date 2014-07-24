@@ -437,7 +437,7 @@ var rigger = {
 				if(rigger.menuOption === 0){
 					rigger.ctx.fillText("Pick a gel.", rigger.width/4, rigger.height - rigger.LS.height);
 				}else{
-					rigger.ctx.fillText("Pick a gel. Selected: "+gelsNos[rigger.menuOption - 1], rigger.width/4, rigger.height - rigger.LS.height);
+					rigger.ctx.fillText("Pick a gel. Selected: L"+gelsNos[rigger.menuOption - 1], rigger.width/4, rigger.height - rigger.LS.height);
 				}
 
 
